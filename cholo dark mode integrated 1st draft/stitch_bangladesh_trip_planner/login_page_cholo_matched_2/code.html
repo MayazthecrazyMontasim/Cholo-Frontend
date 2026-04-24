@@ -132,11 +132,21 @@
 <p class="text-outline/60 text-xs">© 2024 Cholo Travel Ecosystem. All rights reserved.</p>
 </footer>
 <div class="fixed top-6 right-6 hidden md:block">
-<div class="flex items-center gap-1 bg-surface-container p-1 rounded-full border border-outline-variant shadow-sm"><button aria-label="Toggle dark mode" class="w-9 h-9 flex items-center justify-center text-primary bg-primary/10 rounded-full transition-colors">
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-full border border-outline-variant shadow-sm"><button id="themeToggle" aria-label="Toggle dark mode" class="w-9 h-9 flex items-center justify-center text-primary bg-primary/10 rounded-full transition-colors">
 <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">light_mode</span>
 </button>
 <button class="px-4 py-2 text-xs font-bold text-on-primary bg-primary rounded-full">EN</button>
 <button class="px-4 py-2 text-xs font-bold text-outline hover:text-primary transition-colors">BN</button>
 </div>
 </div>
+<script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'light') {
+        window.location.replace('../login_page_cholo_matched_1/code.html');
+    }
+    themeToggleBtn.addEventListener('click', () => {
+        localStorage.setItem('theme', 'light');
+        window.location.href = '../login_page_cholo_matched_1/code.html';
+    });
+</script>
 </body></html>
