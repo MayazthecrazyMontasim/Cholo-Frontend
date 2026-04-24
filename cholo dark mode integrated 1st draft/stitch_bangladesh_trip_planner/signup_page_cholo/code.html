@@ -235,57 +235,18 @@ I agree to the <a href="#" onclick="showTerms(); return false;" class="text-prim
             const newHashBuffer = newCombined.slice(32);
             
             // Constant-time comparison
-    function submitForm() {
-        const name = document.getElementById('fullname').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        // Basic validation
-        if (!name || !email || !username || !password) {
-            alert('Please fill in all fields');
-            return;
+            if (newHashBuffer.length !== storedHashBuffer.length) {
+                return false;
+            }
+            for (let i = 0; i < newHashBuffer.length; i++) {
+                if (newHashBuffer[i] !== storedHashBuffer[i]) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (error) {
+            return false;
         }
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            return;
-        }
-
-        // Create user data
-        const userData = {
-            id: Date.now().toString(),
-            name: name,
-            email: email,
-            username: username,
-            password: password,
-            createdAt: new Date().toISOString()
-        };
-
-        // Store in localStorage
-        const existingUsers = JSON.parse(localStorage.getItem('cholo_users') || '[]');
-        if (existingUsers.find(u => u.username === username || u.email === email)) {
-            alert('Username or email already exists');
-            return;
-        }
-
-        existingUsers.push(userData);
-        localStorage.setItem('cholo_users', JSON.stringify(existingUsers));
-        
-        alert('Account created successfully! Please login to continue.');
-        window.location.href = '../login_page_cholo_matched_1/code.html';
-    }
-
-    function showTerms() {
-        alert('Terms of Service\n\nBy using Cholo Travel, you agree to our terms of service and privacy policy.');
-    }
-
-    function showPrivacy() {
-        alert('Privacy Policy\n\nWe respect your privacy and protect your personal information.');
-    }
-
-    function showHelp() {
-        alert('Help\n\nFor support, contact our team at support@cholo.travel');
     }
 </script>
 </body></html>
