@@ -148,5 +148,13 @@
         localStorage.setItem('theme', 'light');
         window.location.href = '../login_page_cholo_matched_1/code.html';
     });
+
+    // Connect "Create Account" link
+    document.querySelector('a[href="#"]').addEventListener('click', (e) => {
+        if(e.target.textContent === 'Create Account') {
+            e.preventDefault();
+            window.location.href = '../signup_page_cholo_dark/code.html';
+        }
+    });
 </script>
 </body></html>
