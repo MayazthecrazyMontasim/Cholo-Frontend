@@ -179,6 +179,79 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
 
     const API_BASE_URL = "https://cholo-live-api-1.onrender.com";
 
+    // Secure password hashing using Web Crypto API
+    async function hashPassword(password, salt = null) {
+        if (!salt) {
+            salt = crypto.getRandomValues(new Uint8Array(32));
+        }
+        
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw',
+            data,
+            { name: 'PBKDF2' },
+            false,
+            ['deriveBits', 'deriveKey']
+        );
+        
+        const key = await crypto.subtle.deriveKey(
+            {
+                name: 'PBKDF2',
+                salt: salt,
+                iterations: 100000,
+                hash: 'SHA-256'
+            },
+            keyMaterial,
+            { name: 'AES-GCM', length: 256 },
+            true,
+            ['encrypt', 'decrypt']
+        );
+        
+        const exported = await crypto.subtle.exportKey('raw', key);
+        const hashBuffer = new Uint8Array(exported);
+        
+        // Combine salt and hash for storage
+        const combined = new Uint8Array(salt.length + hashBuffer.length);
+        combined.set(salt);
+        combined.set(hashBuffer, salt.length);
+        
+        return btoa(String.fromCharCode(...combined));
+    }
+
+    async function verifyPassword(password, storedHash) {
+        try {
+            const combined = new Uint8Array(
+                atob(storedHash).split('').map(char => char.charCodeAt(0))
+            );
+            
+            const salt = combined.slice(0, 32);
+            const storedHashBuffer = combined.slice(32);
+            
+            const newHash = await hashPassword(password, salt);
+            const newCombined = new Uint8Array(
+                atob(newHash).split('').map(char => char.charCodeAt(0))
+            );
+            const newHashBuffer = newCombined.slice(32);
+            
+            // Constant-time comparison
+            if (storedHashBuffer.length !== newHashBuffer.length) {
+                return false;
+            }
+            
+            for (let i = 0; i < storedHashBuffer.length; i++) {
+                if (storedHashBuffer[i] !== newHashBuffer[i]) {
+                    return false;
+                }
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Password verification error:', error);
+            return false;
+        }
+    }
+
     // Password visibility toggle
     document.querySelectorAll('button[type="button"]').forEach(button => {
         if (button.querySelector('span[data-icon="visibility"]')) {
@@ -260,13 +333,14 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
                 console.log('Backend API failed, using local storage fallback');
             }
 
-            // Fallback: Store user locally
+            // Fallback: Store user locally with secure password hashing
+            const hashedPassword = await hashPassword(password);
             const userData = {
                 id: 'user_' + Date.now(),
                 username: username,
                 email: email,
                 fullname: fullname,
-                password: btoa(password), // Basic encoding (not secure for production)
+                password: hashedPassword, // Secure PBKDF2 hash with salt
                 created_at: new Date().toISOString()
             };
 

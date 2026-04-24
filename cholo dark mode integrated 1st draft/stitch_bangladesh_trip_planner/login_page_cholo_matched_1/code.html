@@ -152,6 +152,61 @@
 
     const API_BASE_URL = "https://cholo-live-api-1.onrender.com";
 
+    // Secure password verification using Web Crypto API
+    async function verifyPassword(password, storedHash) {
+        try {
+            const combined = new Uint8Array(
+                atob(storedHash).split('').map(char => char.charCodeAt(0))
+            );
+            
+            const salt = combined.slice(0, 32);
+            const storedHashBuffer = combined.slice(32);
+            
+            // Re-hash the password with the same salt
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw',
+                data,
+                { name: 'PBKDF2' },
+                false,
+                ['deriveBits', 'deriveKey']
+            );
+            
+            const key = await crypto.subtle.deriveKey(
+                {
+                    name: 'PBKDF2',
+                    salt: salt,
+                    iterations: 100000,
+                    hash: 'SHA-256'
+                },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                true,
+                ['encrypt', 'decrypt']
+            );
+            
+            const exported = await crypto.subtle.exportKey('raw', key);
+            const hashBuffer = new Uint8Array(exported);
+            
+            // Constant-time comparison
+            if (storedHashBuffer.length !== hashBuffer.length) {
+                return false;
+            }
+            
+            for (let i = 0; i < storedHashBuffer.length; i++) {
+                if (storedHashBuffer[i] !== hashBuffer[i]) {
+                    return false;
+                }
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Password verification error:', error);
+            return false;
+        }
+    }
+
     document.querySelector('form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const username = document.getElementById('username').value;
@@ -191,11 +246,11 @@
                 console.log('Backend API failed, trying local storage');
             }
 
-            // Fallback: Check local storage
+            // Fallback: Check local storage with secure password verification
             const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
-            const user = users.find(u => u.username === username && atob(u.password) === password);
+            const user = users.find(u => u.username === username);
             
-            if (user) {
+            if (user && await verifyPassword(password, user.password)) {
                 // Create a fake token for local storage
                 const fakeToken = btoa(JSON.stringify({ username: user.username, id: user.id }));
                 localStorage.setItem('cholo_token', fakeToken);
