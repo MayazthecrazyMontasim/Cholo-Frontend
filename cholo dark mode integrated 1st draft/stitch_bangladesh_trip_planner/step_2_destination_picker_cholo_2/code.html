@@ -423,7 +423,9 @@
         }
 
         // Add click handlers to destination cards
-        const destinationCards = document.querySelectorAll('.cursor-pointer');
+        const destinationCards = document.querySelectorAll('[class*="rounded-3xl"]');
+        console.log('Found destination cards:', destinationCards.length);
+        
         destinationCards.forEach((card, index) => {
             const destinations = [
                 { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
@@ -436,17 +438,32 @@
                 { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
             ];
             
+            console.log(`Card ${index}:`, card.textContent);
+            
             if (destinations[index]) {
                 card.addEventListener('click', () => {
+                    console.log('Clicked destination:', destinations[index].name);
                     selectDestination(destinations[index], card);
                 });
             }
         });
 
-        // Add "Find Services" button handler
-        const findServicesBtn = document.querySelector('.group.active\\:scale-95');
+        // Add "Find Services" button handler - try multiple selectors
+        let findServicesBtn = document.querySelector('.group.active\\:scale-95');
+        if (!findServicesBtn) {
+            findServicesBtn = document.querySelector('button[class*="rounded-full"]');
+        }
+        if (!findServicesBtn) {
+            findServicesBtn = document.querySelector('button');
+        }
+        
+        console.log('Find Services button found:', !!findServicesBtn);
         if (findServicesBtn) {
-            findServicesBtn.addEventListener('click', goToNextStep);
+            findServicesBtn.addEventListener('click', (e) => {
+                console.log('Find Services button clicked!');
+                e.preventDefault();
+                goToNextStep();
+            });
         }
 
         // Add theme toggle handler
