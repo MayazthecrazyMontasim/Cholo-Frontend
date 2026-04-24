@@ -260,7 +260,7 @@
         });
 
         // Navigate to next step
-        window.location.href = '../step_2_destination_selection_cholo_1/code.html';
+        window.location.href = '../step_2_destination_picker_cholo_1/code.html';
     }
 
     // Theme switching
@@ -307,10 +307,13 @@
         document.querySelector('[data-icon="diamond"]').parentElement.addEventListener('click', () => selectTripStyle('luxury'));
 
         // Add form submission handler
-        document.querySelector('button[type="submit"]').addEventListener('click', (e) => {
-            e.preventDefault();
-            handleFormSubmit();
-        });
+        const submitButton = document.querySelector('button[type="button"]');
+        if (submitButton && submitButton.textContent.includes('Choose Destination')) {
+            submitButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleFormSubmit();
+            });
+        }
 
         // Add theme toggle handler
         const themeToggle = document.querySelector('[data-icon="dark_mode"]');
