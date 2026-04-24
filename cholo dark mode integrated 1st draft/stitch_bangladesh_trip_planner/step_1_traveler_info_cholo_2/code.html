@@ -179,4 +179,162 @@
 </div>
 </div>
 </main>
+<script>
+    // Check authentication on page load
+    function checkAuthentication() {
+        const token = localStorage.getItem('cholo_token');
+        if (!token) {
+            // Redirect to login if not authenticated
+            window.location.href = '../login_page_cholo_matched_2/code.html';
+            return false;
+        }
+        return true;
+    }
+
+    // Get current user data
+    function getCurrentUser() {
+        const currentUser = localStorage.getItem('current_user');
+        return currentUser ? JSON.parse(currentUser) : null;
+    }
+
+    // Update profile picture with user initial
+    function updateProfilePicture() {
+        const user = getCurrentUser();
+        if (user) {
+            const profileImg = document.querySelector('img[data-alt*="Close up portrait"]');
+            if (profileImg) {
+                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
+                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=1D9E75&color=ffffff&size=40&font-size=20`;
+            }
+        }
+    }
+
+    // Trip planning data management
+    function getTripData() {
+        const tripData = localStorage.getItem('cholo_trip_data');
+        return tripData ? JSON.parse(tripData) : {};
+    }
+
+    function saveTripData(data) {
+        const existingData = getTripData();
+        const updatedData = { ...existingData, ...data };
+        localStorage.setItem('cholo_trip_data', JSON.stringify(updatedData));
+        return updatedData;
+    }
+
+    // Trip style selection
+    let selectedTripStyle = 'mid-range';
+    function selectTripStyle(style) {
+        selectedTripStyle = style;
+        
+        // Update UI
+        const buttons = document.querySelectorAll('[data-icon="account_balance_wallet"], [data-icon="payments"], [data-icon="diamond"]').forEach(btn => {
+            btn.parentElement.classList.remove('bg-primary-container', 'dark:bg-primary/20', 'border-primary');
+            btn.parentElement.classList.add('bg-surface-container-low', 'dark:bg-dark-surface-container-high', 'border-transparent');
+            btn.parentElement.querySelector('span:last-child').classList.remove('text-primary');
+        });
+
+        // Highlight selected
+        const selectedButton = style === 'budget' ? 
+            document.querySelector('[data-icon="account_balance_wallet"]').parentElement :
+            style === 'mid-range' ? 
+            document.querySelector('[data-icon="payments"]').parentElement :
+            document.querySelector('[data-icon="diamond"]').parentElement;
+        
+        selectedButton.classList.remove('bg-surface-container-low', 'dark:bg-dark-surface-container-high', 'border-transparent');
+        selectedButton.classList.add('bg-primary-container', 'dark:bg-primary/20', 'border-primary');
+        selectedButton.querySelector('span:last-child').classList.add('text-primary');
+    }
+
+    // Form submission
+    function handleFormSubmit() {
+        const startCity = document.querySelector('select').value;
+        const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
+        const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
+
+        // Validation
+        if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
+            alert('Please fill in all fields with valid values');
+            return;
+        }
+
+        // Save trip data
+        const tripData = saveTripData({
+            step_1: {
+                start_city: startCity,
+                travelers: travelers,
+                duration: duration,
+                trip_style: selectedTripStyle,
+                timestamp: new Date().toISOString()
+            }
+        });
+
+        // Navigate to next step
+        window.location.href = '../step_2_destination_selection_cholo_2/code.html';
+    }
+
+    // Theme switching
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'light') {
+            window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+        } else {
+            // Already in dark mode
+            location.reload();
+        }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check authentication first
+        if (!checkAuthentication()) {
+            return;
+        }
+
+        // Update profile picture
+        updateProfilePicture();
+
+        // Load existing trip data if available
+        const tripData = getTripData();
+        if (tripData.step_1) {
+            // Pre-fill form with existing data
+            document.querySelector('select').value = tripData.step_1.start_city || 'Dhaka';
+            document.querySelector('input[type="number"]:first-of-type').value = tripData.step_1.travelers || 2;
+            document.querySelector('input[type="number"]:last-of-type').value = tripData.step_1.duration || 5;
+            
+            // Restore trip style selection
+            if (tripData.step_1.trip_style) {
+                selectTripStyle(tripData.step_1.trip_style);
+            }
+        }
+
+        // Add click handlers for trip style buttons
+        document.querySelector('[data-icon="account_balance_wallet"]').parentElement.addEventListener('click', () => selectTripStyle('budget'));
+        document.querySelector('[data-icon="payments"]').parentElement.addEventListener('click', () => selectTripStyle('mid-range'));
+        document.querySelector('[data-icon="diamond"]').parentElement.addEventListener('click', () => selectTripStyle('luxury'));
+
+        // Add form submission handler
+        document.querySelector('button[type="submit"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleFormSubmit();
+        });
+
+        // Add theme toggle handler
+        const themeToggle = document.querySelector('[data-icon="light_mode"]');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Add back button handler
+        const backButton = document.querySelector('[data-icon="arrow_back"]');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                window.location.href = '../dashboard_cholo_2/code.html';
+            });
+        }
+    });
+</script>
 </body></html>
