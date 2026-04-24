@@ -284,4 +284,191 @@
 </div>
 </div>
 </nav>
-</body></html>
+</body>
+<script>
+    // Check authentication on page load
+    function checkAuthentication() {
+        const token = localStorage.getItem('cholo_token');
+        if (!token) {
+            // Redirect to login if not authenticated
+            window.location.href = '../login_page_cholo_matched_1/code.html';
+            return false;
+        }
+        return true;
+    }
+
+    // Get current user data
+    function getCurrentUser() {
+        const currentUser = localStorage.getItem('current_user');
+        return currentUser ? JSON.parse(currentUser) : null;
+    }
+
+    // Update profile picture with user initial
+    function updateProfilePicture() {
+        const user = getCurrentUser();
+        if (user) {
+            const profileImg = document.querySelector('img[alt="User profile"]');
+            if (profileImg) {
+                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
+                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=00694c&color=ffffff&size=40&font-size=20`;
+            }
+        }
+    }
+
+    // Trip planning data management
+    function getTripData() {
+        const tripData = localStorage.getItem('cholo_trip_data');
+        return tripData ? JSON.parse(tripData) : {};
+    }
+
+    function saveTripData(data) {
+        const existingData = getTripData();
+        const updatedData = { ...existingData, ...data };
+        localStorage.setItem('cholo_trip_data', JSON.stringify(updatedData));
+        return updatedData;
+    }
+
+    // Destination selection
+    let selectedDestination = null;
+    function selectDestination(destinationData, cardElement) {
+        selectedDestination = destinationData;
+        
+        // Update UI - remove previous selection
+        document.querySelectorAll('.border-primary').forEach(card => {
+            card.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
+            card.classList.add('border-transparent');
+            // Remove checkmark
+            const checkmark = card.querySelector('.absolute .bg-primary');
+            if (checkmark) {
+                checkmark.parentElement.remove();
+            }
+        });
+        
+        // Add selection to clicked card
+        cardElement.classList.remove('border-transparent');
+        cardElement.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
+        
+        // Add checkmark
+        if (!cardElement.querySelector('.absolute .bg-primary')) {
+            const checkmark = document.createElement('div');
+            checkmark.className = 'absolute top-4 right-4';
+            checkmark.innerHTML = `
+                <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+                </div>
+            `;
+            cardElement.appendChild(checkmark);
+        }
+    }
+
+    // Navigate to next step
+    function goToNextStep() {
+        if (!selectedDestination) {
+            alert('Please select a destination first!');
+            return;
+        }
+
+        // Save destination data
+        const tripData = saveTripData({
+            step_2: {
+                destination: selectedDestination,
+                timestamp: new Date().toISOString()
+            }
+        });
+
+        // Check if next step exists, otherwise go to dashboard
+        window.location.href = '../dashboard_cholo_1/code.html';
+    }
+
+    // Theme switching
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+            window.location.href = '../step_2_destination_picker_cholo_2/code.html';
+        } else {
+            // Already in light mode
+            location.reload();
+        }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check authentication first
+        if (!checkAuthentication()) {
+            return;
+        }
+
+        // Update profile picture
+        updateProfilePicture();
+
+        // Load existing trip data if available
+        const tripData = getTripData();
+        if (tripData.step_2 && tripData.step_2.destination) {
+            selectedDestination = tripData.step_2.destination;
+            // Restore selection UI
+            const destinationCards = document.querySelectorAll('.cursor-pointer');
+            destinationCards.forEach(card => {
+                const cardTitle = card.querySelector('h3')?.textContent;
+                if (cardTitle === selectedDestination.name) {
+                    selectDestination(selectedDestination, card);
+                }
+            });
+        }
+
+        // Add click handlers to destination cards
+        const destinationCards = document.querySelectorAll('.cursor-pointer');
+        destinationCards.forEach((card, index) => {
+            const destinations = [
+                { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
+                { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
+                { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
+                { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
+                { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
+                { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
+                { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
+                { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
+            ];
+            
+            if (destinations[index]) {
+                card.addEventListener('click', () => {
+                    selectDestination(destinations[index], card);
+                });
+            }
+        });
+
+        // Add "Find Services" button handler
+        const findServicesBtn = document.querySelector('.group.active\\:scale-95');
+        if (findServicesBtn) {
+            findServicesBtn.addEventListener('click', goToNextStep);
+        }
+
+        // Add theme toggle handler
+        const themeToggle = document.querySelector('.text-primary[data-icon="dark_mode"]');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Add back button handler
+        const backButton = document.querySelector('.text-emerald-800[data-icon="arrow_back"]');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+            });
+        }
+
+        // Add bottom navigation handlers
+        const navItems = document.querySelectorAll('.md\\:hidden .flex-col');
+        navItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const routes = ['../dashboard_cholo_1/code.html', '#', '#', '#'];
+                if (index === 0 && routes[index] !== '#') {
+                    window.location.href = routes[index];
+                }
+            });
+        });
+    });
+</script>
+</html>
