@@ -155,24 +155,178 @@
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-t border-outline-variant/30 shadow-lg rounded-t-3xl flex justify-around items-center px-4 py-3 pb-safe">
 <!-- Explore (Active) -->
-<a class="flex flex-col items-center justify-center text-primary bg-primary-container/40 rounded-2xl px-5 py-2 active:scale-90 transition-all" href="#">
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/40 rounded-2xl px-5 py-2 active:scale-90 transition-all" href="#" onclick="handleNavClick('explore')">
 <span class="material-symbols-outlined" data-icon="explore" style="font-variation-settings: 'FILL' 1;">explore</span>
 <span class="font-body text-[11px] font-bold mt-1">Explore</span>
 </a>
 <!-- Planner -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#" onclick="handleNavClick('planner')">
 <span class="material-symbols-outlined" data-icon="event_note">event_note</span>
 <span class="font-body text-[11px] font-medium mt-1">Planner</span>
 </a>
 <!-- Saved -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#" onclick="handleNavClick('saved')">
 <span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
 <span class="font-body text-[11px] font-medium mt-1">Saved</span>
 </a>
 <!-- Profile -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#" onclick="handleNavClick('profile')">
 <span class="material-symbols-outlined" data-icon="person">person</span>
 <span class="font-body text-[11px] font-medium mt-1">Profile</span>
 </a>
 </nav>
-</body></html>
+</body>
+<script>
+    // Check authentication on page load
+    function checkAuthentication() {
+        const token = localStorage.getItem('cholo_token');
+        const currentUser = localStorage.getItem('current_user');
+        
+        if (!token) {
+            // Redirect to login if not authenticated
+            window.location.href = '../login_page_cholo_matched_1/code.html';
+            return false;
+        }
+        
+        return true;
+    }
+
+    // Get current user data
+    function getCurrentUser() {
+        const currentUser = localStorage.getItem('current_user');
+        return currentUser ? JSON.parse(currentUser) : null;
+    }
+
+    // Update UI with user data
+    function updateUIWithUserData() {
+        const user = getCurrentUser();
+        if (user) {
+            // Update welcome message
+            const welcomeHeader = document.querySelector('h2');
+            if (welcomeHeader) {
+                welcomeHeader.textContent = `Hello, ${user.fullname || user.username}!`;
+            }
+            
+            // Update profile picture (use a placeholder with user initial)
+            const profileImg = document.querySelector('img[data-alt*="portrait"]');
+            if (profileImg) {
+                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
+                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=1D9E75&color=ffffff&size=40&font-size=20`;
+            }
+        }
+    }
+
+    // Handle navigation clicks
+    function handleNavClick(section) {
+        switch(section) {
+            case 'explore':
+                // Already on explore, do nothing
+                break;
+            case 'planner':
+                window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+                break;
+            case 'saved':
+                alert('Saved trips feature coming soon!');
+                break;
+            case 'profile':
+                showProfileMenu();
+                break;
+        }
+    }
+
+    // Handle feature card clicks
+    function handleFeatureClick(feature) {
+        switch(feature) {
+            case 'plan':
+                window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+                break;
+            case 'budget':
+                window.location.href = '../budget_splitter_unified_ui/code.html';
+                break;
+            case 'destinations':
+                window.location.href = '../travel_destinations_64_districts/code.html';
+                break;
+            case 'travis':
+                window.location.href = '../travis_ai_unified_experience/code.html';
+                break;
+        }
+    }
+
+    // Show profile menu
+    function showProfileMenu() {
+        const user = getCurrentUser();
+        const actions = [
+            `Name: ${user?.fullname || user?.username || 'N/A'}`,
+            `Email: ${user?.email || 'N/A'}`,
+            '---',
+            'Settings',
+            'Logout'
+        ];
+        
+        const action = prompt(`Profile\n\n${actions.join('\n')}\n\nEnter number to action:\n1. Settings\n2. Logout\n\nOr press Cancel to close`);
+        
+        if (action === '2') {
+            logout();
+        } else if (action === '1') {
+            alert('Settings feature coming soon!');
+        }
+    }
+
+    // Logout function
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('cholo_token');
+            localStorage.removeItem('current_user');
+            window.location.href = '../login_page_cholo_matched_1/code.html';
+        }
+    }
+
+    // Theme switching
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+            window.location.href = '../dashboard_cholo_2/code.html';
+        } else {
+            // Already in light mode
+            location.reload();
+        }
+    }
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check authentication first
+        if (!checkAuthentication()) {
+            return;
+        }
+        
+        // Update UI with user data
+        updateUIWithUserData();
+        
+        // Add click handlers to feature cards
+        const featureCards = document.querySelectorAll('.group');
+        featureCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                const features = ['plan', 'budget', 'destinations', 'travis'];
+                handleFeatureClick(features[index]);
+            });
+        });
+        
+        // Add theme toggle handler
+        const themeToggle = document.querySelector('button[data-icon="dark_mode"], button[data-icon="light_mode"]');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        
+        // Add notifications handler
+        const notificationsBtn = document.querySelector('button[data-icon="notifications"]');
+        if (notificationsBtn) {
+            notificationsBtn.addEventListener('click', () => {
+                alert('No new notifications');
+            });
+        }
+    });
+</script>
+</html>
