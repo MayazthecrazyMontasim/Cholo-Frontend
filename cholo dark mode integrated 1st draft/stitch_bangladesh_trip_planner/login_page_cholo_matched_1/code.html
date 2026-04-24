@@ -163,30 +163,51 @@
             submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span><span>Logging in...</span>';
             submitBtn.disabled = true;
 
-            // FastAPI OAuth2PasswordRequestForm requires URL encoded form data
-            const formData = new URLSearchParams();
-            formData.append('username', username);
-            formData.append('password', password);
+            // Try backend API first
+            try {
+                // FastAPI OAuth2PasswordRequestForm requires URL encoded form data
+                const formData = new URLSearchParams();
+                formData.append('username', username);
+                formData.append('password', password);
 
-            const response = await fetch(`${API_BASE_URL}/auth/token`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData
-            });
+                const response = await fetch(`${API_BASE_URL}/auth/token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || 'Login failed. Check your credentials.');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Save the JWT token
+                    localStorage.setItem('cholo_token', data.access_token);
+                    
+                    // Redirect to dashboard
+                    window.location.href = '../dashboard_cholo_1/code.html';
+                    return;
+                }
+            } catch (apiError) {
+                console.log('Backend API failed, trying local storage');
             }
 
-            const data = await response.json();
-            // Save the JWT token
-            localStorage.setItem('cholo_token', data.access_token);
+            // Fallback: Check local storage
+            const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+            const user = users.find(u => u.username === username && atob(u.password) === password);
             
-            // Redirect to dashboard
-            window.location.href = '../dashboard_cholo_1/code.html';
+            if (user) {
+                // Create a fake token for local storage
+                const fakeToken = btoa(JSON.stringify({ username: user.username, id: user.id }));
+                localStorage.setItem('cholo_token', fakeToken);
+                localStorage.setItem('current_user', JSON.stringify(user));
+                
+                // Redirect to dashboard
+                window.location.href = '../dashboard_cholo_1/code.html';
+                return;
+            }
+
+            throw new Error('Invalid username or password');
+
         } catch (error) {
             alert(error.message);
         } finally {

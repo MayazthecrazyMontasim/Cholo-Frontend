@@ -156,5 +156,77 @@
             window.location.href = '../signup_page_cholo_dark/code.html';
         }
     });
+
+    const API_BASE_URL = "https://cholo-live-api-1.onrender.com";
+
+    document.querySelector('form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        try {
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span><span>Logging in...</span>';
+            submitBtn.disabled = true;
+
+            // Try backend API first
+            try {
+                // FastAPI OAuth2PasswordRequestForm requires URL encoded form data
+                const formData = new URLSearchParams();
+                formData.append('username', email);
+                formData.append('password', password);
+
+                const response = await fetch(`${API_BASE_URL}/auth/token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Save the JWT token
+                    localStorage.setItem('cholo_token', data.access_token);
+                    
+                    // Redirect to dashboard
+                    window.location.href = '../dashboard_cholo_1/code.html';
+                    return;
+                }
+            } catch (apiError) {
+                console.log('Backend API failed, trying local storage');
+            }
+
+            // Fallback: Check local storage
+            const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+            const user = users.find(u => u.email === email && atob(u.password) === password);
+            
+            if (user) {
+                // Create a fake token for local storage
+                const fakeToken = btoa(JSON.stringify({ username: user.username, id: user.id }));
+                localStorage.setItem('cholo_token', fakeToken);
+                localStorage.setItem('current_user', JSON.stringify(user));
+                
+                // Redirect to dashboard
+                window.location.href = '../dashboard_cholo_1/code.html';
+                return;
+            }
+
+            throw new Error('Invalid email or password');
+
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Handle Start as Guest button
+    document.querySelector('button.bg-surface').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '../dashboard_cholo_1/code.html';
+    });
 </script>
 </body></html>
