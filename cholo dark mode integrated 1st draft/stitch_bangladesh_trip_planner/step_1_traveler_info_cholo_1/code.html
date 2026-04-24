@@ -61,10 +61,10 @@
 <header class="sticky top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
 <div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
 <div class="flex items-center gap-4">
-<button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95" data-icon="arrow_back">arrow_back</button>
+<button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95" data-icon="arrow_back" onclick="goBack()">arrow_back</button>
 <span class="text-xl font-extrabold tracking-tighter text-primary">Cholo</span>
 </div>
-<div class="w-10 h-10 rounded-full bg-primary-container border-2 border-white shadow-sm overflow-hidden"><button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95 mr-2" data-icon="dark_mode">dark_mode</button>
+<div class="w-10 h-10 rounded-full bg-primary-container border-2 border-white shadow-sm overflow-hidden"><button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95 mr-2" data-icon="dark_mode" onclick="toggleTheme()">dark_mode</button>
 <img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling professional person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ"/>
 </div>
 </div>
@@ -122,15 +122,15 @@
 <div class="space-y-3">
 <label class="block text-xs font-extrabold tracking-wider text-on-surface-variant uppercase">Trip Style</label>
 <div class="grid grid-cols-3 gap-3">
-<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button" onclick="selectTripStyle('budget', this)">
 <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="account_balance_wallet">account_balance_wallet</span>
 <span class="text-[11px] font-bold">Budget</span>
 </button>
-<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-primary-container border-2 border-primary transition-all shadow-sm active:scale-95" type="button">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-primary-container border-2 border-primary transition-all shadow-sm active:scale-95" type="button" onclick="selectTripStyle('mid-range', this)">
 <span class="material-symbols-outlined text-primary" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
 <span class="text-[11px] font-bold text-primary">Mid-range</span>
 </button>
-<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button" onclick="selectTripStyle('luxury', this)">
 <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="diamond">diamond</span>
 <span class="text-[11px] font-bold">Luxury</span>
 </button>
@@ -138,7 +138,7 @@
 </div>
 <!-- CTA -->
 <div class="pt-4">
-<button type="button" class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center justify-center gap-3" onclick="window.location.href='../step_2_destination_picker_cholo_1/code.html'">
+<button type="button" class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center justify-center gap-3" onclick="submitForm()">
                         Choose Destination
                         <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </button>
@@ -170,89 +170,66 @@
 </div>
 </main>
 <script>
-    // Simple initialization - no authentication checks for testing
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Traveler Info Page - Initializing...');
-        
-        // Trip style selection
-        let selectedTripStyle = 'mid-range';
-        
-        // Add trip style handlers
+    // Simplified trip style selection with inline handlers
+    function selectTripStyle(style, element) {
+        // Update UI
         document.querySelectorAll('.grid button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                selectedTripStyle = this.getAttribute('data-style') || 'mid-range';
-                console.log('Trip style selected:', selectedTripStyle);
-                
-                // Update UI
-                document.querySelectorAll('.grid button').forEach(b => {
-                    b.classList.remove('bg-primary-container', 'border-primary');
-                    b.classList.add('bg-surface-container-low', 'border-transparent');
-                });
-                this.classList.remove('bg-surface-container-low', 'border-transparent');
-                this.classList.add('bg-primary-container', 'border-primary');
-            });
+            btn.classList.remove('bg-primary-container', 'border-primary');
+            btn.classList.add('bg-surface-container-low', 'border-transparent');
         });
-
-        // Add form submit handler
-        const submitBtn = document.querySelector('button[type="button"]');
-        if (submitBtn) {
-            submitBtn.addEventListener('click', function() {
-                console.log('Form submit clicked');
-                
-                const startCity = document.querySelector('select').value;
-                const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
-                const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
-
-                // Validation
-                if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
-                    alert('Please fill in all fields with valid values');
-                    return;
-                }
-
-                // Save trip data
-                const tripData = {
-                    step_1: {
-                        start_city: startCity,
-                        travelers: travelers,
-                        duration: duration,
-                        trip_style: selectedTripStyle,
-                        timestamp: new Date().toISOString()
-                    }
-                };
-                
-                localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-                console.log('Trip data saved:', tripData);
-
-                // Navigate to next step
-                window.location.href = '../step_2_destination_picker_cholo_1/code.html';
-            });
-        }
-
-        // Add theme toggle handler
-        const themeToggle = document.querySelector('[data-icon="dark_mode"]');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = localStorage.getItem('theme') || 'light';
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                localStorage.setItem('theme', newTheme);
-                
-                if (newTheme === 'dark') {
-                    window.location.href = '../step_1_traveler_info_cholo_2/code.html';
-                } else {
-                    location.reload();
-                }
-            });
-        }
-
-        // Add back button handler
-        const backButton = document.querySelector('[data-icon="arrow_back"]');
-        if (backButton) {
-            backButton.addEventListener('click', function() {
-                window.location.href = '../dashboard_cholo_1/code.html';
-            });
-        }
+        element.classList.remove('bg-surface-container-low', 'border-transparent');
+        element.classList.add('bg-primary-container', 'border-primary');
         
-        console.log('Traveler Info Page - Initialized successfully');
-    });
+        // Save selection
+        localStorage.setItem('selected_trip_style', style);
+    }
+
+    // Simplified form submission
+    function submitForm() {
+        const startCity = document.querySelector('select').value;
+        const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
+        const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
+        const tripStyle = localStorage.getItem('selected_trip_style') || 'mid-range';
+
+        // Basic validation
+        if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
+            alert('Please fill in all fields with valid values');
+            return;
+        }
+
+        // Save trip data
+        const tripData = {
+            step_1: {
+                start_city: startCity,
+                travelers: travelers,
+                duration: duration,
+                trip_style: tripStyle,
+                timestamp: new Date().toISOString()
+            }
+        };
+        
+        localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+
+        // Navigate to next step
+        window.location.href = '../step_2_destination_picker_cholo_1/code.html';
+    }
+
+    // Theme switching
+    function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+            window.location.href = '../step_1_traveler_info_cholo_2/code.html';
+        } else {
+            location.reload();
+        }
+    }
+
+    // Back navigation
+    function goBack() {
+        window.location.href = '../dashboard_cholo_1/code.html';
+    }
 </script>
 </body></html>
