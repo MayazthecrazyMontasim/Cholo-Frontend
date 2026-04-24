@@ -153,42 +153,8 @@
 </div>
 <!-- Destination Selection Grid (3 columns as per RAD) -->
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
-<!-- Destination Card: Selected -->
-<div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-primary shadow-sm group cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[0];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Cox's Bazar -->
+<div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent shadow-sm group cursor-pointer" onclick="selectDestination('Cox\'s Bazar', 'Coastal Region', '🏖️', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-primary-container/10 flex items-center justify-center text-2xl">
                     🏖️
@@ -204,42 +170,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[1];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Sundarbans -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sundarbans', 'Mangrove Forest', '🐅', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🐅
@@ -250,42 +182,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[2];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Sylhet -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sylhet', 'Tea Estates', '🍵', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🍵
@@ -296,42 +194,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[3];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Bandarban -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Bandarban', 'Cloudy Peaks', '⛰️', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     ⛰️
@@ -342,42 +206,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[4];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Rangamati -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Rangamati', 'Hill Tracts', '🛶', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🛶
@@ -388,42 +218,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[5];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Sreemangal -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sreemangal', 'Rainforest', '🍃', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🍃
@@ -434,42 +230,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[6];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Saint Martin -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Saint Martin', 'Coral Island', '🏝️', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🏝️
@@ -480,42 +242,8 @@
 </div>
 </div>
 </div>
-<!-- Destination Card -->
-<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="
-  const destinations = [
-    {name: \"Cox's Bazar\", type: 'Coastal Region', emoji: '🏖️'},
-    {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-    {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-    {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-    {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-    {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-    {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-    {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-  ];
-  const dest = destinations[7];
-  let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
-  const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
-  if (existingIndex > -1) {
-    selectedDestinations.splice(existingIndex, 1);
-    this.classList.remove('border-primary');
-    this.classList.add('border-transparent');
-    const checkmark = this.querySelector('.destination-checkmark');
-    if (checkmark) checkmark.remove();
-  } else {
-    selectedDestinations.push(dest);
-    this.classList.remove('border-transparent');
-    this.classList.add('border-primary');
-    if (!this.querySelector('.destination-checkmark')) {
-      const checkmark = document.createElement('div');
-      checkmark.className = 'destination-checkmark absolute top-4 right-4';
-      checkmark.innerHTML = '<div class=\"w-5 h-5 rounded-full bg-primary flex items-center justify-center\"><span class=\"material-symbols-outlined text-[12px] text-on-primary\" style=\"font-variation-settings: \\\"FILL\\\" 1;\">check</span></div>';
-      this.appendChild(checkmark);
-    }
-  }
-  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
-  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
-  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
-">
+<!-- Destination Card: Kuakata -->
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Kuakata', 'Daughter of Ocean', '🌅', this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🌅
@@ -568,41 +296,29 @@
 </nav>
 </body>
 <script>
-    // Simplified destination selection
-    function selectDestination(destinationName, cardElement) {
-        const destinations = [
-            {name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️'},
-            {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
-            {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
-            {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
-            {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
-            {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
-            {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
-            {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
-        ];
-
-        const dest = destinations.find(d => d.name === destinationName);
+    // Simplified destination selection with inline handlers
+    function selectDestination(destName, destType, destEmoji, element) {
         let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
         
-        const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
+        const existingIndex = selectedDestinations.findIndex(d => d.name === destName);
         
         if (existingIndex > -1) {
             // Deselect
             selectedDestinations.splice(existingIndex, 1);
-            cardElement.classList.remove('border-primary');
-            cardElement.classList.add('border-transparent');
-            const checkmark = cardElement.querySelector('.destination-checkmark');
+            element.classList.remove('border-primary');
+            element.classList.add('border-transparent');
+            const checkmark = element.querySelector('.destination-checkmark');
             if (checkmark) checkmark.remove();
         } else {
             // Select
-            selectedDestinations.push(dest);
-            cardElement.classList.remove('border-transparent');
-            cardElement.classList.add('border-primary');
-            if (!cardElement.querySelector('.destination-checkmark')) {
+            selectedDestinations.push({name: destName, type: destType, emoji: destEmoji});
+            element.classList.remove('border-transparent');
+            element.classList.add('border-primary');
+            if (!element.querySelector('.destination-checkmark')) {
                 const checkmark = document.createElement('div');
                 checkmark.className = 'destination-checkmark absolute top-4 right-4';
                 checkmark.innerHTML = '<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: \'FILL\' 1;">check</span></div>';
-                cardElement.appendChild(checkmark);
+                element.appendChild(checkmark);
             }
         }
 
@@ -641,65 +357,22 @@
     function goBack() {
         window.location.href = '../step_1_traveler_info_cholo_1/code.html';
     }
-        
-        cards.forEach((card, index) => {
-            if (destinations[index]) {
-                card.classList.add('destination-card');
-                console.log(`Setting up card ${index}: ${destinations[index].name}`);
-                
-                // Add click handler
-                card.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    console.log('Clicked destination:', destinations[index].name);
-                    selectDestination(destinations[index], card);
-                });
 
-                // Restore previous selections
-                if (selectedDestinations.some(dest => dest.name === destinations[index].name)) {
-                    console.log(`Restoring selection for: ${destinations[index].name}`);
-                    selectDestination(destinations[index], card);
-                }
-            }
-        });
-
-        // Add Find Services button handler
-        let findServicesBtn = document.querySelector('button[class*="rounded-full"]');
-        if (!findServicesBtn) {
-            findServicesBtn = document.querySelector('button');
+    // JavaScript execution test
+    function testJavaScript() {
+        try {
+            const testResult = 'Destination Picker JavaScript is working! ' + new Date().toISOString();
+            console.log(testResult);
+            alert(testResult);
+            return true;
+        } catch (error) {
+            console.error('JavaScript test failed:', error);
+            alert('JavaScript test failed: ' + error.message);
+            return false;
         }
-        console.log('Find Services button found:', !!findServicesBtn);
-        
-        if (findServicesBtn) {
-            findServicesBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Find Services button clicked!');
-                goToNextStep();
-            });
-        }
-
-        // Add theme toggle handler
-        const themeToggle = document.querySelector('button[data-icon="dark_mode"]');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', toggleTheme);
-        }
-
-        // Add back button handler
-        const backButton = document.querySelector('button[data-icon="arrow_back"]');
-        if (backButton) {
-            backButton.addEventListener('click', () => {
-                window.location.href = '../step_1_traveler_info_cholo_1/code.html';
-            });
-        }
-
-        // Add bottom navigation handlers
-        const navItems = document.querySelectorAll('.md\\:hidden .flex-col');
-        navItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                if (index === 0) {
-                    window.location.href = '../dashboard_cholo_1/code.html';
-                }
-            });
-        });
-    });
+    }
+    
+    // Auto-test JavaScript on page load
+    setTimeout(testJavaScript, 1000);
 </script>
 </html>
