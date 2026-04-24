@@ -170,171 +170,89 @@
 </div>
 </main>
 <script>
-    // Check authentication on page load
-    function checkAuthentication() {
-        const token = localStorage.getItem('cholo_token');
-        // Allow guest access during testing phase
-        if (!token) {
-            console.log('Guest access enabled - no authentication token found');
-            // Create a temporary guest token for testing
-            localStorage.setItem('cholo_token', 'guest_testing_token');
-            localStorage.setItem('cholo_user', JSON.stringify({
-                name: 'Guest User',
-                email: 'guest@test.com',
-                picture: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ'
-            }));
-        }
-        return true;
-    }
-
-    // Get current user data
-    function getCurrentUser() {
-        const currentUser = localStorage.getItem('current_user');
-        return currentUser ? JSON.parse(currentUser) : null;
-    }
-
-    // Update profile picture with user initial
-    function updateProfilePicture() {
-        const user = getCurrentUser();
-        if (user) {
-            const profileImg = document.querySelector('img[data-alt*="Close up portrait"]');
-            if (profileImg) {
-                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
-                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=1D9E75&color=ffffff&size=40&font-size=20`;
-            }
-        }
-    }
-
-    // Trip planning data management
-    function getTripData() {
-        const tripData = localStorage.getItem('cholo_trip_data');
-        return tripData ? JSON.parse(tripData) : {};
-    }
-
-    function saveTripData(data) {
-        const existingData = getTripData();
-        const updatedData = { ...existingData, ...data };
-        localStorage.setItem('cholo_trip_data', JSON.stringify(updatedData));
-        return updatedData;
-    }
-
-    // Trip style selection
-    let selectedTripStyle = 'mid-range';
-    function selectTripStyle(style) {
-        selectedTripStyle = style;
-        
-        // Update UI
-        const buttons = document.querySelectorAll('[data-icon="account_balance_wallet"], [data-icon="payments"], [data-icon="diamond"]').forEach(btn => {
-            btn.parentElement.classList.remove('bg-primary-container', 'border-primary');
-            btn.parentElement.classList.add('bg-surface-container-low', 'border-transparent');
-            btn.parentElement.querySelector('span:last-child').classList.remove('text-primary');
-        });
-
-        // Highlight selected
-        const selectedButton = style === 'budget' ? 
-            document.querySelector('[data-icon="account_balance_wallet"]').parentElement :
-            style === 'mid-range' ? 
-            document.querySelector('[data-icon="payments"]').parentElement :
-            document.querySelector('[data-icon="diamond"]').parentElement;
-        
-        selectedButton.classList.remove('bg-surface-container-low', 'border-transparent');
-        selectedButton.classList.add('bg-primary-container', 'border-primary');
-        selectedButton.querySelector('span:last-child').classList.add('text-primary');
-    }
-
-    // Form submission
-    function handleFormSubmit() {
-        const startCity = document.querySelector('select').value;
-        const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
-        const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
-
-        // Validation
-        if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
-            alert('Please fill in all fields with valid values');
-            return;
-        }
-
-        // Save trip data
-        const tripData = saveTripData({
-            step_1: {
-                start_city: startCity,
-                travelers: travelers,
-                duration: duration,
-                trip_style: selectedTripStyle,
-                timestamp: new Date().toISOString()
-            }
-        });
-
-        // Navigate to next step
-        window.location.href = '../step_2_destination_picker_cholo_1/code.html';
-    }
-
-    // Theme switching
-    function toggleTheme() {
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        localStorage.setItem('theme', newTheme);
-        
-        if (newTheme === 'dark') {
-            window.location.href = '../step_1_traveler_info_cholo_2/code.html';
-        } else {
-            // Already in light mode
-            location.reload();
-        }
-    }
-
-    // Initialize page
+    // Simple initialization - no authentication checks for testing
     document.addEventListener('DOMContentLoaded', function() {
-        // Check authentication first
-        if (!checkAuthentication()) {
-            return;
-        }
-
-        // Update profile picture
-        updateProfilePicture();
-
-        // Load existing trip data if available
-        const tripData = getTripData();
-        if (tripData.step_1) {
-            // Pre-fill form with existing data
-            document.querySelector('select').value = tripData.step_1.start_city || 'Dhaka';
-            document.querySelector('input[type="number"]:first-of-type').value = tripData.step_1.travelers || 2;
-            document.querySelector('input[type="number"]:last-of-type').value = tripData.step_1.duration || 5;
-            
-            // Restore trip style selection
-            if (tripData.step_1.trip_style) {
-                selectTripStyle(tripData.step_1.trip_style);
-            }
-        }
-
-        // Add click handlers for trip style buttons
-        document.querySelector('[data-icon="account_balance_wallet"]').parentElement.addEventListener('click', () => selectTripStyle('budget'));
-        document.querySelector('[data-icon="payments"]').parentElement.addEventListener('click', () => selectTripStyle('mid-range'));
-        document.querySelector('[data-icon="diamond"]').parentElement.addEventListener('click', () => selectTripStyle('luxury'));
-
-        // Add form submission handler
-        const submitButton = document.querySelector('button[type="button"]');
+        console.log('Traveler Info Page - Initializing...');
         
-        if (submitButton) {
-            submitButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleFormSubmit();
+        // Trip style selection
+        let selectedTripStyle = 'mid-range';
+        
+        // Add trip style handlers
+        document.querySelectorAll('.grid button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                selectedTripStyle = this.getAttribute('data-style') || 'mid-range';
+                console.log('Trip style selected:', selectedTripStyle);
+                
+                // Update UI
+                document.querySelectorAll('.grid button').forEach(b => {
+                    b.classList.remove('bg-primary-container', 'border-primary');
+                    b.classList.add('bg-surface-container-low', 'border-transparent');
+                });
+                this.classList.remove('bg-surface-container-low', 'border-transparent');
+                this.classList.add('bg-primary-container', 'border-primary');
+            });
+        });
+
+        // Add form submit handler
+        const submitBtn = document.querySelector('button[type="button"]');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function() {
+                console.log('Form submit clicked');
+                
+                const startCity = document.querySelector('select').value;
+                const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
+                const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
+
+                // Validation
+                if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
+                    alert('Please fill in all fields with valid values');
+                    return;
+                }
+
+                // Save trip data
+                const tripData = {
+                    step_1: {
+                        start_city: startCity,
+                        travelers: travelers,
+                        duration: duration,
+                        trip_style: selectedTripStyle,
+                        timestamp: new Date().toISOString()
+                    }
+                };
+                
+                localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+                console.log('Trip data saved:', tripData);
+
+                // Navigate to next step
+                window.location.href = '../step_2_destination_picker_cholo_1/code.html';
             });
         }
 
         // Add theme toggle handler
         const themeToggle = document.querySelector('[data-icon="dark_mode"]');
         if (themeToggle) {
-            themeToggle.addEventListener('click', toggleTheme);
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                localStorage.setItem('theme', newTheme);
+                
+                if (newTheme === 'dark') {
+                    window.location.href = '../step_1_traveler_info_cholo_2/code.html';
+                } else {
+                    location.reload();
+                }
+            });
         }
 
         // Add back button handler
         const backButton = document.querySelector('[data-icon="arrow_back"]');
         if (backButton) {
-            backButton.addEventListener('click', () => {
+            backButton.addEventListener('click', function() {
                 window.location.href = '../dashboard_cholo_1/code.html';
             });
         }
+        
+        console.log('Traveler Info Page - Initialized successfully');
     });
 </script>
 </body></html>
