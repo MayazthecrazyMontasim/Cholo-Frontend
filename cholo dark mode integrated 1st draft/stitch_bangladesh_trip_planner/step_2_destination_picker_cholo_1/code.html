@@ -568,127 +568,59 @@
 </nav>
 </body>
 <script>
-    // Check authentication on page load
-    function checkAuthentication() {
-        const token = localStorage.getItem('cholo_token');
-        // Allow guest access during testing phase
-        if (!token) {
-            console.log('Guest access enabled - no authentication token found');
-            // Create a temporary guest token for testing
-            localStorage.setItem('cholo_token', 'guest_testing_token');
-            localStorage.setItem('cholo_user', JSON.stringify({
-                name: 'Guest User',
-                email: 'guest@test.com',
-                picture: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ'
-            }));
-        }
-        return true;
-    }
-
-    // Get current user data
-    function getCurrentUser() {
-        const currentUser = localStorage.getItem('current_user');
-        return currentUser ? JSON.parse(currentUser) : null;
-    }
-
-    // Update profile picture with user initial
-    function updateProfilePicture() {
-        const user = getCurrentUser();
-        if (user) {
-            const profileImg = document.querySelector('img[alt="User profile"]');
-            if (profileImg) {
-                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
-                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=00694c&color=ffffff&size=40&font-size=20`;
-            }
-        }
-    }
-
-    // Trip planning data management
-    function getTripData() {
-        const tripData = localStorage.getItem('cholo_trip_data');
-        return tripData ? JSON.parse(tripData) : {};
-    }
-
-    function saveTripData(data) {
-        const existingData = getTripData();
-        const updatedData = { ...existingData, ...data };
-        localStorage.setItem('cholo_trip_data', JSON.stringify(updatedData));
-        return updatedData;
-    }
-
-    // Destination selection (multiple destinations)
-    let selectedDestinations = [];
-    function selectDestination(destinationData, cardElement) {
-        const isSelected = selectedDestinations.some(dest => dest.name === destinationData.name);
-        
-        if (isSelected) {
-            // Remove from selection
-            selectedDestinations = selectedDestinations.filter(dest => dest.name !== destinationData.name);
-            
-            // Update UI - remove selection styling
-            cardElement.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
-            cardElement.classList.add('border-transparent');
-            
-            // Remove checkmark
-            const existingCheckmark = cardElement.querySelector('.destination-checkmark');
-            if (existingCheckmark) {
-                existingCheckmark.remove();
-            }
-        } else {
-            // Add to selection
-            selectedDestinations.push(destinationData);
-            
-            // Update UI - add selection styling
-            cardElement.classList.remove('border-transparent');
-            cardElement.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
-            
-            // Add checkmark
-            const checkmark = document.createElement('div');
-            checkmark.className = 'destination-checkmark absolute top-4 right-4';
-            checkmark.innerHTML = `
-                <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
-                </div>
-            `;
-            cardElement.appendChild(checkmark);
-        }
-    }
-
-    function selectDestinationInline(index, cardElement) {
+    // Simplified destination selection
+    function selectDestination(destinationName, cardElement) {
         const destinations = [
-            { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
-            { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
-            { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
-            { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
-            { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
-            { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
-            { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
-            { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
+            {name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️'},
+            {name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅'},
+            {name: 'Sylhet', type: 'Tea Estates', emoji: '🍵'},
+            {name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️'},
+            {name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶'},
+            {name: 'Sreemangal', type: 'Rainforest', emoji: '🍃'},
+            {name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️'},
+            {name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅'}
         ];
 
-        selectDestination(destinations[index], cardElement);
+        const dest = destinations.find(d => d.name === destinationName);
+        let selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
+        
+        const existingIndex = selectedDestinations.findIndex(d => d.name === dest.name);
+        
+        if (existingIndex > -1) {
+            // Deselect
+            selectedDestinations.splice(existingIndex, 1);
+            cardElement.classList.remove('border-primary');
+            cardElement.classList.add('border-transparent');
+            const checkmark = cardElement.querySelector('.destination-checkmark');
+            if (checkmark) checkmark.remove();
+        } else {
+            // Select
+            selectedDestinations.push(dest);
+            cardElement.classList.remove('border-transparent');
+            cardElement.classList.add('border-primary');
+            if (!cardElement.querySelector('.destination-checkmark')) {
+                const checkmark = document.createElement('div');
+                checkmark.className = 'destination-checkmark absolute top-4 right-4';
+                checkmark.innerHTML = '<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: \'FILL\' 1;">check</span></div>';
+                cardElement.appendChild(checkmark);
+            }
+        }
+
+        // Save to localStorage
+        const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
+        tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
+        localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
     }
 
-    function goToNextStepInline() {
-        goToNextStep();
-    }
-
-    // Navigate to services page
-    function goToNextStep() {
+    // Navigation to services page
+    function goToServices() {
+        const selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
+        
         if (selectedDestinations.length === 0) {
             alert('Please select at least one destination!');
             return;
         }
 
-        // Save destination data
-        const tripData = saveTripData({
-            step_2: {
-                destinations: selectedDestinations,
-                timestamp: new Date().toISOString()
-            }
-        });
-
-        // Navigate to services page
         window.location.href = '../travel_services_cholo_1/code.html';
     }
 
@@ -700,40 +632,15 @@
         
         if (newTheme === 'dark') {
             window.location.href = '../step_2_destination_picker_cholo_2/code.html';
+        } else {
+            location.reload();
         }
     }
 
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check authentication first
-        if (!checkAuthentication()) {
-            return;
-        }
-
-        // Update profile picture
-        updateProfilePicture();
-
-        // Load existing trip data
-        const tripData = getTripData();
-        if (tripData.step_2 && tripData.step_2.destinations) {
-            selectedDestinations = tripData.step_2.destinations;
-        }
-
-        // Define destinations data
-        const destinations = [
-            { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
-            { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
-            { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
-            { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
-            { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
-            { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
-            { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
-            { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
-        ];
-
-        // Add destination class to cards and click handlers
-        const cards = document.querySelectorAll('.grid div.rounded-3xl');
-        console.log('Found destination cards:', cards.length);
+    // Back navigation
+    function goBack() {
+        window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+    }
         
         cards.forEach((card, index) => {
             if (destinations[index]) {
