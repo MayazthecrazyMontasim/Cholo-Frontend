@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangladesh Bhromon — Requirements Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300;1,600&family=DM+Sans:wght@300;400;500&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #00695C;
+    --teal-light: #00897B;
+    --teal-dark: #004D40;
+    --gold: #F9A825;
+    --gold-light: #FFD54F;
+    --cream: #FDFAF4;
+    --warm-white: #FAF7F0;
+    --ink: #1A1A18;
+    --ink-light: #3D3D38;
+    --muted: #7A786E;
+    --border: #E8E4D9;
+    --python: #3776AB;
+    --python-light: #EBF4FF;
+    --must: #006B5E;
+    --should: #1565C0;
+    --could: #6A1B9A;
+    --must-bg: #E8F5E9;
+    --should-bg: #E3F2FD;
+    --could-bg: #F3E5F5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--teal-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(249,168,37,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(0,137,123,0.25) 0%, transparent 60%);
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .cover-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cover-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .cover h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 900;
+    color: white;
+    line-height: 0.95;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .cover h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .cover-subtitle {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 60px;
+    position: relative;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    position: relative;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .cover-meta-item label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 4px;
+  }
+
+  .cover-meta-item span {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+  }
+
+  .badge-stack {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 60px;
+    right: 80px;
+  }
+
+  .tech-badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .tech-badge.python { background: rgba(55,118,171,0.25); color: #90CAF9; border: 1px solid rgba(55,118,171,0.4); }
+  .tech-badge.fastapi { background: rgba(0,150,136,0.2); color: #80CBC4; border: 1px solid rgba(0,150,136,0.35); }
+  .tech-badge.stitch { background: rgba(249,168,37,0.15); color: #FFD54F; border: 1px solid rgba(249,168,37,0.3); }
+  .tech-badge.mongo { background: rgba(76,175,80,0.15); color: #A5D6A7; border: 1px solid rgba(76,175,80,0.3); }
+  .tech-badge.mvc { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .section-number {
+    font-family: 'Fraunces', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--border);
+    line-height: 1;
+    user-select: none;
+    flex-shrink: 0;
+    margin-top: -8px;
+  }
+
+  .section-title-block {}
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+    max-width: 540px;
+  }
+
+  /* ── OVERVIEW CARDS ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .overview-card {
+    background: white;
+    padding: 28px 24px;
+  }
+
+  .overview-card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .overview-card-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .overview-card-value {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  /* ── MVC DIAGRAM ── */
+  .mvc-diagram {
+    background: var(--ink);
+    border-radius: 20px;
+    padding: 48px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mvc-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .mvc-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .mvc-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+
+  .mvc-layer {
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .mvc-layer.view { background: rgba(249,168,37,0.12); border: 1px solid rgba(249,168,37,0.25); }
+  .mvc-layer.controller { background: rgba(55,118,171,0.15); border: 1px solid rgba(55,118,171,0.3); }
+  .mvc-layer.model { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.25); }
+
+  .mvc-layer-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mvc-layer-name {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .mvc-layer.view .mvc-layer-name { color: #FFD54F; }
+  .mvc-layer.controller .mvc-layer-name { color: #90CAF9; }
+  .mvc-layer.model .mvc-layer-name { color: #A5D6A7; }
+
+  .mvc-layer-tech {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+  }
+
+  .mvc-layer-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mvc-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'DM Sans', monospace;
+  }
+
+  .mvc-arrow {
+    text-align: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 18px;
+    line-height: 1;
+    margin: 4px 0;
+    position: relative;
+  }
+
+  .mvc-arrow::after {
+    content: attr(data-label);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── REQUIREMENTS TABLE ── */
+  .req-module {
+    margin-bottom: 48px;
+  }
+
+  .req-module-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .req-module-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .req-module-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .req-module-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--warm-white);
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+
+  .req-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .req-table thead tr {
+    background: var(--warm-white);
+  }
+
+  .req-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .req-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 13.5px;
+  }
+
+  .req-table tr:last-child td { border-bottom: none; }
+  .req-table tr:hover td { background: var(--warm-white); }
+
+  .req-id {
+    font-family: 'DM Sans', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .priority-badge.must { background: var(--must-bg); color: var(--must); }
+  .priority-badge.should { background: var(--should-bg); color: var(--should); }
+  .priority-badge.could { background: var(--could-bg); color: var(--could); }
+  .priority-badge::before { content: '●'; font-size: 7px; }
+
+  /* ── NFR GRID ── */
+  .nfr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .nfr-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nfr-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+  }
+
+  .nfr-card.perf::before { background: #FF7043; }
+  .nfr-card.sec::before { background: #D32F2F; }
+  .nfr-card.ui::before { background: #7B1FA2; }
+  .nfr-card.compat::before { background: #1565C0; }
+  .nfr-card.seo::before { background: #F57F17; }
+  .nfr-card.a11y::before { background: #2E7D32; }
+  .nfr-card.scale::before { background: #00695C; }
+  .nfr-card.avail::before { background: #1A237E; }
+
+  .nfr-category {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .nfr-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .nfr-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  /* ── DATA MODELS ── */
+  .model-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .model-card {
+    background: var(--ink);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .model-header {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .model-name {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .model-collection {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-family: monospace;
+    margin-left: auto;
+  }
+
+  .model-fields {
+    padding: 16px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .model-field {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 12.5px;
+  }
+
+  .field-name {
+    color: #90CAF9;
+    font-family: monospace;
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .field-type {
+    color: #A5D6A7;
+    font-family: monospace;
+    font-size: 11.5px;
+  }
+
+  .field-note {
+    color: rgba(255,255,255,0.25);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  /* ── API ENDPOINTS ── */
+  .api-group {
+    margin-bottom: 32px;
+  }
+
+  .api-group-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .api-group-title span {
+    font-size: 12px;
+    font-family: monospace;
+    color: var(--muted);
+    font-weight: 400;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+
+  .endpoint-list {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .endpoint {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .endpoint:last-child { border-bottom: none; }
+  .endpoint:hover { background: var(--warm-white); }
+
+  .method {
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .method.get { background: #E3F2FD; color: #1565C0; }
+  .method.post { background: #E8F5E9; color: #2E7D32; }
+  .method.put { background: #FFF8E1; color: #F57F17; }
+  .method.delete { background: #FFEBEE; color: #C62828; }
+
+  .endpoint-path {
+    font-family: monospace;
+    font-size: 12.5px;
+    color: var(--ink-light);
+  }
+
+  .endpoint-desc {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ── WATERFALL TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--gold), var(--teal));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 32px;
+    padding-left: 28px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -34px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 3px solid var(--cream);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .timeline-phase {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .timeline-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .timeline-body {
+    font-size: 13.5px;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+  }
+
+  .timeline-deliverable {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    color: var(--muted);
+  }
+
+  /* ── FOLDER STRUCTURE ── */
+  .folder-tree {
+    background: var(--ink);
+    border-radius: 16px;
+    padding: 32px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+
+  .folder-tree .dir { color: #90CAF9; font-weight: 600; }
+  .folder-tree .file { color: rgba(255,255,255,0.65); }
+  .folder-tree .comment { color: rgba(255,255,255,0.25); font-style: italic; }
+  .folder-tree .py { color: #A5D6A7; }
+  .folder-tree .js { color: #FFD54F; }
+
+  /* ── STITCH PROMPT ── */
+  .prompt-block {
+    background: var(--ink);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .prompt-header {
+    background: rgba(255,255,255,0.05);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .prompt-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+
+  .prompt-dot.red { background: #FF5F57; }
+  .prompt-dot.yellow { background: #FEBC2E; }
+  .prompt-dot.green { background: #28C840; }
+
+  .prompt-label {
+    margin-left: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-family: monospace;
+  }
+
+  .prompt-body {
+    padding: 28px 32px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .prompt-body .highlight { color: #FFD54F; font-weight: 600; }
+  .prompt-body .key { color: #90CAF9; }
+  .prompt-body .val { color: #A5D6A7; }
+  .prompt-body .comment { color: rgba(255,255,255,0.3); font-style: italic; }
+
+  /* ── PYTHON TECH STACK ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .stack-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .stack-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--python-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .stack-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .stack-replaces {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .stack-replaces s { color: #E57373; }
+  .stack-replaces strong { color: #2E7D32; }
+
+  .stack-why {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  /* ── PRODUCTION CHECKLIST ── */
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .check-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin: 48px 0;
+  }
+
+  .toc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .toc-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 32px;
+    list-style: none;
+  }
+
+  .toc-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .toc-num {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--teal);
+    min-width: 28px;
+  }
+
+  .toc-list a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .toc-list a:hover { border-color: var(--teal); color: var(--teal); }
+
+  @media (max-width: 768px) {
+    .cover { padding: 40px 28px 40px; }
+    .badge-stack { position: static; margin-bottom: 32px; }
+    .page { padding: 0 20px; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .nfr-grid { grid-template-columns: 1fr 1fr; }
+    .model-grid { grid-template-columns: 1fr; }
+    .stack-grid { grid-template-columns: 1fr; }
+    .checklist { grid-template-columns: 1fr; }
+    .toc-list { grid-template-columns: 1fr; }
+    .mvc-layer { grid-template-columns: 1fr; }
+    .section-number { font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="cover-grid"></div>
+
+  <div class="badge-stack">
+    <span class="tech-badge python">Python</span>
+    <span class="tech-badge fastapi">FastAPI</span>
+    <span class="tech-badge stitch">Stitch</span>
+    <span class="tech-badge mongo">MongoDB</span>
+    <span class="tech-badge mvc">MVC</span>
+  </div>
+
+  <div class="cover-tag">Requirements Analysis · v1.0</div>
+
+  <h1>Bangladesh<br><em>Bhromon</em></h1>
+  <p class="cover-subtitle">বাংলাদেশ ভ্রমণ পরিকল্পনাকারী</p>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>SDLC Model</label>
+      <span>Waterfall</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Architecture</label>
+      <span>MVC</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Frontend</label>
+      <span>MongoDB Stitch</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Backend</label>
+      <span>Python / FastAPI</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Database</label>
+      <span>MongoDB Atlas</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Phase</label>
+      <span>1 — Requirements</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#overview">Project Overview</a></li>
+      <li><span class="toc-num">02</span><a href="#stack">Python Tech Stack</a></li>
+      <li><span class="toc-num">03</span><a href="#architecture">MVC Architecture</a></li>
+      <li><span class="toc-num">04</span><a href="#functional">Functional Requirements</a></li>
+      <li><span class="toc-num">05</span><a href="#nfr">Non-Functional Requirements</a></li>
+      <li><span class="toc-num">06</span><a href="#models">Data Models</a></li>
+      <li><span class="toc-num">07</span><a href="#api">API Endpoints</a></li>
+      <li><span class="toc-num">08</span><a href="#waterfall">Waterfall Phase Plan</a></li>
+      <li><span class="toc-num">09</span><a href="#structure">Folder Structure</a></li>
+      <li><span class="toc-num">10</span><a href="#stitch-prompt">Stitch Frontend Prompt</a></li>
+      <li><span class="toc-num">11</span><a href="#antigravity-prompt">Antigravity Backend Prompt</a></li>
+      <li><span class="toc-num">12</span><a href="#production">Production Checklist</a></li>
+    </ul>
+  </div>
+
+  <!-- 01 OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Project Overview</div>
+        <div class="section-title">What we are building</div>
+        <div class="section-desc">A production-level Bangladesh domestic travel planner — combining smart budget estimation with interactive map-driven trip planning, inspired by VromonGuide.com.</div>
+      </div>
+    </div>
+
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="overview-card-icon">💰</div>
+        <div class="overview-card-label">Module 1</div>
+        <div class="overview-card-value">Budget Tracker</div>
+      </div>
+      <div class="overview-card">
+        <div class="overview-card-icon">🗺️</div>
+        <div class="overview-card-label">Module 2</div>
+        <div class="overview-card-value">Trip Planner + Maps</div>
+      </div>
+      <div class="overview-card">
+        <div class="overview-card-icon">👤</div>
+        <div class="overview-card-label">Module 3</div>
+        <div class="overview-card-value">User Accounts</div>
+      </div>
+      <div class="overview-card">
+        <div class="overview-card-icon">🇧🇩</div>
+        <div class="overview-card-label">Coverage</div>
+        <div class="overview-card-value">8 Divisions · 64 Districts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 PYTHON STACK -->
+  <div class="section" id="stack">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Technology</div>
+        <div class="section-title">Python Tech Stack</div>
+        <div class="section-desc">Full replacement of Node.js/Express with a Python-native stack. FastAPI is chosen for its async performance, automatic OpenAPI docs, and Pydantic-based validation.</div>
+      </div>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-icon">⚡</div>
+        <div>
+          <div class="stack-name">FastAPI</div>
+          <div class="stack-replaces"><s>Express.js</s> → <strong>FastAPI</strong></div>
+          <div class="stack-why">Async, auto OpenAPI/Swagger docs, Pydantic validation built in. Fastest Python web framework.</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🍃</div>
+        <div>
+          <div class="stack-name">Beanie (ODM) + Motor</div>
+          <div class="stack-replaces"><s>Mongoose</s> → <strong>Beanie + Motor</strong></div>
+          <div class="stack-why">Beanie is an async ODM built on Motor (async MongoDB driver). Pydantic-based document models.</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🔐</div>
+        <div>
+          <div class="stack-name">python-jose + passlib</div>
+          <div class="stack-replaces"><s>jsonwebtoken + bcrypt</s> → <strong>python-jose + passlib[bcrypt]</strong></div>
+          <div class="stack-why">JWT signing/verification and bcrypt hashing, production-tested Python libraries.</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🛡️</div>
+        <div>
+          <div class="stack-name">slowapi + httpx</div>
+          <div class="stack-replaces"><s>express-rate-limit + axios</s> → <strong>slowapi + httpx</strong></div>
+          <div class="stack-why">slowapi for rate limiting, httpx for async HTTP calls to Google Maps API.</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">📄</div>
+        <div>
+          <div class="stack-name">Pydantic v2</div>
+          <div class="stack-replaces">No Node equivalent → <strong>Pydantic schemas</strong></div>
+          <div class="stack-why">Request/response validation schemas. Replaces manual Joi/Zod validation. Auto-generates API docs.</div>
+        </div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">📦</div>
+        <div>
+          <div class="stack-name">requirements.txt</div>
+          <div class="stack-replaces"><s>package.json</s> → <strong>requirements.txt / pyproject.toml</strong></div>
+          <div class="stack-why">fastapi, beanie, motor, python-jose[cryptography], passlib[bcrypt], httpx, slowapi, python-dotenv</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 ARCHITECTURE -->
+  <div class="section" id="architecture">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Architecture</div>
+        <div class="section-title">MVC Layer Diagram</div>
+        <div class="section-desc">Stitch owns the View layer. FastAPI owns Controllers and routing. Beanie/Motor owns the Model layer via MongoDB Atlas.</div>
+      </div>
+    </div>
+
+    <div class="mvc-diagram">
+      <div class="mvc-title">MVC — Request Flow</div>
+      <div class="mvc-layers">
+        <div class="mvc-layer view">
+          <div class="mvc-layer-label">
+            <div class="mvc-layer-name">View</div>
+            <div class="mvc-layer-tech">MongoDB Stitch · React</div>
+          </div>
+          <div class="mvc-layer-items">
+            <span class="mvc-item">HomeView</span>
+            <span class="mvc-item">BudgetView</span>
+            <span class="mvc-item">TripPlannerView</span>
+            <span class="mvc-item">DestinationDetailView</span>
+            <span class="mvc-item">DashboardView</span>
+          </div>
+        </div>
+        <div class="mvc-arrow" data-label="HTTP / REST — JSON">↕</div>
+        <div class="mvc-layer controller">
+          <div class="mvc-layer-label">
+            <div class="mvc-layer-name">Controller</div>
+            <div class="mvc-layer-tech">FastAPI · Python Routers</div>
+          </div>
+          <div class="mvc-layer-items">
+            <span class="mvc-item">auth_router.py</span>
+            <span class="mvc-item">destination_router.py</span>
+            <span class="mvc-item">places_router.py</span>
+            <span class="mvc-item">budget_router.py</span>
+            <span class="mvc-item">trip_router.py</span>
+          </div>
+        </div>
+        <div class="mvc-arrow" data-label="Motor async · MongoDB Atlas">↕</div>
+        <div class="mvc-layer model">
+          <div class="mvc-layer-label">
+            <div class="mvc-layer-name">Model</div>
+            <div class="mvc-layer-tech">Beanie ODM · MongoDB Atlas</div>
+          </div>
+          <div class="mvc-layer-items">
+            <span class="mvc-item">User</span>
+            <span class="mvc-item">Trip</span>
+            <span class="mvc-item">Destination</span>
+            <span class="mvc-item">PlaceCache</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 FUNCTIONAL REQUIREMENTS -->
+  <div class="section" id="functional">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Functional Requirements</div>
+        <div class="section-title">What the system must do</div>
+        <div class="section-desc">Requirements prioritized using MoSCoW: <span style="background:#E8F5E9;color:#2E7D32;padding:2px 8px;border-radius:4px;font-size:12px;">Must Have</span> &nbsp;<span style="background:#E3F2FD;color:#1565C0;padding:2px 8px;border-radius:4px;font-size:12px;">Should Have</span> &nbsp;<span style="background:#F3E5F5;color:#6A1B9A;padding:2px 8px;border-radius:4px;font-size:12px;">Could Have</span></div>
+      </div>
+    </div>
+
+    <div class="req-module">
+      <div class="req-module-header">
+        <div class="req-module-icon">💰</div>
+        <div class="req-module-title">Budget Tracker</div>
+        <div class="req-module-count">10 requirements</div>
+      </div>
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Requirement</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="req-id">FR-BT-01</td><td>User selects number of travelers (1–20+) via stepper input</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-02</td><td>User inputs destination city/district — searchable dropdown of all 64 districts</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-03</td><td>System returns estimated costs per person: transport, hotel/night, food/day, activities</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-04</td><td>User can manually override any cost field (editable inputs)</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-05</td><td>Total trip cost calculated and displayed in real time (in ৳ BDT)</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-06</td><td>Cost breakdown donut chart showing distribution by category</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-07</td><td>Budget saved to logged-in user's profile</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-08</td><td>Three budget tiers selectable: Budget ৳ / Mid-range ৳৳ / Luxury ৳৳৳</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-09</td><td>Export / share trip budget as PDF or shareable link</td><td><span class="priority-badge could">Could Have</span></td></tr>
+          <tr><td class="req-id">FR-BT-10</td><td>Group cost-split: divide total among N travelers, show individual share</td><td><span class="priority-badge could">Could Have</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="req-module">
+      <div class="req-module-header">
+        <div class="req-module-icon">🗺️</div>
+        <div class="req-module-title">Trip Planner + Map</div>
+        <div class="req-module-count">14 requirements</div>
+      </div>
+      <table class="req-table">
+        <thead>
+          <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="req-id">FR-TP-01</td><td>User inputs destination city/area to initialize the planner</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-02</td><td>Google Maps embedded and centered on the selected destination</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-03</td><td>Nearby hotels shown as map markers + scrollable list cards with rating and distance</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-04</td><td>Nearby restaurants shown with same treatment</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-05</td><td>Nearby bus counters / launch terminals shown</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-06</td><td>Nearby bike/cycle rentals shown</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-07</td><td>Category filter tabs: 🏨 Hotels · 🍽️ Food · 🚌 Bus · 🚲 Bike</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-08</td><td>Clicking a map marker highlights corresponding sidebar card and vice versa</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-09</td><td>Itinerary builder: add stops to a day-wise schedule (drag-and-drop)</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-10</td><td>Popular spots auto-suggested per destination (Cox's Bazar, Sajek, Sylhet, etc.)</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-11</td><td>Travel tips per destination: কিভাবে যাবেন, কোথায় থাকবেন, কী খাবেন</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-12</td><td>Directions/routing between two selected stops</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-13</td><td>Export / share full trip plan as PDF or link</td><td><span class="priority-badge could">Could Have</span></td></tr>
+          <tr><td class="req-id">FR-TP-14</td><td>Multi-day trip planning (Day 1, Day 2… N)</td><td><span class="priority-badge should">Should Have</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="req-module">
+      <div class="req-module-header">
+        <div class="req-module-icon">👤</div>
+        <div class="req-module-title">User Management</div>
+        <div class="req-module-count">4 requirements</div>
+      </div>
+      <table class="req-table">
+        <thead>
+          <tr><th>ID</th><th>Requirement</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="req-id">FR-UM-01</td><td>User registration and login via email + password</td><td><span class="priority-badge must">Must Have</span></td></tr>
+          <tr><td class="req-id">FR-UM-02</td><td>Google OAuth2 social login</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-UM-03</td><td>Save and view past trips and budgets from user dashboard</td><td><span class="priority-badge should">Should Have</span></td></tr>
+          <tr><td class="req-id">FR-UM-04</td><td>Guest mode: full Budget + Trip Planner access without login</td><td><span class="priority-badge must">Must Have</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 05 NFR -->
+  <div class="section" id="nfr">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Non-Functional Requirements</div>
+        <div class="section-title">Quality attributes</div>
+      </div>
+    </div>
+    <div class="nfr-grid">
+      <div class="nfr-card perf">
+        <div class="nfr-category">Performance</div>
+        <div class="nfr-title">Page Load &lt; 3s</div>
+        <div class="nfr-desc">On 4G mobile connections. Google Maps tiles excluded from timing. Images served as WebP with lazy loading.</div>
+      </div>
+      <div class="nfr-card scale">
+        <div class="nfr-category">Scalability</div>
+        <div class="nfr-title">500+ Concurrent Users</div>
+        <div class="nfr-desc">FastAPI async + MongoDB Atlas handles MVP load. Scale horizontally on Antigravity when needed.</div>
+      </div>
+      <div class="nfr-card avail">
+        <div class="nfr-category">Availability</div>
+        <div class="nfr-title">99.5% Uptime</div>
+        <div class="nfr-desc">Managed via Antigravity hosting. MongoDB Atlas multi-region replication. Health check endpoint at <code>/api/health</code>.</div>
+      </div>
+      <div class="nfr-card sec">
+        <div class="nfr-category">Security</div>
+        <div class="nfr-title">HTTPS + JWT Auth</div>
+        <div class="nfr-desc">python-jose JWT (7-day expiry). bcrypt password hashing. Input validation via Pydantic. Google Maps API key domain-restricted.</div>
+      </div>
+      <div class="nfr-card ui">
+        <div class="nfr-category">Usability</div>
+        <div class="nfr-title">Bilingual UI</div>
+        <div class="nfr-desc">English + বাংলা toggle in navbar. Hind Siliguri font for Bangla text. All destination names in both scripts.</div>
+      </div>
+      <div class="nfr-card compat">
+        <div class="nfr-category">Compatibility</div>
+        <div class="nfr-title">Mobile-First</div>
+        <div class="nfr-desc">Responsive from 320px up. Map + sidebar stack vertically on mobile. PWA-ready for offline budget access.</div>
+      </div>
+      <div class="nfr-card seo">
+        <div class="nfr-category">SEO</div>
+        <div class="nfr-title">Crawlable Pages</div>
+        <div class="nfr-desc">Each destination a static route: <code>/destination/coxsbazar</code>. Open Graph tags + meta descriptions in Bangla + English.</div>
+      </div>
+      <div class="nfr-card a11y">
+        <div class="nfr-category">Accessibility</div>
+        <div class="nfr-title">WCAG 2.1 AA</div>
+        <div class="nfr-desc">Color contrast ratio ≥ 4.5:1. Keyboard navigation. ARIA labels on map markers. Screen reader support.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 DATA MODELS -->
+  <div class="section" id="models">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Data Models</div>
+        <div class="section-title">Beanie / MongoDB Schemas</div>
+        <div class="section-desc">All models defined as Beanie Documents (Pydantic-based). Stored in MongoDB Atlas collections.</div>
+      </div>
+    </div>
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-name">User</div>
+          <div class="model-collection">collection: users</div>
+        </div>
+        <div class="model-fields">
+          <div class="model-field"><span class="field-name">id</span><span class="field-type">PydanticObjectId</span><span class="field-note">primary key</span></div>
+          <div class="model-field"><span class="field-name">name</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">email</span><span class="field-type">EmailStr</span><span class="field-note">unique index</span></div>
+          <div class="model-field"><span class="field-name">password_hash</span><span class="field-type">Optional[str]</span><span class="field-note">None if OAuth</span></div>
+          <div class="model-field"><span class="field-name">google_id</span><span class="field-type">Optional[str]</span></div>
+          <div class="model-field"><span class="field-name">saved_trips</span><span class="field-type">List[PydanticObjectId]</span></div>
+          <div class="model-field"><span class="field-name">created_at</span><span class="field-type">datetime</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-name">Trip</div>
+          <div class="model-collection">collection: trips</div>
+        </div>
+        <div class="model-fields">
+          <div class="model-field"><span class="field-name">id</span><span class="field-type">PydanticObjectId</span></div>
+          <div class="model-field"><span class="field-name">user_id</span><span class="field-type">PydanticObjectId</span><span class="field-note">ref: users</span></div>
+          <div class="model-field"><span class="field-name">title</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">destination_slug</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">travelers</span><span class="field-type">int</span></div>
+          <div class="model-field"><span class="field-name">days</span><span class="field-type">List[DaySchema]</span></div>
+          <div class="model-field"><span class="field-name">budget</span><span class="field-type">BudgetSchema</span></div>
+          <div class="model-field"><span class="field-name">share_token</span><span class="field-type">Optional[str]</span></div>
+          <div class="model-field"><span class="field-name">created_at</span><span class="field-type">datetime</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-name">Destination</div>
+          <div class="model-collection">collection: destinations</div>
+        </div>
+        <div class="model-fields">
+          <div class="model-field"><span class="field-name">slug</span><span class="field-type">str</span><span class="field-note">unique, e.g. coxsbazar</span></div>
+          <div class="model-field"><span class="field-name">name_en</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">name_bn</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">division</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">lat / lng</span><span class="field-type">float</span></div>
+          <div class="model-field"><span class="field-name">budget_templates</span><span class="field-type">BudgetTemplateSchema</span></div>
+          <div class="model-field"><span class="field-name">popular_spots</span><span class="field-type">List[str]</span></div>
+          <div class="model-field"><span class="field-name">tips</span><span class="field-type">List[str]</span></div>
+          <div class="model-field"><span class="field-name">cover_image_url</span><span class="field-type">str</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-header">
+          <div class="model-name">PlaceCache</div>
+          <div class="model-collection">collection: place_cache</div>
+        </div>
+        <div class="model-fields">
+          <div class="model-field"><span class="field-name">google_place_id</span><span class="field-type">str</span><span class="field-note">unique</span></div>
+          <div class="model-field"><span class="field-name">name</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">place_type</span><span class="field-type">str</span><span class="field-note">hotel|restaurant|bus|bike</span></div>
+          <div class="model-field"><span class="field-name">lat / lng</span><span class="field-type">float</span></div>
+          <div class="model-field"><span class="field-name">address</span><span class="field-type">str</span></div>
+          <div class="model-field"><span class="field-name">rating</span><span class="field-type">Optional[float]</span></div>
+          <div class="model-field"><span class="field-name">photo_url</span><span class="field-type">Optional[str]</span></div>
+          <div class="model-field"><span class="field-name">cached_at</span><span class="field-type">datetime</span><span class="field-note">TTL: 7 days</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 API ENDPOINTS -->
+  <div class="section" id="api">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">REST API Contract</div>
+        <div class="section-title">Endpoints (FastAPI Routers)</div>
+        <div class="section-desc">All responses follow: <code style="background:#F0F0EB;padding:2px 8px;border-radius:4px;font-size:12px;">{ "success": true, "data": {...} }</code> — must match what Stitch frontend consumes.</div>
+      </div>
+    </div>
+
+    <div class="api-group">
+      <div class="api-group-title">Auth <span>/api/auth</span></div>
+      <div class="endpoint-list">
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/auth/register</span><span class="endpoint-desc">Create account</span></div>
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/auth/login</span><span class="endpoint-desc">Email/password login → JWT</span></div>
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/auth/google</span><span class="endpoint-desc">Google OAuth token → JWT</span></div>
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/auth/me</span><span class="endpoint-desc">Return current user (auth required)</span></div>
+      </div>
+    </div>
+
+    <div class="api-group">
+      <div class="api-group-title">Destinations <span>/api/destinations</span></div>
+      <div class="endpoint-list">
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/destinations</span><span class="endpoint-desc">All 64 districts summary</span></div>
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/destinations/{slug}</span><span class="endpoint-desc">Full destination document</span></div>
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/destinations/{slug}/budget</span><span class="endpoint-desc">Budget templates for city</span></div>
+      </div>
+    </div>
+
+    <div class="api-group">
+      <div class="api-group-title">Places (Google Maps Proxy) <span>/api/places</span></div>
+      <div class="endpoint-list">
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/places?lat=&lng=&type=&radius=</span><span class="endpoint-desc">Nearby places (cache-first)</span></div>
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/places/{place_id}</span><span class="endpoint-desc">Place details for info panel</span></div>
+      </div>
+    </div>
+
+    <div class="api-group">
+      <div class="api-group-title">Budget <span>/api/budget</span></div>
+      <div class="endpoint-list">
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/budget/estimate</span><span class="endpoint-desc">Body: {slug, travelers, tier} → cost breakdown</span></div>
+      </div>
+    </div>
+
+    <div class="api-group">
+      <div class="api-group-title">Trips <span>/api/trips</span> <small style="font-size:11px;color:#999;font-weight:400;">(auth required)</small></div>
+      <div class="endpoint-list">
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/trips</span><span class="endpoint-desc">User's saved trips</span></div>
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/trips</span><span class="endpoint-desc">Create new trip</span></div>
+        <div class="endpoint"><span class="method get">GET</span><span class="endpoint-path">/api/trips/{id}</span><span class="endpoint-desc">Single trip (ownership verified)</span></div>
+        <div class="endpoint"><span class="method put">PUT</span><span class="endpoint-path">/api/trips/{id}</span><span class="endpoint-desc">Update stops / budget</span></div>
+        <div class="endpoint"><span class="method delete">DELETE</span><span class="endpoint-path">/api/trips/{id}</span><span class="endpoint-desc">Soft delete</span></div>
+        <div class="endpoint"><span class="method post">POST</span><span class="endpoint-path">/api/trips/{id}/share</span><span class="endpoint-desc">Generate public share link</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 WATERFALL -->
+  <div class="section" id="waterfall">
+    <div class="section-header">
+      <div class="section-number">08</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">SDLC</div>
+        <div class="section-title">Waterfall Phase Plan</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 1 · Current</div>
+        <div class="timeline-title">Requirements</div>
+        <div class="timeline-body">Stakeholder interviews, competitor analysis (VromonGuide), user stories, MoSCoW prioritization, data model definition, API contract.</div>
+        <div class="timeline-deliverable">📄 This Document</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 2</div>
+        <div class="timeline-title">System Design</div>
+        <div class="timeline-body">Wireframes for all 5 pages, Beanie schema finalization, FastAPI router tree, Google Maps integration design, Stitch component library planning.</div>
+        <div class="timeline-deliverable">🎨 Wireframes + Design Doc</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 3</div>
+        <div class="timeline-title">Implementation</div>
+        <div class="timeline-body">Stitch frontend build → FastAPI backend build → MongoDB seed data for 64 districts → Google Maps API integration → JWT auth.</div>
+        <div class="timeline-deliverable">💻 Source Code</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 4</div>
+        <div class="timeline-title">Testing</div>
+        <div class="timeline-body">Unit tests (pytest), integration tests for all API endpoints, UAT with real Bangladesh travel scenarios, Lighthouse performance audit, load testing.</div>
+        <div class="timeline-deliverable">✅ Test Reports</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 5</div>
+        <div class="timeline-title">Deployment</div>
+        <div class="timeline-body">Antigravity deploy, domain setup (e.g. bhromon.com.bd), SSL, environment variables, MongoDB Atlas indexes, monitoring via Sentry.</div>
+        <div class="timeline-deliverable">🚀 Live URL</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 6</div>
+        <div class="timeline-title">Maintenance</div>
+        <div class="timeline-body">Bug fixes, content updates (new destinations, updated BDT costs), feature additions, community tips module.</div>
+        <div class="timeline-deliverable">🔧 Patch Releases</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 FOLDER STRUCTURE -->
+  <div class="section" id="structure">
+    <div class="section-header">
+      <div class="section-number">09</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Project Structure</div>
+        <div class="section-title">Folder Layout (MVC)</div>
+      </div>
+    </div>
+    <div class="folder-tree">
+<span class="dir">bangladesh-bhromon/</span>
+├── <span class="dir">frontend/</span>                   <span class="comment">← Stitch-generated React app</span>
+│   └── <span class="dir">src/</span>
+│       ├── <span class="dir">views/</span>
+│       │   ├── <span class="js">HomeView.jsx</span>
+│       │   ├── <span class="js">BudgetView.jsx</span>
+│       │   ├── <span class="js">TripPlannerView.jsx</span>
+│       │   ├── <span class="js">DestinationDetailView.jsx</span>
+│       │   └── <span class="js">DashboardView.jsx</span>
+│       ├── <span class="dir">components/</span>
+│       │   ├── <span class="js">PlaceCard.jsx</span>
+│       │   ├── <span class="js">BudgetCalculator.jsx</span>
+│       │   ├── <span class="js">MapView.jsx</span>
+│       │   ├── <span class="js">ItineraryBuilder.jsx</span>
+│       │   └── <span class="js">DestinationCard.jsx</span>
+│       └── <span class="js">App.jsx</span>
+│
+└── <span class="dir">backend/</span>                    <span class="comment">← FastAPI Python app</span>
+    ├── <span class="dir">app/</span>
+    │   ├── <span class="dir">models/</span>              <span class="comment">← Beanie Documents (M in MVC)</span>
+    │   │   ├── <span class="py">user.py</span>
+    │   │   ├── <span class="py">trip.py</span>
+    │   │   ├── <span class="py">destination.py</span>
+    │   │   └── <span class="py">place_cache.py</span>
+    │   ├── <span class="dir">routers/</span>             <span class="comment">← FastAPI Routers (C in MVC)</span>
+    │   │   ├── <span class="py">auth_router.py</span>
+    │   │   ├── <span class="py">destination_router.py</span>
+    │   │   ├── <span class="py">places_router.py</span>
+    │   │   ├── <span class="py">budget_router.py</span>
+    │   │   └── <span class="py">trip_router.py</span>
+    │   ├── <span class="dir">schemas/</span>             <span class="comment">← Pydantic request/response schemas</span>
+    │   │   ├── <span class="py">auth_schema.py</span>
+    │   │   ├── <span class="py">trip_schema.py</span>
+    │   │   ├── <span class="py">budget_schema.py</span>
+    │   │   └── <span class="py">place_schema.py</span>
+    │   ├── <span class="dir">services/</span>            <span class="comment">← Business logic layer</span>
+    │   │   ├── <span class="py">auth_service.py</span>
+    │   │   ├── <span class="py">google_maps_service.py</span>
+    │   │   └── <span class="py">budget_service.py</span>
+    │   ├── <span class="dir">middleware/</span>
+    │   │   ├── <span class="py">auth_middleware.py</span>   <span class="comment">← JWT verify dependency</span>
+    │   │   └── <span class="py">rate_limiter.py</span>     <span class="comment">← slowapi</span>
+    │   └── <span class="py">main.py</span>              <span class="comment">← FastAPI app entry point</span>
+    ├── <span class="dir">seed/</span>
+    │   └── <span class="py">seed_destinations.py</span> <span class="comment">← all 64 districts data</span>
+    ├── <span class="py">requirements.txt</span>
+    └── <span class="file">.env.example</span>
+    </div>
+  </div>
+
+  <!-- 10 STITCH PROMPT -->
+  <div class="section" id="stitch-prompt">
+    <div class="section-header">
+      <div class="section-number">10</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Stitch Prompt</div>
+        <div class="section-title">Frontend Generation Prompt</div>
+        <div class="section-desc">Paste into MongoDB Stitch / Atlas App Builder AI prompt interface.</div>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="prompt-dot red"></div>
+        <div class="prompt-dot yellow"></div>
+        <div class="prompt-dot green"></div>
+        <span class="prompt-label">stitch-frontend-prompt.txt</span>
+      </div>
+      <div class="prompt-body"><span class="highlight">Build a production-level Bangladesh travel planning web application</span> called <span class="val">"বাংলাদেশ ভ্রমণ" (Bangladesh Bhromon)</span>.
+
+<span class="highlight">DESIGN SYSTEM:</span>
+- Mobile-first, fully responsive
+- Palette: deep teal <span class="val">#00695C</span> primary · saffron <span class="val">#F9A825</span> accent · off-white <span class="val">#FDFAF4</span> background
+- Fonts: <span class="val">'Hind Siliguri'</span> for Bangla text · <span class="val">'Fraunces'</span> for headings · <span class="val">'DM Sans'</span> for body
+- Bilingual toggle in navbar (English / বাংলা)
+- Editorial travel aesthetic — inspired by vromonguide.com
+
+<span class="highlight">PAGES TO GENERATE:</span>
+
+<span class="key">1. HOME PAGE (/)</span>
+   - Full-width hero with search bar: "কোথায় যেতে চান?"
+   - Division cards grid: 8 divisions of Bangladesh
+   - Popular destinations horizontal scroll (Cox's Bazar, Sajek, Sylhet, Bandarban, Sundarbans, Kuakata)
+   - Navbar: Logo | Destinations | Trip Planner | Budget | Login
+
+<span class="key">2. BUDGET TRACKER (/budget)</span>
+   - Step 1: Number of travelers (stepper +/-)
+   - Step 2: Destination city (searchable dropdown, all 64 districts)
+   - Step 3: Budget tier cards: Budget ৳ / Mid-range ৳৳ / Luxury ৳৳৳
+   - Real-time cost table: Transport · Hotel/Night · Food/Day · Activities
+   - Total displayed in ৳ BDT, large and prominent
+   - Donut chart showing cost distribution
+   - "Save Budget" + "Download PDF" buttons
+
+<span class="key">3. TRIP PLANNER (/plan)</span>
+   - Split layout: 40% sidebar + 60% Google Maps
+   - Category filter tabs: 🏨 Hotels | 🍽️ Restaurants | 🚌 Bus Counters | 🚲 Bike Rentals
+   - Scrollable place cards: name, rating, distance, thumbnail, "Add to Itinerary" button
+   - Itinerary section: drag-and-drop day-wise stops
+   - Google Maps with colored markers per category
+   - Bidirectional highlight: clicking marker ↔ highlights card
+   - Mobile: tabs switch map view / list view
+
+<span class="key">4. DESTINATION DETAIL (/destination/:slug)</span>
+   - Hero banner with cover photo
+   - Tabs: Overview | Map | Hotels | Food | Getting There | Tips
+   - Sidebar: compact Budget Calculator widget
+
+<span class="key">5. USER DASHBOARD (/dashboard)</span>
+   - Saved trips list
+   - Saved budgets
+   - "Create New Trip" CTA
+
+<span class="key">6. AUTH (/login, /register)</span>
+   - Email/password + Google OAuth button
+
+<span class="highlight">API BASE URL:</span> <span class="val">process.env.REACT_APP_API_URL</span>
+<span class="highlight">Auth:</span> JWT Bearer token in Authorization header
+
+<span class="highlight">STATE SHAPE:</span>
+- budgetState: { travelers, destinationSlug, tier, costs{}, total }
+- tripState: { destination, days[], selectedPlaces[] }
+- mapState: { center, zoom, activeFilter, markers[] }
+- authState: { user, token, isGuest }
+
+<span class="highlight">OUTPUT:</span> React components with Tailwind CSS. Export full routing config and component tree.</div>
+    </div>
+  </div>
+
+  <!-- 11 ANTIGRAVITY PROMPT -->
+  <div class="section" id="antigravity-prompt">
+    <div class="section-header">
+      <div class="section-number">11</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Antigravity Prompt</div>
+        <div class="section-title">Python/FastAPI Backend Prompt</div>
+        <div class="section-desc">Paste into Antigravity after importing the Stitch frontend design. This generates the Python backend that exactly serves the frontend.</div>
+      </div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="prompt-dot red"></div>
+        <div class="prompt-dot yellow"></div>
+        <div class="prompt-dot green"></div>
+        <span class="prompt-label">antigravity-backend-prompt.txt</span>
+      </div>
+      <div class="prompt-body"><span class="highlight">Build the complete Python/FastAPI backend</span> for Bangladesh Bhromon travel planner.
+Must match the Stitch-generated frontend exactly. Follow <span class="val">MVC architecture</span>.
+
+<span class="highlight">TECH STACK:</span>
+- <span class="val">FastAPI</span> (async web framework)
+- <span class="val">Beanie</span> ODM + <span class="val">Motor</span> (async MongoDB driver)
+- <span class="val">python-jose[cryptography]</span> for JWT
+- <span class="val">passlib[bcrypt]</span> for password hashing
+- <span class="val">httpx</span> for async Google Maps API calls
+- <span class="val">slowapi</span> for rate limiting
+- <span class="val">Pydantic v2</span> for all schemas
+- Python-dotenv for environment config
+
+<span class="highlight">MODELS (app/models/) — Beanie Documents:</span>
+
+<span class="key">user.py</span>: id, name, email (unique), password_hash, google_id, saved_trips[], created_at
+<span class="key">trip.py</span>: id, user_id, title, destination_slug, travelers, days[{day_number, date, stops[{place_id, note, arrival_time}]}], budget{transport, hotel, food, activities, total}, share_token, created_at
+<span class="key">destination.py</span>: slug (unique), name_en, name_bn, division, lat, lng, budget_templates{budget{}, midrange{}, luxury{}}, popular_spots[], tips[], cover_image_url, best_time_to_visit, description_en, description_bn
+<span class="key">place_cache.py</span>: google_place_id (unique), name, place_type, lat, lng, address, rating, photo_url, destination_slug, cached_at (TTL index: 7 days)
+
+<span class="highlight">ROUTERS (app/routers/) — one file per domain:</span>
+
+<span class="key">auth_router.py</span>
+  POST /api/auth/register → validate via Pydantic RegisterSchema → hash password with passlib → insert User → return JWT
+  POST /api/auth/login    → verify email + bcrypt hash → return JWT + user dict
+  POST /api/auth/google   → verify Google ID token → upsert User → return JWT
+  GET  /api/auth/me       → Depends(get_current_user) → return user
+
+<span class="key">destination_router.py</span>
+  GET /api/destinations           → return all (slug, name_en, name_bn, division, cover_image_url)
+  GET /api/destinations/{slug}    → return full Destination document
+  GET /api/destinations/{slug}/budget → return budget_templates
+
+<span class="key">places_router.py</span>
+  GET /api/places?lat=&lng=&type=&radius=
+    → Check PlaceCache first (cached_at > now - 7 days)
+    → Cache miss: call Google Places Nearby Search via httpx
+    → type mapping: hotel→lodging, restaurant→restaurant, bus→bus_station, bike→bicycle_store
+    → Normalize: {place_id, name, type, lat, lng, address, rating, photo_url, distance}
+    → Cache results in PlaceCache collection
+    → Return normalized list
+  GET /api/places/{place_id} → Google Place Details
+
+<span class="key">budget_router.py</span>
+  POST /api/budget/estimate
+    Body: BudgetEstimateSchema { destination_slug, travelers: int, tier: Literal["budget","midrange","luxury"] }
+    → Fetch destination.budget_templates[tier]
+    → Multiply per-person costs × travelers
+    → Return: { per_person: {}, totals: {}, grand_total: int }
+
+<span class="key">trip_router.py</span> (all routes: Depends(get_current_user))
+  GET    /api/trips       → user's trips from user_id in JWT
+  POST   /api/trips       → create Trip document
+  GET    /api/trips/{id}  → verify user_id ownership → return
+  PUT    /api/trips/{id}  → partial update (days, budget)
+  DELETE /api/trips/{id}  → soft delete (set deleted_at)
+  POST   /api/trips/{id}/share → generate UUID share_token → return share URL
+
+<span class="highlight">MIDDLEWARE (app/middleware/):</span>
+- <span class="key">auth_middleware.py</span>: FastAPI Dependency → extract Bearer JWT → python-jose decode → attach user to request
+- <span class="key">rate_limiter.py</span>: slowapi Limiter → 100 req/min per IP
+
+<span class="highlight">MAIN (app/main.py):</span>
+- Initialize FastAPI app
+- Include all routers with /api prefix
+- Initialize Beanie with all Document models on startup
+- Add CORS middleware (allow Stitch frontend domain + localhost:3000)
+- Add slowapi rate limiting
+- Health check: GET /api/health → { status: "ok" }
+
+<span class="highlight">SEED (seed/seed_destinations.py):</span>
+Pre-populate Destination collection for all 8 divisions. Include realistic BDT budget_templates:
+- Cox's Bazar: budget{transport:800,hotel:500,food:400}, midrange{transport:1500,hotel:1500,food:800}, luxury{transport:3000,hotel:5000,food:2000}
+- Sylhet: budget{transport:600,hotel:400,food:350}, midrange{transport:1200,hotel:1200,food:700}
+- Bandarban, Sajek, Sundarbans, Kuakata, Srimangal — include lat/lng + tips in both English and Bangla
+
+<span class="highlight">RESPONSE FORMAT</span> (must match Stitch frontend exactly):
+Success: <span class="val">{ "success": true, "data": {...} }</span>
+Error:   <span class="val">{ "success": false, "message": "...", "code": 400 }</span>
+List:    <span class="val">{ "success": true, "data": [...], "count": N }</span>
+
+<span class="highlight">ENV VARIABLES (.env.example):</span>
+MONGO_URI, JWT_SECRET, JWT_EXPIRES_DAYS=7, GOOGLE_MAPS_API_KEY, GOOGLE_CLIENT_ID, PORT=8080, CLIENT_URL
+
+<span class="highlight">GENERATE:</span>
+1. All files in the MVC folder structure above
+2. requirements.txt with pinned versions
+3. Full Pydantic schemas for all requests/responses
+4. seed_destinations.py with realistic Bangladesh data
+5. README.md with setup, .env config, and run instructions</div>
+    </div>
+  </div>
+
+  <!-- 12 PRODUCTION CHECKLIST -->
+  <div class="section" id="production">
+    <div class="section-header">
+      <div class="section-number">12</div>
+      <div class="section-title-block">
+        <div class="section-eyebrow">Production Readiness</div>
+        <div class="section-title">Quality Checklist</div>
+      </div>
+    </div>
+    <div class="checklist">
+      <div class="check-item"><span class="check-icon">🔐</span>Input validation via Pydantic schemas on all endpoints</div>
+      <div class="check-item"><span class="check-icon">🗝️</span>Google Maps API key: domain + API type restricted</div>
+      <div class="check-item"><span class="check-icon">💾</span>MongoDB Atlas automated backups enabled</div>
+      <div class="check-item"><span class="check-icon">📊</span>Sentry error monitoring integrated in FastAPI</div>
+      <div class="check-item"><span class="check-icon">⚡</span>Lighthouse score &gt; 85 (perf, SEO, a11y)</div>
+      <div class="check-item"><span class="check-icon">🖼️</span>Images: WebP format with lazy loading</div>
+      <div class="check-item"><span class="check-icon">🔄</span>CI/CD: GitHub Actions → Antigravity auto-deploy</div>
+      <div class="check-item"><span class="check-icon">🧪</span>pytest: unit + integration tests for all routers</div>
+      <div class="check-item"><span class="check-icon">📱</span>PWA manifest for offline budget access</div>
+      <div class="check-item"><span class="check-icon">🌐</span>SEO: Open Graph + meta tags per destination page</div>
+      <div class="check-item"><span class="check-icon">🗄️</span>PlaceCache TTL index → reduce Google Maps API cost</div>
+      <div class="check-item"><span class="check-icon">📝</span>FastAPI auto-generates /docs (Swagger UI) in dev</div>
+    </div>
+  </div>
+
+  <div style="padding: 48px 0 32px; text-align: center; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border);">
+    Bangladesh Bhromon · Requirements Analysis v1.0 · Waterfall Phase 1 · Python/FastAPI + MongoDB Stitch
+  </div>
+
+</div>
+</body>
+</html>
