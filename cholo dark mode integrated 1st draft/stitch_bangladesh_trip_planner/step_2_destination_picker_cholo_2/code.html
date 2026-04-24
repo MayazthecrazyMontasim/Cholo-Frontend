@@ -303,9 +303,16 @@
     // Check authentication on page load
     function checkAuthentication() {
         const token = localStorage.getItem('cholo_token');
+        // Allow guest access during testing phase
         if (!token) {
-            window.location.href = '../login_page_cholo_matched_2/code.html';
-            return false;
+            console.log('Guest access enabled - no authentication token found');
+            // Create a temporary guest token for testing
+            localStorage.setItem('cholo_token', 'guest_testing_token');
+            localStorage.setItem('cholo_user', JSON.stringify({
+                name: 'Guest User',
+                email: 'guest@test.com',
+                picture: 'https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ'
+            }));
         }
         return true;
     }
