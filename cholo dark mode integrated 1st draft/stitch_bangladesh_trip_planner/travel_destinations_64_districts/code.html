@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#68dbae",
+                    "on-primary-fixed": "#002115",
+                    "secondary": "#885200",
+                    "surface-tint": "#006c4e",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#eff5ef",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#68dbae",
+                    "on-tertiary-container": "#f6fefb",
+                    "tertiary-container": "#6e7674",
+                    "on-background": "#171d1a",
+                    "on-error": "#ffffff",
+                    "background": "#f5fbf5",
+                    "surface-variant": "#dee4de",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#dce4e1",
+                    "outline-variant": "#bccac1",
+                    "on-secondary-fixed-variant": "#673d00",
+                    "on-tertiary-fixed": "#151d1c",
+                    "tertiary-fixed-dim": "#c0c8c6",
+                    "secondary-fixed": "#ffdcbb",
+                    "inverse-on-surface": "#ecf2ed",
+                    "secondary-container": "#fdad4e",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#171d1a",
+                    "surface-container-highest": "#dee4de",
+                    "secondary-fixed-dim": "#ffb869",
+                    "on-primary-container": "#f5fff7",
+                    "primary-fixed": "#86f8c9",
+                    "on-tertiary-fixed-variant": "#404847",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#eaefea",
+                    "primary-container": "#008560",
+                    "tertiary": "#565e5c",
+                    "on-secondary-fixed": "#2b1700",
+                    "on-surface-variant": "#3d4943",
+                    "surface-dim": "#d6dbd6",
+                    "inverse-surface": "#2c322e",
+                    "outline": "#6d7a73",
+                    "on-primary-fixed-variant": "#00513a",
+                    "on-secondary-container": "#704200",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#00694c",
+                    "surface-container-high": "#e4eae4",
+                    "surface-bright": "#f5fbf5",
+                    "surface": "#f5fbf5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin": "20px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "gutter": "16px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "label-md": ["Hind Siliguri"],
+                    "h2": ["Hind Siliguri"],
+                    "body-sm": ["Hind Siliguri"],
+                    "h1": ["Hind Siliguri"],
+                    "display": ["Hind Siliguri"],
+                    "button": ["Hind Siliguri"],
+                    "body-lg": ["Hind Siliguri"],
+                    "body-md": ["Hind Siliguri"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "h2": ["20px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Hind Siliguri', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none font-sans antialiased text-slate-900 dark:text-slate-100">
+<div class="flex justify-between items-center h-16 px-5 w-full">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-slate-600 dark:text-slate-400 active:scale-95 transition-transform duration-150">menu</button>
+<span class="text-2xl font-bold tracking-tight text-teal-600 dark:text-teal-400">Cholo</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-6">
+<a class="text-teal-600 dark:text-teal-400 font-semibold transition-colors" href="#">Explore</a>
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors" href="#">Saved</a>
+<a class="text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors" href="#">Trips</a>
+</div>
+<button aria-label="Toggle Dark Mode" class="text-primary hover:bg-primary/10 p-1 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">dark_mode</span>
+</button><div class="w-8 h-8 rounded-full overflow-hidden border border-teal-600/20">
+<img alt="user profile picture" data-alt="close-up portrait of a young professional smiling softly with soft studio lighting and clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhdDpPOybBL3unhlqQOrRXMH3lNXszqIP0d3bd9SSbSHMpDOf06Za2X_CY0mzKpLPkJlI4FARmb2OICmHyHoT9gjM0v4_Z7acoDgjFGd-ZpR4PhNY7hsPZkUfUUdxZgYxEe7tQjrBBRRLMZHJz1QT-vZLjbf45JRVrtvX7R8O4UaL86TyZZyC31uTaHviA472HerY5MttE24zOKoQVZDh-HnDjxo-RIi8JzzkJOB6SqxDjuBfjXBq_B5RwbES2B1u7WeEUmO6hQPje"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-5 max-w-7xl mx-auto">
+<!-- Search Section -->
+<section class="mt-6 mb-8">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-body-md text-on-surface shadow-sm" placeholder="Search for districts, landmarks, or divisions..." type="text"/>
+</div>
+</section>
+<!-- Division Tabs -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-h2 text-h2 text-on-background">Divisions</h2>
+<button class="text-primary font-button text-button hover:underline">View All</button>
+</div>
+<div class="flex overflow-x-auto gap-3 no-scrollbar pb-2">
+<button class="shrink-0 px-6 py-2 rounded-full bg-primary-container text-on-primary-container font-button text-button transition-all">Dhaka</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Chittagong</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Sylhet</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Khulna</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Rajshahi</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Rangpur</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Barisal</button>
+<button class="shrink-0 px-6 py-2 rounded-full bg-surface-container-highest text-on-surface-variant font-button text-button hover:bg-surface-variant transition-all">Mymensingh</button>
+</div>
+</section>
+<!-- Districts Grid -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<h1 class="font-h1 text-h1 text-on-background">Popular Districts</h1>
+<span class="font-label-md text-label-md text-outline uppercase tracking-wider">64 Districts found</span>
+</div>
+<!-- Bento Grid Pattern for Highlights -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-12">
+<!-- Large Highlight Card -->
+<div class="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container shadow-[0_4px_12px_rgba(0,0,0,0.05)] cursor-pointer">
+<div class="aspect-[4/5] md:aspect-auto md:h-full relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="scenic aerial view of Sylhet tea gardens with rolling green hills and misty morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzFhL4kuwYl3ke-KKsy8UIoqA2luJnnQOZ_iXMm5CutQRzjYR3elFpExwAeufQ9ygpOKp-tqcumKsfILpdofUjWUZZlClgI_Cout-6tsouNJvuL4vK28pwI7QPt1aeIKtO-q_hDWXAupQqbtAT4k_iSMHF6bEi5wShXRyw4iYetBPZUtIvPJa0M_c6I6YDoG8fcQGFrvQnGgl_vQUrseRyi11uKjz27Q9n5zOdqn3KIU9-bBxhENl6HlmkAvJKqnnJ9EN8ju0kWgFT"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="flex justify-between items-end">
+<div>
+<span class="bg-primary/20 backdrop-blur-md text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full border border-white/20 mb-2 inline-block">Featured Destination</span>
+<h3 class="text-white text-3xl font-bold font-h1">Sylhet</h3>
+<p class="text-white/80 font-body-sm">The Land of Two Leaves and a Bud</p>
+</div>
+<button class="w-12 h-12 rounded-full bg-white text-primary flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+</button>
+</div>
+</div>
+<button class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Medium Card -->
+<div class="md:col-span-2 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container shadow-[0_4px_12px_rgba(0,0,0,0.05)] cursor-pointer">
+<div class="aspect-[16/9] relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="the architectural majesty of Ahsan Manzil in Dhaka during sunset with warm glow on pink palace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtJxfiPeO5zY33wpZDm2gfg5eSkhBwpWZcFw8Rqb1wPF2_lxzS8nWVdayRlLMqWH3rhFRSl1aG3_wNLd2ZdQ9uk1serd8tlM4YHYz9b0Xr6I4EaRmJvQRUWiVs6m3X5yQ5GiWO2bMNwEL3BZqiywKu-BOMjlQQTMyJDed_q-06kOuSbfGwZIH0EtP4H2pzGvEQasJPFs6c06gUPZyOWp7vWGOXp5Ct6KtIxy5MmMCi_ifminO_Hr_7n-CgN2KGhz3ImH3tVdGE0PMc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-5">
+<h3 class="text-white text-xl font-bold font-h2">Dhaka</h3>
+<p class="text-white/70 text-sm font-body-sm">Rickshaw Capital of the World</p>
+</div>
+<button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Small Grid Items -->
+<div class="group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container shadow-[0_4px_12px_rgba(0,0,0,0.05)] cursor-pointer">
+<div class="aspect-square relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="scenic view of Coxs Bazar beach with traditional fishing boats and blue ocean waves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc_8WWqLXZ9ddG3DtVkgZPWPxMrhGCTm08TIKLC9ZNWWIqiuU7R5NaBch1tia9HyNRXUyW4YjM9K0y71MQULhHrsf4FZvaKTjrUrCRMNY6kVXB5MK8e4cHFxeJkogaMfJ50OPQjGCUrI4LnwkW1WVjkEUen_LXjqgB5QIMI_FLgIXATXOaipZXn-FHXyuohqGfcAK9nrN87xhgwF2tA1_RkoPBz75LDf4H2jCEDLThDLZhrDndrpdXNVAgPNGKFZEu7Q3rQEAATrDD"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4">
+<h3 class="text-white font-bold font-body-lg">Chittagong</h3>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container shadow-[0_4px_12px_rgba(0,0,0,0.05)] cursor-pointer">
+<div class="aspect-square relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="lush mangroves of the Sundarbans with water reflections and dense tropical foliage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvSM8B5hjTN58QrsDl_dly9y8ZQnH3i67FKwuC2i_r_grDinQwi3uD9PDsw5yg40dBb4PrRpjGl8Oas_1VMm2xFjUDwhEAVyqcRHu8djk5Ts18T0-SKtr1FCDyvuu6XsWK8B5ZA_LVbZFfqahhietrjosBE4kufzppFO8AtY_ID7WI-ZGTRX18M4gDKdpruAy372YuyXgr0M-bYGoGoZ6yjaWFFhVif28exEdOL_o3fUbFLc6unlIhYV1uce_AS0Au_kNZwK8n4lFv"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-4">
+<h3 class="text-white font-bold font-body-lg">Khulna</h3>
+</div>
+</div>
+</div>
+</div>
+<!-- Standard Grid for all other districts -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-gutter">
+<!-- Loop-like structure for districts -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group">
+<div class="aspect-video mb-3 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="serene morning view of the Somapura Mahavihara ruins in Rajshahi under a clear sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDamSzDeZrvKNg0apId5yCXd6-fybAJclWnPh7iOHYcT6fZfWr3dEAzpmnCIUDeFDaKi-oatRj17yFNi1I54lYKJYbt_t9DKkKNWqMv0zPvJP3KTTXVNjYt14Bs0iqonRP2QPJ0UdzjLpcE8SHaSLTC-zw7MxbtKO8g1l-tomkQjZ0PMNTmXqW1syIRI1IhmNjW4PtAvTjietRzdUXxQ5UjDQKF1xoYJiu3IRHpJlZuMNKoLvJPKIvVmFiesG-He_7l2G3gFnV87y2z"/>
+<button class="absolute top-2 right-2 text-white/50 hover:text-secondary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<h4 class="font-body-md font-semibold text-on-surface">Rajshahi</h4>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group">
+<div class="aspect-video mb-3 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="wide angle shot of the historical Shait Gumbad Mosque in Bagerhat showing the multiple domes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEOsH3jgdT2bbAaRDZJZmEKbUE03mVOh8StdOwZ5OQFWcv_IeAt1NgXVrEg7bgbsfMTvKRiX708E8w9hjW1wkmr2-Sm1bpB10No0q-6zHMq1Zgadr5qVJo_RYtVDCXiOzzkwKRnsdzt7y8LoN83wAldnkk5_OuMrW12xj4wvFHuO0_K-o2OTx4sGWjje34SfzUZ6ccP2lM6STaFDt2Exfby5dXSnwqRlp35UfA6MwPdYyd6GeMMQ5aDp0iKS5OBNvo1Is16WzXju2H"/>
+<button class="absolute top-2 right-2 text-white/50 hover:text-secondary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<h4 class="font-body-md font-semibold text-on-surface">Bagerhat</h4>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group">
+<div class="aspect-video mb-3 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="vibrant floating guava market in Barisal with wooden boats filled with green guavas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDgI90IS5NCQdC6qZ3au2rtQ68Ga8cCkIC-vFJWYFfEXFFkgvN-L6Bh9l5jBFbzMjhLGs1I5ttkNQaeJhT63RPt2Z0vhg6rrTY9faXRPjOoE1iIUhFfm3HDGu-1Py6FF22q6FpgAS_qtp4SuFvz1kUIaG9zSgHJvJeI_lzsC5NTwUf4l-RhF6DXDa-r_wD6_QbzzSEZjCgJLMUPESUsma3AlXU5rjmwU2PZ1SP5mh23hipOdFtaNQDhYZ-ldkD-SuwH8i7nVrmCSgF"/>
+<button class="absolute top-2 right-2 text-white/50 hover:text-secondary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<h4 class="font-body-md font-semibold text-on-surface">Barisal</h4>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group">
+<div class="aspect-video mb-3 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Kantajew Temple in Dinajpur showing intricate terracotta artwork on its walls in sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsQUg3e2aAxZwEofrrswi_ZQn52HJjw641pRqmO5T-ByGfd4-KKf0UhDqHui3gxlJE9OrO3x0lV5_c02GNZREvZGRH6lq9tfvWmp8EcnRGmiyZJGrQ1HTGBlxgZoFLZYZnGXc5Sv1IGgT3u67uqxaznTfoHvYvputsyPugma2M8Srji4jmfjmwHCml7hNvuq1lgH5WMu44nI4F2JIHtsez4sy6139-ck2qkAHKRH26mW34nXbb_jgDWK4d_KGnC6WuOGUGP4PBLZqr"/>
+<button class="absolute top-2 right-2 text-white/50 hover:text-secondary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<h4 class="font-body-md font-semibold text-on-surface">Dinajpur</h4>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group">
+<div class="aspect-video mb-3 rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="lush green valley of Sajek in Rangamati with clouds floating between the hills" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcSEL-PMD25vnx1bB79ZQl4gndLP5tEHZajV9qUw9poM8fHx67H2Mbchpf8NfXl5A0d3GxKpBFPM803jcFlgpijxxk_Z3NgcGQHNFBHm2gFUcZX5OzBeeLsWhP73181Qf9jJtTJXptsBzwC00xMaYhf47VU7yAeSpQSQQcDLyIZJ1bRPmTf0CuVWvzDOAsRzYlAzwT202jm0iHOzYkKPAVlouVRRQlL8JnsY424Q6xPtvz0ZibuJ6iqjPBCP10TbuAkDbxNxEv6Gv1"/>
+<button class="absolute top-2 right-2 text-white/50 hover:text-secondary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<h4 class="font-body-md font-semibold text-on-surface">Rangamati</h4>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-3 hover:shadow-md transition-shadow group flex items-center justify-center border-dashed border-2">
+<div class="text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-2">grid_view</span>
+<p class="font-button text-button text-primary">View all 64</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 pb-safe bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<div class="flex justify-around items-center h-16 w-full px-2">
+<a class="flex flex-col items-center justify-center text-teal-600 dark:text-teal-400 gap-1 active:opacity-70 transition-opacity" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="text-[11px] font-medium leading-none">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-1 active:opacity-70 transition-opacity" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="text-[11px] font-medium leading-none">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-1 active:opacity-70 transition-opacity" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="text-[11px] font-medium leading-none">Trips</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-1 active:opacity-70 transition-opacity" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[11px] font-medium leading-none">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

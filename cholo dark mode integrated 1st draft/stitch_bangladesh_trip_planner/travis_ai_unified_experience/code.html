@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Travis AI Chat - Cholo</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#ecf2ed",
+                    "tertiary-fixed-dim": "#c0c8c6",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#68dbae",
+                    "outline": "#6d7a73",
+                    "surface-container": "#eaefea",
+                    "surface-container-low": "#eff5ef",
+                    "on-surface-variant": "#3d4943",
+                    "on-secondary-fixed": "#2b1700",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#86f8c9",
+                    "on-tertiary-container": "#f6fefb",
+                    "on-primary-fixed": "#002115",
+                    "on-error": "#ffffff",
+                    "surface": "#f5fbf5",
+                    "surface-variant": "#dee4de",
+                    "inverse-surface": "#2c322e",
+                    "error": "#ba1a1a",
+                    "outline-variant": "#bccac1",
+                    "on-secondary-container": "#704200",
+                    "background": "#f5fbf5",
+                    "primary": "#00694c",
+                    "surface-container-highest": "#dee4de",
+                    "surface-bright": "#f5fbf5",
+                    "on-tertiary-fixed-variant": "#404847",
+                    "on-primary-fixed-variant": "#00513a",
+                    "tertiary-container": "#6e7674",
+                    "primary-container": "#008560",
+                    "on-error-container": "#93000a",
+                    "on-background": "#171d1a",
+                    "surface-container-high": "#e4eae4",
+                    "inverse-primary": "#68dbae",
+                    "on-tertiary-fixed": "#151d1c",
+                    "tertiary": "#565e5c",
+                    "secondary-fixed-dim": "#ffb869",
+                    "tertiary-fixed": "#dce4e1",
+                    "surface-dim": "#d6dbd6",
+                    "secondary": "#885200",
+                    "on-surface": "#171d1a",
+                    "on-secondary-fixed-variant": "#673d00",
+                    "on-primary-container": "#f5fff7",
+                    "secondary-container": "#fdad4e",
+                    "secondary-fixed": "#ffdcbb",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#006c4e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "margin": "20px",
+                    "lg": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Hind Siliguri"],
+                    "body-sm": ["Hind Siliguri"],
+                    "h1": ["Hind Siliguri"],
+                    "display": ["Hind Siliguri"],
+                    "body-lg": ["Hind Siliguri"],
+                    "h2": ["Hind Siliguri"],
+                    "body-md": ["Hind Siliguri"],
+                    "button": ["Hind Siliguri"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h2": ["20px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "button": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f5fbf5; }
+        .chat-bubble-left { border-radius: 0px 16px 16px 16px; }
+        .chat-bubble-right { border-radius: 16px 16px 0px 16px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-white border-b border-slate-200 shadow-sm">
+<div class="flex items-center gap-3">
+<button class="transition-colors duration-200 active:opacity-70 text-teal-600">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="AI Avatar" class="w-full h-full object-cover" data-alt="A clean minimalist 3D robot avatar icon with soft teal lighting and friendly digital eyes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDEsIQPF_n_nOqCi7ZXuoBUND6m1xXU8vKWa7Xlq9mbI-cZXNXO9pi3WGuNjO7iv50vDLhjZsIaeoOk-Uw5MbnEf04IGOZEEH7FnYhmmlIn2ZhUGdBZOonRSyR7SK19_KnJCHQJPXIA_nCdxVXluDQVkPbdl08wgN0Ya2ShG1ZifKw7AD45MG-SBWMU6EjbVqfmH8dKXhCU63NyWMzLHshspsAPnJMxZM98ZuiWe9wcp0McSGTbt9op4kjSNgiwr7wlD64ya5F_MFv"/>
+</div>
+<div>
+<h1 class="font-['Hind_Siliguri'] text-base font-semibold text-teal-600">Travis AI</h1>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] text-slate-500 font-medium">Online</span>
+</div>
+</div>
+</div>
+</div>
+<button class="transition-colors duration-200 active:opacity-70 text-slate-500">
+<button class="transition-colors duration-200 active:opacity-70 text-[#1D9E75] mr-2">
+<span class="material-symbols-outlined">dark_mode</span>
+</button><span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<!-- Chat Content -->
+<main class="pt-20 pb-40 px-4 max-w-2xl mx-auto space-y-6">
+<!-- Travis Greeting -->
+<div class="flex items-start gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="bg-white chat-bubble-left p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] border border-outline-variant max-w-[85%]">
+<p class="text-body-md font-body-md text-on-surface">Hello! I'm Travis, your travel companion. Ready to plan your next adventure? 🌏</p>
+</div>
+</div>
+<!-- User Request -->
+<div class="flex justify-end">
+<div class="bg-primary-container text-on-primary-container chat-bubble-right p-4 shadow-sm max-w-[85%]">
+<p class="text-body-md font-body-md">Can you help me with a budget for a 3-day trip to Sylhet? We're a group of 3.</p>
+</div>
+</div>
+<!-- Travis Response + Budget Card -->
+<div class="flex items-start gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="space-y-4 w-full">
+<div class="bg-white chat-bubble-left p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] border border-outline-variant max-w-[90%]">
+<p class="text-body-md font-body-md text-on-surface">Certainly! Here's a breakdown for a standard 3-day Sylhet trip for 3 people. You can adjust the figures below:</p>
+</div>
+<!-- Interactive Budget Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] max-w-[90%]">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-h2 font-h2 text-primary">Estimated Budget</h2>
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full text-label-md font-label-md">3 Days</span>
+</div>
+<div class="space-y-3">
+<div class="space-y-1">
+<label class="text-label-md font-label-md text-on-surface-variant">Accommodation (Hotel/Resort)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface">৳</span>
+<input class="w-full pl-8 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-body-md font-body-md" type="text" value="12,000"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-md font-label-md text-on-surface-variant">Food &amp; Dining</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface">৳</span>
+<input class="w-full pl-8 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-body-md font-body-md" type="text" value="8,500"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-md font-label-md text-on-surface-variant">Local Transport</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface">৳</span>
+<input class="w-full pl-8 pr-4 py-2 border border-outline-variant rounded-lg focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-body-md font-body-md" type="text" value="4,500"/>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex items-center justify-between mb-6">
+<span class="text-body-lg font-h2">Total Budget</span>
+<span class="text-h1 font-display text-primary">৳ 25,000</span>
+</div>
+<div class="flex flex-col gap-2">
+<button class="w-full bg-[#1D9E75] text-white py-3 rounded-lg font-button text-button transition-colors active:opacity-90 shadow-sm">Confirm Budget</button>
+<button class="w-full border border-primary text-primary py-3 rounded-lg font-button text-button hover:bg-surface-container transition-colors active:opacity-90">Change Details</button>
+</div>
+</div>
+<!-- Bill Splitter Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] max-w-[90%]">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h2 class="text-h2 font-h2 text-on-surface">Bill Splitter</h2>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-surface border border-outline-variant rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Alex" class="w-full h-full object-cover" data-alt="Portrait photo of a young man with a friendly smile, outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMnk4ErfhKxYsdWrY-sobDT5heb89LMrrzG7J97m6ZmRjFHmr9IEKhU0PkZyrZxss3TD1h7mJDInTW-uj6jgIf9GRM1k8L32UFtBHgVGiCdbUL7EBoC4WGoII9FKVHwva1j1sdvihoJzvWBhhZfGa01aanVbAdG8gf-2kw3X71vbRbDNaQ6vS2DABOap0re2iQ7AhprpMeQqZIkyhFMxYtXgL-azZYAt4MdFYnxl40XoxoIecOjk0WvGoZ9gLAyeXY2EheA8erzalU"/>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Alex (You)</p>
+<p class="text-label-md text-on-surface-variant">Paid ৳12,000</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-label-md text-on-surface-variant font-medium">Owes</p>
+<p class="text-body-md font-bold text-primary">৳ 0</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface border border-outline-variant rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Sarah" class="w-full h-full object-cover" data-alt="Portrait photo of a professional young woman, minimalist background, bright lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS10p03EzVvTAWR2w94JiMU-PZfYJu4W7K1sevzI_69xuqEJMKzmNYCWJn9UkiisDJDRQNpZ9ivfhzJXnTKkKAg5gyuKMaIEXVaivWxS5eu4SPfq-GllEyMeJTq-fEjvr-hbpZ1IgZnN5ujRpwJt1Fd5bcAIWVntYP_DbtLUXsSZ4bR5CtjXqxVBOtOwMfekgS9Y9UHUgUxR_cloMgOiXkVwxXYuU2pEmoticniXZGF80bMCHgJwpz-XIICK6s946BxQfGsQtRijx5"/>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Sarah</p>
+<p class="text-label-md text-on-surface-variant">Paid ৳0</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-label-md text-on-surface-variant font-medium">Owes</p>
+<p class="text-body-md font-bold text-error">৳ 8,333</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface border border-outline-variant rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Tanvir" class="w-full h-full object-cover" data-alt="Portrait photo of a person with glasses, urban setting, soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANolLf07fBYzGmgIyFSbETcSbz1w6NUkqNL3eVdVjm0xjnA8UNQalEe0TOheKQqwknNeiqIgUJF7elL5qf4PL6mF-_d38DLiC0INKpm9ZIfArrdRQZZ3cE844BXSA_D_2yG88er9GCD4OeGlXPJkjre4c7zmJdNbz6Z8o1FDUvoIw0lf9lfMrUxwx6lVfbbTq0FhBTz5CcAoy0AIim73SFyx2DxeRlg-DEVtFE3v_JA97U9ue3OHiPOJh8Qft-fDeijcp0hJavWK29"/>
+</div>
+<div>
+<p class="text-body-md font-semibold text-on-surface">Tanvir</p>
+<p class="text-label-md text-on-surface-variant">Paid ৳0</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-label-md text-on-surface-variant font-medium">Owes</p>
+<p class="text-body-md font-bold text-error">৳ 8,333</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Interface Shell -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.05)] pb-safe">
+<!-- Quick Actions Chips -->
+<div class="flex items-center gap-2 overflow-x-auto px-4 py-3 no-scrollbar border-t border-slate-100">
+<button class="flex-shrink-0 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-label-md font-semibold hover:bg-primary/20 transition-colors">
+                Settle Bills
+            </button>
+<button class="flex-shrink-0 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-label-md font-semibold hover:bg-primary/20 transition-colors">
+                View Itinerary
+            </button>
+<button class="flex-shrink-0 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-label-md font-semibold hover:bg-primary/20 transition-colors">
+                Ask about Hotels
+            </button>
+<button class="flex-shrink-0 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-label-md font-semibold hover:bg-primary/20 transition-colors">
+                Local Guide
+            </button>
+</div>
+<!-- Input Area -->
+<div class="px-4 py-3 flex items-center gap-3 bg-white border-t border-slate-100">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<div class="flex-1 relative">
+<input class="w-full bg-slate-50 border-none rounded-full py-3 px-5 text-body-md outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Type a message..." type="text"/>
+</div>
+<button class="w-12 h-12 rounded-full bg-[#1D9E75] text-white flex items-center justify-center shadow-md active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar Placeholder -->
+<div class="flex justify-around items-center h-16 bg-white/95 backdrop-blur-sm px-2 border-t border-slate-200">
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[12px] font-medium">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-teal-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="text-[12px] font-medium">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[12px] font-medium">Splitter</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">map</span>
+<span class="text-[12px] font-medium">Itinerary</span>
+</div>
+</div>
+</div>
+</body></html>

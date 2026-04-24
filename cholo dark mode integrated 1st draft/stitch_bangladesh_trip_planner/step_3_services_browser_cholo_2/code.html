@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#c0ecd6",
+                        "tertiary": "#ffb869",
+                        "secondary-fixed-dim": "#a5d0ba",
+                        "on-surface": "#e1e3e4",
+                        "inverse-primary": "#006c4e",
+                        "surface-container-high": "#2e3132",
+                        "inverse-surface": "#e1e3e4",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed": "#2b1700",
+                        "on-secondary-fixed-variant": "#264e3e",
+                        "on-primary": "#ffffff",
+                        "secondary": "#a5d0ba",
+                        "surface-container-highest": "#333537",
+                        "tertiary-fixed-dim": "#ffb869",
+                        "tertiary-fixed": "#ffdcbb",
+                        "on-tertiary": "#4a2800",
+                        "primary-fixed-dim": "#68dbae",
+                        "outline": "#8b938f",
+                        "on-primary-fixed-variant": "#00513a",
+                        "on-primary-fixed": "#002115",
+                        "surface-dim": "#0e1415",
+                        "tertiary-container": "#673d00",
+                        "surface-tint": "#68dbae",
+                        "on-primary-container": "#f5fff7",
+                        "primary": "#68dbae",
+                        "primary-fixed": "#86f8c9",
+                        "background": "#0e1415",
+                        "outline-variant": "#414945",
+                        "inverse-on-surface": "#191c1d",
+                        "primary-container": "#00513a",
+                        "surface": "#0e1415",
+                        "secondary-container": "#264e3e",
+                        "on-secondary-fixed": "#002115",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#343a3b",
+                        "on-tertiary-fixed-variant": "#673d00",
+                        "on-tertiary-container": "#ffdcbb",
+                        "on-secondary-container": "#bdead3",
+                        "surface-container": "#1d2021",
+                        "surface-variant": "#414945",
+                        "on-surface-variant": "#bfc9c2",
+                        "on-background": "#e1e3e4",
+                        "surface-container-low": "#191c1d",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Be Vietnam Pro"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .editorial-title { font-family: 'Be Vietnam Pro', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-40">
+<!-- Top AppBar -->
+<nav class="sticky top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-surface-container-high">
+<div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform p-2 hover:bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="text-xl font-extrabold tracking-tighter text-primary editorial-title">Cholo</h1>
+</div>
+<button class="active:scale-95 transition-transform p-2 bg-primary-container text-on-primary-container rounded-full mr-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlW3f7diJMcjwFEaJSO5roC4MzI7DZujXLIVLmKvThAeGCPOxIQ9j6U3STXQqsfzIdS-52QJjlsqWc5OzHdKB01XXR3n0k9chuKD5xJI1sp50RUr_ISUkqeVz18sXVD0wt1Qta0j_ATyvmOaFUYkj1O2iKdtFRxn6JuMuEYMJDHsnkRhlhvCxJLu1FEQxTjBVBedJfCrtF69BJ_11d8Gn5_seSi70ZgiawfCK0qPnL-sEh9axB7yuJJcIlu4KUjOMbzYDSBmYoRQZ-"/>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 pt-6">
+<!-- Progress Indicator -->
+<div class="mb-6">
+<div class="flex justify-between items-end mb-2">
+<span class="text-[10px] uppercase tracking-[0.2em] font-bold text-outline">Step 3 of 4</span>
+<span class="text-sm font-bold text-primary">75% Complete</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-3/4"></div>
+</div>
+</div>
+<!-- AdSense Placeholder -->
+<div class="w-full flex justify-center mb-8">
+<div class="w-full max-w-[320px] h-[50px] bg-surface-container-low flex items-center justify-center rounded-lg border border-dashed border-outline-variant">
+<span class="text-[10px] uppercase tracking-widest text-outline font-medium">Advertisement</span>
+</div>
+</div>
+<!-- Destination Header -->
+<header class="mb-8">
+<h2 class="editorial-title text-4xl font-black tracking-tight text-on-surface mb-2">Sylhet, Bangladesh</h2>
+<p class="text-on-surface-variant font-medium">Browse and select local services for your itinerary.</p>
+</header>
+<!-- Tab Bar -->
+<div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar mb-6">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">Hotels</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Bike Rental</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Bus Counters</button>
+<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Restaurants</button>
+</div>
+<!-- Service Grid -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Service Card: Selected (Hotel - Teal) -->
+<div class="relative bg-surface-container-lowest rounded-2xl p-4 border-2 border-primary shadow-sm">
+<div class="absolute top-4 right-4 bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm font-bold">check</span>
+</div>
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-xl bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">hotel</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-lg leading-tight mb-1">Grand Sultan Tea Resort</h3>
+<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Sreemangal, Sylhet
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-primary font-bold text-lg">৳12,500 <span class="text-[10px] font-medium text-outline">/ night</span></span>
+</div>
+<span class="bg-primary-container text-on-primary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Luxury</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Service Card: Unselected (Bike - Amber) -->
+<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-xl bg-tertiary-container/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-3xl">motorcycle</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Sylhet Bike Hub</h3>
+<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Zindabazar, Sylhet
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-primary font-bold text-lg">৳1,200 <span class="text-[10px] font-medium text-outline">/ day</span></span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Budget</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Service Card: Unselected (Bus - Coral) -->
+<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-xl bg-error-container/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-3xl">directions_bus</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Green Line Paribahan</h3>
+<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Humayun Rashid Square
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-primary font-bold text-lg">৳1,500 <span class="text-[10px] font-medium text-outline">/ seat</span></span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Popular</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Service Card: Unselected (Restaurant - Blue) -->
+<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-xl bg-blue-900/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-400 text-3xl">restaurant</span>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Panch Bhai Restaurant</h3>
+<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">location_on</span> Zindabazar, Sylhet
+                    </p>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-primary font-bold text-lg">৳450 <span class="text-[10px] font-medium text-outline">/ meal</span></span>
+</div>
+<div class="flex gap-1">
+<span class="bg-green-900/30 text-green-400 px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Eco</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Google Maps Attribution -->
+<div class="mt-12 mb-24 flex items-center justify-center gap-2 opacity-60">
+<img alt="Google Logo" class="h-4 invert brightness-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7xyGqR_WPmvlO0aWqmPJBa6JP9AAoEoh8GSDwXLlj3oweyEgsqicniFHd7bKoEhwO-srLzHTdUnBVf5uG6a668csETnyO5SLGG2anugC5r-7F1Yq9R_xZumc0SOKNrCa-O36WkelkhC1K8VwO9t3IM9ucP7RzQjQbQAY3LjJh4ge9CH-by551TuHsmcIngrFybmBTsYFHDHfWRMkB5WVcCB7j_X-xG5UUfrMBMsP4p9PYZhQdsIYO9zuE2Bcx7ddXE7iEYujIeEBr"/>
+<span class="text-xs font-medium text-on-surface-variant tracking-tight">Powered by Google Maps</span>
+</div>
+<!-- CTA Section -->
+<div class="fixed bottom-28 left-0 w-full px-6 flex justify-center pointer-events-none">
+<button class="pointer-events-auto bg-primary text-on-primary px-10 py-4 rounded-full shadow-2xl flex items-center gap-3 active:scale-95 transition-all group">
+<span class="font-bold tracking-tight">Calculate Budget</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-lg rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.2)]">
+<div class="flex justify-around items-center px-4 pt-3 pb-8">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-primary rounded-2xl px-5 py-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

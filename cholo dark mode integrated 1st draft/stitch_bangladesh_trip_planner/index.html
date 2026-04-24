@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cholo Frontend Components</title>
+    <style>
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            background: #111; 
+            color: #eee; 
+            padding: 40px; 
+            margin: 0;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 10px; font-size: 2.5rem; background: linear-gradient(90deg, #00C9FF 0%, #92FE9D 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { 
+            background: #1e1e1e; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-decoration: none; 
+            color: white; 
+            transition: all 0.2s ease; 
+            border: 1px solid #333; 
+            display: flex;
+            align-items: center;
+        }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: #00C9FF; 
+            box-shadow: 0 10px 20px rgba(0,201,255,0.1);
+        }
+        .card span { font-size: 1.1rem; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cholo App Directory</h1>
+        <p class="subtitle">Select a UI component to view</p>
+        <div class="grid">
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/start_screen_dark_cholo/code.html"><span>Start Screen (Dark)</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/start_screen_cholo_matched/code.html"><span>Start Screen (Matched)</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/login_page_cholo_matched_1/code.html"><span>Login Page 1</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/login_page_cholo_matched_2/code.html"><span>Login Page 2</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/dashboard_cholo_1/code.html"><span>Dashboard 1</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/dashboard_cholo_2/code.html"><span>Dashboard 2</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/step_1_traveler_info_cholo_1/code.html"><span>Step 1: Traveler Info</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/step_2_destination_picker_cholo_1/code.html"><span>Step 2: Destination</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/step_3_services_browser_cholo_1/code.html"><span>Step 3: Services</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/step_4_budget_results_cholo_1/code.html"><span>Step 4: Budget Results</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/travel_destinations_dark/code.html"><span>Destinations (Dark)</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/travis_ai_unified_experience/code.html"><span>Travis AI Chat</span></a>
+            <a class="card" href="cholo dark mode integrated 1st draft/stitch_bangladesh_trip_planner/budget_splitter_unified_ui/code.html"><span>Budget Splitter</span></a>
+        </div>
+    </div>
+</body>
+</html>

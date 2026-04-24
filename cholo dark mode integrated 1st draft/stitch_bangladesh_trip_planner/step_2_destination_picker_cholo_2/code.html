@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0b0f0d",
+                    "on-secondary": "#003926",
+                    "secondary-fixed": "#c0ecd6",
+                    "tertiary": "#ffb869",
+                    "secondary-fixed-dim": "#a5d0ba",
+                    "on-surface": "#e1e3e1",
+                    "inverse-primary": "#006c4e",
+                    "surface-container-high": "#282b29",
+                    "inverse-surface": "#e1e3e1",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed": "#2b1700",
+                    "on-secondary-fixed-variant": "#264e3e",
+                    "on-primary": "#003926",
+                    "secondary": "#a5d0ba",
+                    "surface-container-highest": "#333534",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary": "#482900",
+                    "primary-fixed-dim": "#68dbae",
+                    "outline": "#8b938d",
+                    "on-primary-fixed-variant": "#00513a",
+                    "on-primary-fixed": "#002115",
+                    "surface-dim": "#111412",
+                    "tertiary-container": "#673d00",
+                    "surface-tint": "#68dbae",
+                    "on-primary-container": "#86f8c9",
+                    "primary": "#68dbae",
+                    "primary-fixed": "#86f8c9",
+                    "background": "#111412",
+                    "outline-variant": "#414943",
+                    "inverse-on-surface": "#2e3130",
+                    "primary-container": "#00513a",
+                    "surface": "#111412",
+                    "secondary-container": "#264e3e",
+                    "on-secondary-fixed": "#002115",
+                    "error": "#ffb4ab",
+                    "surface-bright": "#373a38",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "on-tertiary-container": "#ffdcbb",
+                    "on-secondary-container": "#c0ecd6",
+                    "surface-container": "#1d211e",
+                    "surface-variant": "#414943",
+                    "on-surface-variant": "#c0c9c2",
+                    "on-background": "#e1e3e1",
+                    "surface-container-low": "#191c1b",
+                    "on-error-container": "#ffdad6",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Be Vietnam Pro"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-32 transition-colors duration-300">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-variant/20 transition-colors active:scale-95 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="text-xl font-extrabold tracking-tighter text-primary">Cholo</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full bg-primary-container text-on-primary-container transition-colors active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsZMtzB3VcsUVuf9onAf2yYoYNy_bf0Xo9RHtozI74NbGSyKv0QqHc0HO85NARQ7I613DvQc-PuanrgTYXOvnnVa7yxKX-ZG_KYHU5wI3lbt_jCOMpbY8kS2Ug_DD1HNqvB9fnNEgKx1-iwEIIKw9kd8KQyBuM0Yx-AYVw3Ff6m0G8e9TcytepfgZHiKpAnKxBaCBot_XZL7imcDuW1C-xNpXs6U7RuOwoPHVsbhdO7vFT3rOJZN_PE2C7enxSbO00oTN7N280Du2h"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-6">
+<!-- Progress Stepper -->
+<div class="mb-8">
+<div class="flex items-center justify-between max-w-md mx-auto mb-4">
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Dates</span>
+</div>
+<div class="flex-1 h-[2px] mx-4 bg-primary"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center ring-4 ring-primary/20">
+<span class="text-xs font-bold">2</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Location</span>
+</div>
+<div class="flex-1 h-[2px] mx-4 bg-surface-container-highest"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="text-xs font-bold">3</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60">Services</span>
+</div>
+<div class="flex-1 h-[2px] mx-4 bg-surface-container-highest"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="text-xs font-bold">4</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60">Review</span>
+</div>
+</div>
+<div class="text-center">
+<h1 class="text-3xl font-bold tracking-tight text-on-surface mb-2">Where are we going?</h1>
+<p class="text-on-surface-variant max-w-lg mx-auto text-sm">Select a destination from the list or explore the interactive map.</p>
+</div>
+</div>
+<!-- Map Section -->
+<div class="mb-10">
+<div class="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/50">
+<iframe allowfullscreen="" class="w-full h-full border-0 grayscale invert brightness-90 contrast-90" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3746765.251413645!2d88.001391!3d23.684994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30adaaed8039a3af%3A0xfc611b0bb3005b4!2sBangladesh!5e0!3m2!1sen!2sbd!4v1715694200000!5m2!1sen!2sbd">
+</iframe>
+<div class="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-3xl"></div>
+</div>
+</div>
+<!-- Destination Selection Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
+<!-- Destination Card: Selected -->
+<div class="relative p-5 bg-surface-container-high rounded-3xl border-2 border-primary shadow-lg shadow-primary/10 group cursor-pointer">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center text-2xl">
+                    🏖️
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Cox's Bazar</h3>
+<p class="text-[10px] text-primary font-bold uppercase tracking-widest">Coastal Region</p>
+</div>
+</div>
+<div class="absolute top-4 right-4">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🐅
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Sundarbans</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Mangrove Forest</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🍵
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Sylhet</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Tea Estates</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    ⛰️
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Bandarban</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Cloudy Peaks</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🛶
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Rangamati</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Hill Tracts</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🍃
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Sreemangal</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Rainforest</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🏝️
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Saint Martin</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Coral Island</p>
+</div>
+</div>
+</div>
+<!-- Destination Card -->
+<div class="p-5 bg-surface-container-low rounded-3xl border-2 border-transparent hover:border-outline-variant transition-all cursor-pointer group">
+<div class="flex flex-col h-full gap-3">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-highest flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🌅
+                </div>
+<div>
+<h3 class="font-bold text-base text-on-surface">Kuakata</h3>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Daughter of Ocean</p>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Section -->
+<div class="sticky bottom-24 bg-background/80 backdrop-blur-sm py-4">
+<button class="w-full py-5 px-8 rounded-full bg-primary text-on-primary font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 group active:scale-95 transition-all max-w-lg mx-auto">
+            Find Services
+            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container/80 backdrop-blur-lg border-t border-outline-variant/30 rounded-t-3xl md:hidden">
+<div class="flex justify-around items-center px-4 pt-3 pb-8">
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-5 py-2 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+</div>
+</div>
+</nav>
+</body></html>

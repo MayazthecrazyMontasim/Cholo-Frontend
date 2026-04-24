@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#1D9E75",
+                    "on-primary": "#FFFFFF",
+                    "primary-container": "#D1F2E7",
+                    "on-primary-container": "#002116",
+                    "surface": "#F8FAF9",
+                    "on-surface": "#191C1B",
+                    "surface-container": "#ffffff",
+                    "outline": "#707974",
+                    "outline-variant": "#BFC9C3",
+                    "background": "#F0F4F2",
+                    "secondary-container": "#D6E8DE",
+                    "on-secondary-container": "#002116"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "2xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Be Vietnam Pro"],
+                    "display": ["Be Vietnam Pro"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-headline { font-family: 'Be Vietnam Pro', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="travel_explore" style="font-variation-settings: 'FILL' 1;">travel_explore</span>
+<h1 class="text-on-surface font-black tracking-tight text-2xl font-headline">Cholo</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-outline hover:bg-secondary-container/30 transition-colors p-2 rounded-xl active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-primary hover:bg-primary-container/30 transition-colors p-2 rounded-xl active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="dark_mode" style="font-variation-settings: 'FILL' 0;">dark_mode</span>
+</button><div class="w-10 h-10 rounded-full border-2 border-primary/20 overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="portrait of a young smiling man with a beard in warm sunlight with soft blurred greenery background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfeN4VeNX5jpAxSyj1mFWXgd48KlOX5OJ8vlInqXZbGxLE8XVMryyj7nyghHiX8GFFKidqbfEENhryiU4fQeAnSAygCxYPk15ymqtn9Pf6vQLq5VHVh1RIa1ywSVrLO6OsyhhfTsRQF3jbi3zn6RrgWUl-5gmH1696iUndezNXP_NpmPJfxriBrUFJzpxmxkl-3ilUNWlVUDlG_Hb__kX8hxppcfL8IeH52cX67WO5V8hI_9kRYghXLSCCVeuIJeGQcruIth2256Pt"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Welcome Header -->
+<section class="space-y-1">
+<p class="text-primary font-bold tracking-widest text-xs font-label uppercase">WELCOME BACK</p>
+<h2 class="text-3xl font-extrabold font-headline text-on-surface">Hello, Explorer!</h2>
+</section>
+<!-- Feature Cards -->
+<div class="grid gap-4">
+<!-- Plan Your Journey -->
+<div class="bg-surface-container border border-outline-variant/50 rounded-2xl p-5 shadow-sm flex items-center gap-5 hover:border-primary/50 transition-all active:scale-[0.98] duration-150 group">
+<div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+</div>
+<div class="space-y-0.5 flex-grow">
+<h3 class="text-lg font-bold font-headline text-on-surface">Plan Your Journey</h3>
+<p class="text-outline text-sm leading-tight">AI-powered custom itineraries.</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Budget Calculator -->
+<div class="bg-surface-container border border-outline-variant/50 rounded-2xl p-5 shadow-sm flex items-center gap-5 hover:border-primary/50 transition-all active:scale-[0.98] duration-150 group">
+<div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div class="space-y-0.5 flex-grow">
+<h3 class="text-lg font-bold font-headline text-on-surface">Budget Calculator</h3>
+<p class="text-outline text-sm leading-tight">Estimate trip costs in real-time.</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Travel Destinations -->
+<div class="bg-surface-container border border-outline-variant/50 rounded-2xl p-5 shadow-sm flex items-center gap-5 hover:border-primary/50 transition-all active:scale-[0.98] duration-150 group">
+<div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="explore" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+<div class="space-y-0.5 flex-grow">
+<h3 class="text-lg font-bold font-headline text-on-surface">Travel Destinations</h3>
+<p class="text-outline text-sm leading-tight">Browse curated hidden gems.</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div><!-- Travis AI Bot -->
+<div class="bg-surface-container border border-outline-variant/50 rounded-2xl p-5 shadow-sm flex items-center gap-5 hover:border-primary/50 transition-all active:scale-[0.98] duration-150 group">
+<div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="robot_2" style="font-variation-settings: 'FILL' 1;">robot_2</span>
+</div>
+<div class="space-y-0.5 flex-grow">
+<div class="flex items-center gap-2">
+<h3 class="text-lg font-bold font-headline text-on-surface">Travis</h3>
+<span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-tighter">NEW</span>
+</div>
+<p class="text-outline text-sm leading-tight">Your personal travel bot.</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Secondary Section: Featured Destination -->
+<section class="space-y-4 pt-4">
+<h4 class="text-xl font-bold font-headline text-on-surface">Featured Destination</h4>
+<div class="relative w-full h-52 rounded-2xl overflow-hidden group shadow-md">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="dramatic sunset view of the Taj Mahal reflecting in the Yamuna River with golden orange sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-BYGRWKUkptaejlEZjgmwxR9aPMuuRbxhFcpyiGpfpc7wzlb5qo_6GiqkzSohyj5tsea-3GOF9xY9hP1LLFe7YgStdG14kGEtBY3ihQ6nmzsRdf9y_J7rsI9kWe3koRSqSSpFtl1FX3EdCLQ3jNICQ0dMtgJT5aXeGjNLWH54lB5l-CzmVU-4Zi4PrhigNY0-CujbuG9XxKPNR2WAe9F-jAX8a9dFJEi9jB2SoEf6CAQ0ZtXEKJUBuk5eKl7_nDDtvAl7HTbA0Rij"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex flex-col justify-end p-6">
+<p class="text-primary-container font-bold text-xs tracking-widest uppercase mb-1">TOP RATED</p>
+<h5 class="text-white text-2xl font-bold font-headline">Agra, India</h5>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-t border-outline-variant/30 shadow-lg rounded-t-3xl flex justify-around items-center px-4 py-3 pb-safe">
+<!-- Explore (Active) -->
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/40 rounded-2xl px-5 py-2 active:scale-90 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="explore" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-body text-[11px] font-bold mt-1">Explore</span>
+</a>
+<!-- Planner -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="font-body text-[11px] font-medium mt-1">Planner</span>
+</a>
+<!-- Saved -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-body text-[11px] font-medium mt-1">Saved</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary active:scale-90 transition-all px-5" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-body text-[11px] font-medium mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

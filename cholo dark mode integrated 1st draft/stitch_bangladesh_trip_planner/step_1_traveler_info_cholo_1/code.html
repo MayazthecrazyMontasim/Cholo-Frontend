@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#1D9E75", // Bengal Breeze Teal
+                    "primary-container": "#E8F5F1",
+                    "on-primary": "#FFFFFF",
+                    "secondary": "#BA7517", // Bengal Breeze Amber
+                    "secondary-container": "#F8F1E8",
+                    "on-secondary": "#FFFFFF",
+                    "tertiary": "#BA7517",
+                    "surface": "#F8F9FA",
+                    "on-surface": "#191C1D",
+                    "surface-container-lowest": "#FFFFFF",
+                    "surface-container-low": "#F3F4F5",
+                    "surface-container-highest": "#E1E3E4",
+                    "outline": "#6D7A73",
+                    "on-surface-variant": "#3D4943"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans", "Hind Siliguri", "sans-serif"],
+                    "body": ["Plus Jakarta Sans", "Hind Siliguri", "sans-serif"],
+                    "label": ["Plus Jakarta Sans", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
+<div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95" data-icon="arrow_back">arrow_back</button>
+<span class="text-xl font-extrabold tracking-tighter text-primary">Cholo</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container border-2 border-white shadow-sm overflow-hidden"><button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95 mr-2" data-icon="dark_mode">dark_mode</button>
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling professional person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ"/>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-8 md:py-12">
+<!-- Progress Section -->
+<div class="mb-10">
+<div class="flex justify-between items-end mb-4">
+<div>
+<span class="text-[11px] uppercase tracking-[0.15em] font-extrabold text-primary font-label">Step 1 of 4</span>
+<h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-on-surface mt-1">Plan Your Journey</h1>
+</div>
+<span class="text-sm font-semibold text-outline">25% Complete</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-1/4 bg-primary shadow-[0_0_10px_rgba(29,158,117,0.3)] transition-all duration-700 ease-out"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- Form Card Section -->
+<div class="md:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-surface-container-highest">
+<form class="space-y-8">
+<!-- Starting City -->
+<div class="space-y-3">
+<label class="block text-xs font-extrabold tracking-wider text-on-surface-variant uppercase">Where are you starting from?</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border-2 border-transparent rounded-2xl px-5 py-4 focus:border-primary focus:ring-0 text-on-surface font-semibold cursor-pointer transition-all">
+<option>Dhaka</option>
+<option>Chittagong</option>
+<option>Sylhet</option>
+<option>Rajshahi</option>
+<option>Khulna</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Travelers & Duration Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="space-y-3">
+<label class="block text-xs font-extrabold tracking-wider text-on-surface-variant uppercase">Travelers</label>
+<div class="flex items-center bg-surface-container-low rounded-2xl px-4 py-1 border-2 border-transparent focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-primary mr-3" data-icon="group">group</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-semibold py-3" max="20" min="1" type="number" value="2"/>
+</div>
+</div>
+<div class="space-y-3">
+<label class="block text-xs font-extrabold tracking-wider text-on-surface-variant uppercase">Duration (Days)</label>
+<div class="flex items-center bg-surface-container-low rounded-2xl px-4 py-1 border-2 border-transparent focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-primary mr-3" data-icon="calendar_today">calendar_today</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-semibold py-3" max="30" min="1" type="number" value="5"/>
+</div>
+</div>
+</div>
+<!-- Trip Style -->
+<div class="space-y-3">
+<label class="block text-xs font-extrabold tracking-wider text-on-surface-variant uppercase">Trip Style</label>
+<div class="grid grid-cols-3 gap-3">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-[11px] font-bold">Budget</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-primary-container border-2 border-primary transition-all shadow-sm active:scale-95" type="button">
+<span class="material-symbols-outlined text-primary" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-[11px] font-bold text-primary">Mid-range</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-surface-container-low hover:bg-primary-container transition-all border-2 border-transparent active:scale-95 group" type="button">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="diamond">diamond</span>
+<span class="text-[11px] font-bold">Luxury</span>
+</button>
+</div>
+</div>
+<!-- CTA -->
+<div class="pt-4">
+<button class="w-full bg-primary text-on-primary py-5 rounded-full font-bold text-lg shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+                        Choose Destination
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Contextual Editorial Card -->
+<div class="md:col-span-5 space-y-6">
+<div class="bg-primary text-on-primary rounded-[2.5rem] overflow-hidden relative group shadow-lg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+<img alt="Sundarbans landscape" class="w-full h-72 object-cover transform group-hover:scale-105 transition-transform duration-1000" data-alt="Beautiful aerial view of the Sundarbans mangrove forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr2Ay-mGfR0nKg41BM08SDDT5zsYoCGzcnDQ7-qnf6kUJQ3KVnFiuC0bn0HiWB14fbRxqXVzzOBzKvgz1JRLkLypfE1Se4njbNk5J_KC3BJHrb9rF3-n3Syp7wOpBvj7ztVttCIJY16R5VGKlP2qJwrjlu5R2KfuDHKksTgBpADK1sLc4o97vbCzKA3HCAdD2JHTY3gZ9n5O0xYkex1b5GTEcMgE3_tQCLMAnGN8u4akSkHnFQq06Ku7Qv14ukUXbpAH58O87MrSl6"/>
+<div class="absolute bottom-0 left-0 p-8 z-20 w-full">
+<span class="bg-secondary text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block shadow-sm">Curated Pick</span>
+<h3 class="text-2xl font-extrabold leading-tight">The Delta's Whisper</h3>
+<p class="text-white/80 text-sm mt-2 font-medium">Discover hidden trails in the Sundarbans mangrove forest this season.</p>
+</div>
+</div>
+<div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-surface-container-highest">
+<h4 class="font-extrabold text-secondary text-[11px] uppercase tracking-[0.2em] mb-4">Travel Tip</h4>
+<p class="text-on-surface-variant leading-relaxed italic text-sm">"Starting from Dhaka gives you the best access to overnight launch trips to Barisal—the Venice of the East."</p>
+<div class="flex items-center gap-3 mt-6">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="lightbulb">lightbulb</span>
+</div>
+<span class="text-xs font-bold text-on-surface-variant">Plan better with local insights</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
