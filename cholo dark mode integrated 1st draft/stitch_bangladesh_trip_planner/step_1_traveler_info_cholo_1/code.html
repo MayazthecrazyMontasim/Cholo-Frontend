@@ -238,22 +238,15 @@
 
     // Form submission
     function handleFormSubmit() {
-        console.log('handleFormSubmit called!');
-        
         const startCity = document.querySelector('select').value;
         const travelers = parseInt(document.querySelector('input[type="number"]:first-of-type').value);
         const duration = parseInt(document.querySelector('input[type="number"]:last-of-type').value);
 
-        console.log('Form data:', { startCity, travelers, duration, selectedTripStyle });
-
         // Validation
         if (!startCity || travelers < 1 || travelers > 20 || duration < 1 || duration > 30) {
-            console.log('Validation failed');
             alert('Please fill in all fields with valid values');
             return;
         }
-
-        console.log('Validation passed, saving trip data...');
 
         // Save trip data
         const tripData = saveTripData({
@@ -265,9 +258,6 @@
                 timestamp: new Date().toISOString()
             }
         });
-
-        console.log('Trip data saved:', tripData);
-        console.log('Navigating to next step...');
 
         // Navigate to next step
         window.location.href = '../step_2_destination_picker_cholo_1/code.html';
@@ -318,30 +308,11 @@
 
         // Add form submission handler
         const submitButton = document.querySelector('button[type="button"]');
-        console.log('Found button:', submitButton);
-        console.log('Button text:', submitButton ? submitButton.textContent : 'Button not found');
         
-        if (submitButton && submitButton.textContent.includes('Choose Destination')) {
-            console.log('Adding click listener to Choose Destination button');
+        if (submitButton) {
             submitButton.addEventListener('click', (e) => {
-                console.log('Choose Destination button clicked!');
                 e.preventDefault();
                 handleFormSubmit();
-            });
-        } else {
-            // Fallback: try to find button by text content
-            const allButtons = document.querySelectorAll('button');
-            console.log('All buttons found:', allButtons.length);
-            allButtons.forEach((btn, index) => {
-                console.log(`Button ${index}:`, btn.textContent);
-                if (btn.textContent.includes('Choose Destination')) {
-                    console.log('Adding click listener to button by text match');
-                    btn.addEventListener('click', (e) => {
-                        console.log('Choose Destination button clicked via fallback!');
-                        e.preventDefault();
-                        handleFormSubmit();
-                    });
-                }
             });
         }
 
