@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>JavaScript Test - Cholo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">JavaScript Execution Test</h1>
+        
+        <div class="space-y-4">
+            <div class="p-4 bg-blue-50 rounded">
+                <h2 class="font-semibold text-blue-800">Test 1: Basic JavaScript</h2>
+                <button onclick="testBasicJS()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Test Basic JavaScript
+                </button>
+                <div id="basicResult" class="mt-2 text-sm text-gray-600"></div>
+            </div>
+            
+            <div class="p-4 bg-green-50 rounded">
+                <h2 class="font-semibold text-green-800">Test 2: Form Handling</h2>
+                <form onsubmit="testForm(event)" class="mt-2 space-y-2">
+                    <input type="text" id="testInput" placeholder="Enter text" class="w-full px-3 py-2 border rounded">
+                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                        Test Form
+                    </button>
+                </form>
+                <div id="formResult" class="mt-2 text-sm text-gray-600"></div>
+            </div>
+            
+            <div class="p-4 bg-purple-50 rounded">
+                <h2 class="font-semibold text-purple-800">Test 3: localStorage</h2>
+                <button onclick="testLocalStorage()" class="mt-2 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                    Test localStorage
+                </button>
+                <div id="storageResult" class="mt-2 text-sm text-gray-600"></div>
+            </div>
+            
+            <div class="p-4 bg-orange-50 rounded">
+                <h2 class="font-semibold text-orange-800">Test 4: DOM Manipulation</h2>
+                <button onclick="testDOM()" class="mt-2 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600">
+                    Test DOM Manipulation
+                </button>
+                <div id="domResult" class="mt-2 text-sm text-gray-600"></div>
+            </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-gray-50 rounded">
+            <h2 class="font-semibold text-gray-800">Console Log</h2>
+            <div id="consoleLog" class="mt-2 text-xs text-gray-600 font-mono bg-gray-100 p-2 rounded max-h-32 overflow-y-auto">
+                Console output will appear here...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Console logging function
+        function log(message) {
+            console.log(message);
+            const logDiv = document.getElementById('consoleLog');
+            if (logDiv) {
+                logDiv.innerHTML = logDiv.innerHTML + '<br>' + message;
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
+        }
+
+        // Test 1: Basic JavaScript
+        function testBasicJS() {
+            log('Testing basic JavaScript...');
+            try {
+                const result = 2 + 2;
+                document.getElementById('basicResult').innerHTML = 
+                    '<span class="text-green-600">✓ Basic JavaScript works! 2 + 2 = ' + result + '</span>';
+                log('✓ Basic JavaScript test passed');
+                return true;
+            } catch (error) {
+                document.getElementById('basicResult').innerHTML = 
+                    '<span class="text-red-600">✗ Error: ' + error.message + '</span>';
+                log('✗ Basic JavaScript test failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Test 2: Form Handling
+        function testForm(event) {
+            event.preventDefault();
+            log('Testing form handling...');
+            try {
+                const input = document.getElementById('testInput');
+                const value = input.value;
+                document.getElementById('formResult').innerHTML = 
+                    '<span class="text-green-600">✓ Form works! Input: "' + value + '"</span>';
+                log('✓ Form handling test passed: ' + value);
+                return true;
+            } catch (error) {
+                document.getElementById('formResult').innerHTML = 
+                    '<span class="text-red-600">✗ Error: ' + error.message + '</span>';
+                log('✗ Form handling test failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Test 3: localStorage
+        function testLocalStorage() {
+            log('Testing localStorage...');
+            try {
+                const testData = {
+                    message: 'Hello from localStorage!',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('cholo_test', JSON.stringify(testData));
+                
+                // Read from localStorage
+                const retrieved = JSON.parse(localStorage.getItem('cholo_test'));
+                
+                document.getElementById('storageResult').innerHTML = 
+                    '<span class="text-green-600">✓ localStorage works! Saved: "' + retrieved.message + '"</span>';
+                log('✓ localStorage test passed: ' + retrieved.message);
+                return true;
+            } catch (error) {
+                document.getElementById('storageResult').innerHTML = 
+                    '<span class="text-red-600">✗ Error: ' + error.message + '</span>';
+                log('✗ localStorage test failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Test 4: DOM Manipulation
+        function testDOM() {
+            log('Testing DOM manipulation...');
+            try {
+                const testDiv = document.createElement('div');
+                testDiv.innerHTML = '<span class="text-blue-600">✓ DOM manipulation works!</span>';
+                testDiv.className = 'mt-2 p-2 bg-blue-100 rounded';
+                
+                const resultDiv = document.getElementById('domResult');
+                resultDiv.innerHTML = '';
+                resultDiv.appendChild(testDiv);
+                
+                log('✓ DOM manipulation test passed');
+                return true;
+            } catch (error) {
+                document.getElementById('domResult').innerHTML = 
+                    '<span class="text-red-600">✗ Error: ' + error.message + '</span>';
+                log('✗ DOM manipulation test failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Initialize page
+        window.onload = function() {
+            log('JavaScript test page loaded successfully');
+            log('Testing environment: ' + navigator.userAgent);
+            log('Current URL: ' + window.location.href);
+            
+            // Auto-run basic test
+            setTimeout(testBasicJS, 500);
+        };
+
+        // Log page visibility changes
+        document.addEventListener('visibilitychange', function() {
+            log('Page visibility changed: ' + document.visibilityState);
+        });
+
+        log('JavaScript test page initialized');
+    </script>
+</body>
+</html>
