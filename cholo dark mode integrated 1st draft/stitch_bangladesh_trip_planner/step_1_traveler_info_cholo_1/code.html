@@ -231,5 +231,22 @@
     function goBack() {
         window.location.href = '../dashboard_cholo_1/code.html';
     }
+
+    // JavaScript execution test
+    function testJavaScript() {
+        try {
+            const testResult = 'Traveler Info JavaScript is working! ' + new Date().toISOString();
+            console.log(testResult);
+            alert(testResult);
+            return true;
+        } catch (error) {
+            console.error('JavaScript test failed:', error);
+            alert('JavaScript test failed: ' + error.message);
+            return false;
+        }
+    }
+    
+    // Auto-test JavaScript on page load
+    setTimeout(testJavaScript, 1000);
 </script>
 </body></html>
