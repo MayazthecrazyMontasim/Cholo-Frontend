@@ -261,7 +261,17 @@
 </div>
 <!-- CTA Section -->
 <div class="sticky bottom-24 bg-background/80 backdrop-blur-sm py-4">
-<button class="w-full py-5 px-8 rounded-full bg-primary text-on-primary font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 group active:scale-95 transition-all max-w-lg mx-auto" onclick="goToNextStepInline()">
+<button class="w-full py-5 px-8 rounded-full bg-primary text-on-primary font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 group active:scale-95 transition-all max-w-lg mx-auto" onclick="
+  const selectedDestinations = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}').step_2?.destinations || [];
+  if (selectedDestinations.length === 0) {
+    alert('Please select at least one destination!');
+    return;
+  }
+  const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
+  tripData.step_2 = {destinations: selectedDestinations, timestamp: new Date().toISOString()};
+  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+  window.location.href = '../travel_services_cholo_2/code.html';
+">
             Find Services
             <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </button>
