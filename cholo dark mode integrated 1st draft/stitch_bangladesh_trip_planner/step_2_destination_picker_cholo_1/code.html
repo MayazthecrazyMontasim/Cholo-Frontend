@@ -424,28 +424,40 @@
         ];
 
         // Add destination class to cards and click handlers
-        const cards = document.querySelectorAll('.grid > div[class*="rounded-3xl"]');
+        const cards = document.querySelectorAll('.grid div.rounded-3xl');
+        console.log('Found destination cards:', cards.length);
+        
         cards.forEach((card, index) => {
             if (destinations[index]) {
                 card.classList.add('destination-card');
+                console.log(`Setting up card ${index}: ${destinations[index].name}`);
                 
                 // Add click handler
-                card.addEventListener('click', () => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Clicked destination:', destinations[index].name);
                     selectDestination(destinations[index], card);
                 });
 
                 // Restore previous selections
                 if (selectedDestinations.some(dest => dest.name === destinations[index].name)) {
+                    console.log(`Restoring selection for: ${destinations[index].name}`);
                     selectDestination(destinations[index], card);
                 }
             }
         });
 
         // Add Find Services button handler
-        const findServicesBtn = document.querySelector('button[class*="rounded-full"]');
+        let findServicesBtn = document.querySelector('button[class*="rounded-full"]');
+        if (!findServicesBtn) {
+            findServicesBtn = document.querySelector('button');
+        }
+        console.log('Find Services button found:', !!findServicesBtn);
+        
         if (findServicesBtn) {
             findServicesBtn.addEventListener('click', (e) => {
                 e.preventDefault();
+                console.log('Find Services button clicked!');
                 goToNextStep();
             });
         }
