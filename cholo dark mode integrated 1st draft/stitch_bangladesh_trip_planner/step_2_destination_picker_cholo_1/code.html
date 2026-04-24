@@ -290,7 +290,6 @@
     function checkAuthentication() {
         const token = localStorage.getItem('cholo_token');
         if (!token) {
-            // Redirect to login if not authenticated
             window.location.href = '../login_page_cholo_matched_1/code.html';
             return false;
         }
@@ -333,14 +332,14 @@
     function selectDestination(destinationData, cardElement) {
         selectedDestination = destinationData;
         
-        // Update UI - remove previous selection
-        document.querySelectorAll('.border-primary').forEach(card => {
+        // Remove previous selection
+        document.querySelectorAll('.destination-card').forEach(card => {
             card.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
             card.classList.add('border-transparent');
-            // Remove checkmark
-            const checkmark = card.querySelector('.absolute .bg-primary');
-            if (checkmark) {
-                checkmark.parentElement.remove();
+            // Remove existing checkmark
+            const existingCheckmark = card.querySelector('.destination-checkmark');
+            if (existingCheckmark) {
+                existingCheckmark.remove();
             }
         });
         
@@ -349,16 +348,14 @@
         cardElement.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
         
         // Add checkmark
-        if (!cardElement.querySelector('.absolute .bg-primary')) {
-            const checkmark = document.createElement('div');
-            checkmark.className = 'absolute top-4 right-4';
-            checkmark.innerHTML = `
-                <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                    <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
-                </div>
-            `;
-            cardElement.appendChild(checkmark);
-        }
+        const checkmark = document.createElement('div');
+        checkmark.className = 'destination-checkmark absolute top-4 right-4';
+        checkmark.innerHTML = `
+            <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+            </div>
+        `;
+        cardElement.appendChild(checkmark);
     }
 
     // Navigate to next step
@@ -376,7 +373,7 @@
             }
         });
 
-        // Check if next step exists, otherwise go to dashboard
+        // Navigate to dashboard
         window.location.href = '../dashboard_cholo_1/code.html';
     }
 
@@ -388,9 +385,6 @@
         
         if (newTheme === 'dark') {
             window.location.href = '../step_2_destination_picker_cholo_2/code.html';
-        } else {
-            // Already in light mode
-            location.reload();
         }
     }
 
@@ -404,72 +398,59 @@
         // Update profile picture
         updateProfilePicture();
 
-        // Load existing trip data if available
+        // Load existing trip data
         const tripData = getTripData();
         if (tripData.step_2 && tripData.step_2.destination) {
             selectedDestination = tripData.step_2.destination;
-            // Restore selection UI
-            const destinationCards = document.querySelectorAll('.cursor-pointer');
-            destinationCards.forEach(card => {
-                const cardTitle = card.querySelector('h3')?.textContent;
-                if (cardTitle === selectedDestination.name) {
-                    selectDestination(selectedDestination, card);
-                }
-            });
         }
 
-        // Add click handlers to destination cards
-        const destinationCards = document.querySelectorAll('[class*="rounded-3xl"]');
-        console.log('Found destination cards:', destinationCards.length);
-        
-        destinationCards.forEach((card, index) => {
-            const destinations = [
-                { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
-                { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
-                { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
-                { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
-                { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
-                { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
-                { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
-                { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
-            ];
-            
-            console.log(`Card ${index}:`, card.textContent);
-            
+        // Define destinations data
+        const destinations = [
+            { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
+            { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
+            { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
+            { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
+            { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
+            { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
+            { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
+            { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
+        ];
+
+        // Add destination class to cards and click handlers
+        const cards = document.querySelectorAll('.grid > div[class*="rounded-3xl"]');
+        cards.forEach((card, index) => {
             if (destinations[index]) {
+                card.classList.add('destination-card');
+                
+                // Add click handler
                 card.addEventListener('click', () => {
-                    console.log('Clicked destination:', destinations[index].name);
                     selectDestination(destinations[index], card);
                 });
+
+                // Restore previous selection if it matches
+                if (selectedDestination && destinations[index].name === selectedDestination.name) {
+                    selectDestination(destinations[index], card);
+                }
             }
         });
 
-        // Add "Find Services" button handler - try multiple selectors
-        let findServicesBtn = document.querySelector('.group.active\\:scale-95');
-        if (!findServicesBtn) {
-            findServicesBtn = document.querySelector('button[class*="rounded-full"]');
-        }
-        if (!findServicesBtn) {
-            findServicesBtn = document.querySelector('button');
-        }
-        
-        console.log('Find Services button found:', !!findServicesBtn);
+        // Add Find Services button handler
+        const findServicesBtn = document.querySelector('button[class*="rounded-full"]');
         if (findServicesBtn) {
             findServicesBtn.addEventListener('click', (e) => {
-                console.log('Find Services button clicked!');
                 e.preventDefault();
                 goToNextStep();
             });
         }
 
         // Add theme toggle handler
-        const themeToggle = document.querySelector('.text-primary[data-icon="dark_mode"]');
+        const themeToggle = document.querySelector('button[data-icon="dark_mode"]');
         if (themeToggle) {
             themeToggle.addEventListener('click', toggleTheme);
         }
 
         // Add back button handler
-        const backButton = document.querySelector('.text-emerald-800[data-icon="arrow_back"]');
+        const backButton = document.querySelector('button[data-icon="arrow_back"]');
         if (backButton) {
             backButton.addEventListener('click', () => {
                 window.location.href = '../step_1_traveler_info_cholo_1/code.html';
@@ -480,9 +461,8 @@
         const navItems = document.querySelectorAll('.md\\:hidden .flex-col');
         navItems.forEach((item, index) => {
             item.addEventListener('click', () => {
-                const routes = ['../dashboard_cholo_1/code.html', '#', '#', '#'];
-                if (index === 0 && routes[index] !== '#') {
-                    window.location.href = routes[index];
+                if (index === 0) {
+                    window.location.href = '../dashboard_cholo_1/code.html';
                 }
             });
         });
