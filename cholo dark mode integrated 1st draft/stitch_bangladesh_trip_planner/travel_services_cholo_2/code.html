@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cholo - Travel Services</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&amp;family=Be+Vietnam+Pro:wght@700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0b0f0d",
+                    "on-secondary": "#003926",
+                    "secondary-fixed": "#c0ecd6",
+                    "tertiary": "#ffb869",
+                    "secondary-fixed-dim": "#a5d0ba",
+                    "on-surface": "#e1e3e1",
+                    "inverse-primary": "#006c4e",
+                    "surface-container-high": "#282b29",
+                    "inverse-surface": "#e1e3e1",
+                    "error-container": "#93000a",
+                    "on-tertiary-fixed": "#2b1700",
+                    "on-secondary-fixed-variant": "#264e3e",
+                    "on-primary": "#003926",
+                    "secondary": "#a5d0ba",
+                    "surface-container-highest": "#333534",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary": "#482900",
+                    "primary-fixed-dim": "#68dbae",
+                    "outline": "#8b938d",
+                    "on-primary-fixed-variant": "#00513a",
+                    "on-primary-fixed": "#002115",
+                    "surface-dim": "#111412",
+                    "tertiary-container": "#673d00",
+                    "surface-tint": "#68dbae",
+                    "on-primary-container": "#86f8c9",
+                    "primary": "#68dbae",
+                    "primary-fixed": "#86f8c9",
+                    "background": "#111412",
+                    "outline-variant": "#414943",
+                    "inverse-on-surface": "#2e3130",
+                    "primary-container": "#00513a",
+                    "surface": "#111412",
+                    "secondary-container": "#264e3e",
+                    "on-secondary-fixed": "#002115",
+                    "error": "#ffb4ab",
+                    "surface-bright": "#373a38",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "on-tertiary-container": "#ffdcbb",
+                    "on-secondary-container": "#c0ecd6",
+                    "surface-container": "#1d211e",
+                    "surface-variant": "#414943",
+                    "on-surface-variant": "#c0c9c2",
+                    "on-background": "#e1e3e1",
+                    "surface-container-low": "#191c1b",
+                    "on-error-container": "#ffdad6",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Be Vietnam Pro", "sans-serif"],
+                    "body": ["Hind Siliguri", "sans-serif"],
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Hind Siliguri', sans-serif; }
+        h1, h2, h3 { font-family: 'Be Vietnam Pro', sans-serif; }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col transition-colors duration-300">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-variant/20 transition-colors active:scale-95 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<span class="text-xl font-extrabold tracking-tighter text-primary">Cholo</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full bg-primary-container text-on-primary-container transition-colors active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsZMtzB3VcsUVuf9onAf2yYoYNy_bf0Xo9RHtozI74NbGSyKv0QqHc0HO85NARQ7I613DvQc-PuanrgTYXOvnnVa7yxKX-ZG_KYHU5wI3lbt_jCOMpbY8kS2Ug_DD1HNqvB9fnNEgKx1-iwEIIKw9kd8KQyBuM0Yx-AYVw3Ff6m0G8e9TcytepfgZHiKpAnKxBaCBot_XZL7imcDuW1C-xNpXs6U7RuOwoPHVsbhdO7vFT3rOJZN_PE2C7enxSbO00oTN7N280Du2h"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 pt-6 pb-20">
+<!-- Selected Destinations -->
+<div class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-3xl font-bold tracking-tight text-on-surface mb-2">Travel Services</h1>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium" id="destinationCount">0 destinations</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2" id="selectedDestinations">
+<!-- Destinations will be populated here -->
+</div>
+</div>
+
+<!-- Services Filter -->
+<div class="mb-8">
+<div class="flex gap-2 overflow-x-auto pb-2">
+<button class="service-filter px-4 py-2 bg-primary text-on-primary rounded-full font-medium whitespace-nowrap" data-service="all">All Services</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="hotels">Hotels</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="transport">Transport</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="restaurants">Restaurants</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="attractions">Attractions</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="shopping">Shopping</button>
+<button class="service-filter px-4 py-2 bg-surface-container border border-outline-variant rounded-full font-medium whitespace-nowrap hover:bg-surface-container-high transition-colors" data-service="emergency">Emergency</button>
+</div>
+</div>
+
+<!-- Services Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
+<!-- Services will be populated here -->
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container/80 backdrop-blur-lg border-t border-outline-variant/30 rounded-t-3xl md:hidden">
+<div class="flex justify-around items-center px-4 pt-3 pb-8">
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-5 py-2 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+</div>
+</div>
+</nav>
+</body>
+<script>
+    // Check authentication on page load
+    function checkAuthentication() {
+        const token = localStorage.getItem('cholo_token');
+        if (!token) {
+            window.location.href = '../login_page_cholo_matched_2/code.html';
+            return false;
+        }
+        return true;
+    }
+
+    // Get current user data
+    function getCurrentUser() {
+        const currentUser = localStorage.getItem('current_user');
+        return currentUser ? JSON.parse(currentUser) : null;
+    }
+
+    // Update profile picture with user initial
+    function updateProfilePicture() {
+        const user = getCurrentUser();
+        if (user) {
+            const profileImg = document.querySelector('img[alt="User profile"]');
+            if (profileImg) {
+                const initial = (user.fullname || user.username || 'U').charAt(0).toUpperCase();
+                profileImg.src = `https://ui-avatars.com/api/?name=${initial}&background=68dbae&color=111412&size=40&font-size=20`;
+            }
+        }
+    }
+
+    // Get trip data
+    function getTripData() {
+        const tripData = localStorage.getItem('cholo_trip_data');
+        return tripData ? JSON.parse(tripData) : {};
+    }
+
+    // Services data for each destination
+    const destinationServices = {
+        "Cox's Bazar": {
+            hotels: [
+                { name: "Sea Crown Hotel", rating: 4.5, price: "$$$", phone: "+880-1234-567890", address: "Kolatoli Beach Road" },
+                { name: "Long Beach Hotel", rating: 4.3, price: "$$$", phone: "+880-1234-567891", address: "Inani Beach Road" },
+                { name: "Hotel Sea Palace", rating: 4.0, price: "$$", phone: "+880-1234-567892", address: "Laboni Beach" }
+            ],
+            transport: [
+                { name: "Shohagh Paribahan", type: "Bus Counter", phone: "+880-1234-567893", address: "Bus Station Road" },
+                { name: "Green Line", type: "Bus Counter", phone: "+880-1234-567894", address: "Kalatali Road" },
+                { name: "Cox's Bazar Airport", type: "Airport", phone: "+880-1234-567895", address: "Airport Road" }
+            ],
+            restaurants: [
+                { name: "Mermaid Cafe", cuisine: "Seafood", rating: 4.4, phone: "+880-1234-567896", address: "Kolatoli Beach" },
+                { name: "Jhawbon Restaurant", cuisine: "Bangladeshi", rating: 4.2, phone: "+880-1234-567897", address: "Main Road" },
+                { name: "Pansi Restaurant", cuisine: "International", rating: 4.1, phone: "+880-1234-567898", address: "Hotel Motel Zone" }
+            ],
+            attractions: [
+                { name: "Kolatoli Beach", type: "Beach", rating: 4.6, phone: "+880-1234-567899", address: "Beach Road" },
+                { name: "Inani Beach", type: "Beach", rating: 4.5, phone: "+880-1234-567900", address: "Inani" },
+                { name: "Himchori Waterfall", type: "Waterfall", rating: 4.3, phone: "+880-1234-567901", address: "Himchori" }
+            ],
+            shopping: [
+                { name: "Burmese Market", type: "Local Market", phone: "+880-1234-567902", address: "Main Market Area" },
+                { name: "Cox's Bazar Shopping Mall", type: "Shopping Mall", phone: "+880-1234-567903", address: "Central Road" }
+            ],
+            emergency: [
+                { name: "Cox's Bazar Medical College Hospital", type: "Hospital", phone: "+880-1234-567904", address: "College Road" },
+                { name: "Cox's Bazar Police Station", type: "Police", phone: "+880-1234-567905", address: "Station Road" }
+            ]
+        },
+        "Sundarbans": {
+            hotels: [
+                { name: "Sundarban Resort", rating: 4.2, price: "$$$", phone: "+880-1234-567906", address: "Mongla Port" },
+                { name: "Forest Rest House", rating: 3.8, price: "$$", phone: "+880-1234-567907", address: "Karamjal" }
+            ],
+            transport: [
+                { name: "Mongla Port Authority", type: "Port", phone: "+880-1234-567908", address: "Mongla" },
+                { name: "Launch Terminal", type: "Launch", phone: "+880-1234-567909", address: "Mongla Port" }
+            ],
+            restaurants: [
+                { name: "Forest Cafe", cuisine: "Local", rating: 3.9, phone: "+880-1234-567910", address: "Karamjal" },
+                { name: "Mongla Hotel Restaurant", cuisine: "Bangladeshi", rating: 3.7, phone: "+880-1234-567911", address: "Mongla" }
+            ],
+            attractions: [
+                { name: "Sundarbans National Park", type: "National Park", rating: 4.8, phone: "+880-1234-567912", address: "Sundarbans" },
+                { name: "Karamjal Wildlife Center", type: "Wildlife", rating: 4.5, phone: "+880-1234-567913", address: "Karamjal" },
+                { name: "Hiron Point", type: "Wildlife", rating: 4.6, phone: "+880-1234-567914", address: "Sundarbans" }
+            ],
+            shopping: [
+                { name: "Local Handicraft Shop", type: "Local Market", phone: "+880-1234-567915", address: "Mongla" }
+            ],
+            emergency: [
+                { name: "Mongla Upazila Health Complex", type: "Hospital", phone: "+880-1234-567916", address: "Mongla" },
+                { name: "Forest Department Office", type: "Emergency", phone: "+880-1234-567917", address: "Karamjal" }
+            ]
+        },
+        "Sylhet": {
+            hotels: [
+                { name: "Hotel Noorjahan Grand", rating: 4.4, price: "$$$", phone: "+880-1234-567918", address: "Zindabazar" },
+                { name: "Rose View Hotel", rating: 4.2, price: "$$$", phone: "+880-1234-567919", address: "Shahjalal Road" },
+                { name: "Hotel Holy Garden", rating: 4.0, price: "$$", phone: "+880-1234-567920", address: "Ambarkhana" }
+            ],
+            transport: [
+                { name: "Shahjalal International Airport", type: "Airport", phone: "+880-1234-567921", address: "Airport Road" },
+                { name: "Sylhet Railway Station", type: "Train Station", phone: "+880-1234-567922", address: "Station Road" },
+                { name: "Hanif Bus Counter", type: "Bus Counter", phone: "+880-1234-567923", address: "Kumarpara" }
+            ],
+            restaurants: [
+                { name: "Panshi Restaurant", cuisine: "Bangladeshi", rating: 4.3, phone: "+880-1234-567924", address: "Zindabazar" },
+                { name: "Grand Sultan Tea Resort", cuisine: "International", rating: 4.5, phone: "+880-1234-567925", address: "Srimangal" },
+                { name: "Fusion Kitchen", cuisine: "Fusion", rating: 4.1, phone: "+880-1234-567926", address: "Ambarkhana" }
+            ],
+            attractions: [
+                { name: "Jaflong", type: "Hill Station", rating: 4.7, phone: "+880-1234-567927", address: "Jaflong" },
+                { name: "Lalakhal", type: "Lake", rating: 4.6, phone: "+880-1234-567928", address: "Lalakhal" },
+                { name: "Madhabkunda Waterfall", type: "Waterfall", rating: 4.4, phone: "+880-1234-567929", address: "Barlekha" }
+            ],
+            shopping: [
+                { name: "Zindabazar Shopping Complex", type: "Shopping Mall", phone: "+880-1234-567930", address: "Zindabazar" },
+                { name: "Tea Garden Shops", type: "Local Market", phone: "+880-1234-567931", address: "Srimangal" }
+            ],
+            emergency: [
+                { name: "Sylhet MAG Osmani Medical College", type: "Hospital", phone: "+880-1234-567932", address: "Medical Road" },
+                { name: "Sylhet Police Station", type: "Police", phone: "+880-1234-567933", address: "Station Road" }
+            ]
+        },
+        "Bandarban": {
+            hotels: [
+                { name: "Hill Side Resort", rating: 4.1, price: "$$", phone: "+880-1234-567934", address: "Bandarban Town" },
+                { name: "Meghla Tourist Spot", rating: 3.9, price: "$", phone: "+880-1234-567935", address: "Meghla" }
+            ],
+            transport: [
+                { name: "Bandarban Bus Terminal", type: "Bus Counter", phone: "+880-1234-567936", address: "Bus Stand" }
+            ],
+            restaurants: [
+                { name: "Hill Tribe Restaurant", cuisine: "Local", rating: 3.8, phone: "+880-1234-567937", address: "Town Center" }
+            ],
+            attractions: [
+                { name: "Tajindong Peak", type: "Mountain", rating: 4.8, phone: "+880-1234-567938", address: "Ruma" },
+                { name: "Keokradong", type: "Mountain", rating: 4.7, phone: "+880-1234-567939", address: "Ruma" },
+                { name: "Chimbuk Hill", type: "Hill", rating: 4.5, phone: "+880-1234-567940", address: "Chimbuk" }
+            ],
+            shopping: [
+                { name: "Local Tribal Market", type: "Local Market", phone: "+880-1234-567941", address: "Town Market" }
+            ],
+            emergency: [
+                { name: "Bandarban Sadar Hospital", type: "Hospital", phone: "+880-1234-567942", address: "Hospital Road" }
+            ]
+        },
+        "Rangamati": {
+            hotels: [
+                { name: "Parjatan Hotel", rating: 3.9, price: "$$", phone: "+880-1234-567943", address: "Tourist Complex" },
+                { name: "Kaptai Lake Resort", rating: 4.2, price: "$$$", phone: "+880-1234-567944", address: "Kaptai" }
+            ],
+            transport: [
+                { name: "Rangamati Bus Terminal", type: "Bus Counter", phone: "+880-1234-567945", address: "Bus Stand" }
+            ],
+            restaurants: [
+                { name: "Lake View Restaurant", cuisine: "Bangladeshi", rating: 4.0, phone: "+880-1234-567946", address: "Kaptai Road" }
+            ],
+            attractions: [
+                { name: "Kaptai Lake", type: "Lake", rating: 4.6, phone: "+880-1234-567947", address: "Kaptai" },
+                { name: "Shuvolong Falls", type: "Waterfall", rating: 4.4, phone: "+880-1234-567948", address: "Shuvolong" }
+            ],
+            shopping: [
+                { name: "Tribal Handicraft Center", type: "Local Market", phone: "+880-1234-567949", address: "Town Center" }
+            ],
+            emergency: [
+                { name: "Rangamati Medical College", type: "Hospital", phone: "+880-1234-567950", address: "College Road" }
+            ]
+        },
+        "Sreemangal": {
+            hotels: [
+                { name: "Tea Resort Hotel", rating: 4.3, price: "$$", phone: "+880-1234-567951", address: "Sreemangal" },
+                { name: "Lemon Garden Resort", rating: 4.1, price: "$$", phone: "+880-1234-567952", address: "Sreemangal" }
+            ],
+            transport: [
+                { name: "Sreemangal Railway Station", type: "Train Station", phone: "+880-1234-567953", address: "Station Road" }
+            ],
+            restaurants: [
+                { name: "Tea Garden Restaurant", cuisine: "Local", rating: 4.2, phone: "+880-1234-567954", address: "Tea Garden Area" }
+            ],
+            attractions: [
+                { name: "Lawachara National Park", type: "National Park", rating: 4.5, phone: "+880-1234-567955", address: "Sreemangal" },
+                { name: "Madhabpur Lake", type: "Lake", rating: 4.3, phone: "+880-1234-567956", address: "Madhabpur" }
+            ],
+            shopping: [
+                { name: "Tea Shop", type: "Local Market", phone: "+880-1234-567957", address: "Town Center" }
+            ],
+            emergency: [
+                { name: "Sreemangal Health Complex", type: "Hospital", phone: "+880-1234-567958", address: "Hospital Road" }
+            ]
+        },
+        "Saint Martin": {
+            hotels: [
+                { name: "Coral Blue Resort", rating: 4.2, price: "$$$", phone: "+880-1234-567959", address: "Saint Martin" },
+                { name: "Sea Beach Hotel", rating: 3.8, price: "$$", phone: "+880-1234-567960", address: "Beach Area" }
+            ],
+            transport: [
+                { name: "Saint Martin Jetty", type: "Jetty", phone: "+880-1234-567961", address: "Jetty Area" }
+            ],
+            restaurants: [
+                { name: "Island Restaurant", cuisine: "Seafood", rating: 4.1, phone: "+880-1234-567962", address: "Beach Area" }
+            ],
+            attractions: [
+                { name: "Chera Dip", type: "Island", rating: 4.6, phone: "+880-1234-567963", address: "Chera Dip" },
+                { name: "Narikel Jinjira", type: "Beach", rating: 4.4, phone: "+880-1234-567964", address: "Beach Area" }
+            ],
+            shopping: [
+                { name: "Local Market", type: "Local Market", phone: "+880-1234-567965", address: "Town Center" }
+            ],
+            emergency: [
+                { name: "Island Health Center", type: "Hospital", phone: "+880-1234-567966", address: "Health Center Road" }
+            ]
+        },
+        "Kuakata": {
+            hotels: [
+                { name: "Kuakata Beach Resort", rating: 4.0, price: "$$", phone: "+880-1234-567967", address: "Beach Area" },
+                { name: "Sea Crown Hotel", rating: 3.9, price: "$$", phone: "+880-1234-567968", address: "Main Road" }
+            ],
+            transport: [
+                { name: "Kuakata Bus Stand", type: "Bus Counter", phone: "+880-1234-567969", address: "Bus Stand" }
+            ],
+            restaurants: [
+                { name: "Sunset Restaurant", cuisine: "Bangladeshi", rating: 4.0, phone: "+880-1234-567970", address: "Beach Area" }
+            ],
+            attractions: [
+                { name: "Kuakata Beach", type: "Beach", rating: 4.5, phone: "+880-1234-567971", address: "Beach Area" },
+                { name: "Gangamati Reserved Forest", type: "Forest", rating: 4.2, phone: "+880-1234-567972", address: "Gangamati" }
+            ],
+            shopping: [
+                { name: "Local Market", type: "Local Market", phone: "+880-1234-567973", address: "Market Area" }
+            ],
+            emergency: [
+                { name: "Kuakata Health Complex", type: "Hospital", phone: "+880-1234-567974", address: "Health Complex Road" }
+            ]
+        }
+    };
+
+    let currentFilter = 'all';
+    let allServices = [];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!checkAuthentication()) {
+            return;
+        }
+
+        updateProfilePicture();
+        loadSelectedDestinations();
+        loadServices();
+        setupFilterButtons();
+        setupNavigation();
+    });
+
+    // Load selected destinations
+    function loadSelectedDestinations() {
+        const tripData = getTripData();
+        const destinations = tripData.step_2?.destinations || [];
+        
+        const container = document.getElementById('selectedDestinations');
+        const countElement = document.getElementById('destinationCount');
+        
+        container.innerHTML = '';
+        countElement.textContent = `${destinations.length} destination${destinations.length !== 1 ? 's' : ''}`;
+        
+        destinations.forEach(dest => {
+            const tag = document.createElement('span');
+            tag.className = 'px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium';
+            tag.textContent = `${dest.emoji} ${dest.name}`;
+            container.appendChild(tag);
+        });
+    }
+
+    // Load services for selected destinations
+    function loadServices() {
+        const tripData = getTripData();
+        const destinations = tripData.step_2?.destinations || [];
+        
+        allServices = [];
+        
+        destinations.forEach(dest => {
+            const services = destinationServices[dest.name];
+            if (services) {
+                // Add hotels
+                services.hotels?.forEach(hotel => {
+                    allServices.push({
+                        ...hotel,
+                        serviceType: 'hotels',
+                        destination: dest.name,
+                        icon: 'hotel',
+                        category: 'Hotels'
+                    });
+                });
+                
+                // Add transport
+                services.transport?.forEach(transport => {
+                    allServices.push({
+                        ...transport,
+                        serviceType: 'transport',
+                        destination: dest.name,
+                        icon: 'directions_bus',
+                        category: 'Transport'
+                    });
+                });
+                
+                // Add restaurants
+                services.restaurants?.forEach(restaurant => {
+                    allServices.push({
+                        ...restaurant,
+                        serviceType: 'restaurants',
+                        destination: dest.name,
+                        icon: 'restaurant',
+                        category: 'Restaurants'
+                    });
+                });
+                
+                // Add attractions
+                services.attractions?.forEach(attraction => {
+                    allServices.push({
+                        ...attraction,
+                        serviceType: 'attractions',
+                        destination: dest.name,
+                        icon: 'attractions',
+                        category: 'Attractions'
+                    });
+                });
+                
+                // Add shopping
+                services.shopping?.forEach(shop => {
+                    allServices.push({
+                        ...shop,
+                        serviceType: 'shopping',
+                        destination: dest.name,
+                        icon: 'shopping_bag',
+                        category: 'Shopping'
+                    });
+                });
+                
+                // Add emergency
+                services.emergency?.forEach(emergency => {
+                    allServices.push({
+                        ...emergency,
+                        serviceType: 'emergency',
+                        destination: dest.name,
+                        icon: 'emergency',
+                        category: 'Emergency'
+                    });
+                });
+            }
+        });
+        
+        displayServices(allServices);
+    }
+
+    // Display services
+    function displayServices(services) {
+        const grid = document.getElementById('servicesGrid');
+        grid.innerHTML = '';
+        
+        if (services.length === 0) {
+            grid.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-4">search_off</span>
+                    <p class="text-on-surface-variant">No services found for the selected criteria.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        services.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container-high rounded-2xl p-6 shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 transition-all';
+            
+            card.innerHTML = `
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary text-xl">${service.icon}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-bold text-on-surface mb-1">${service.name}</h3>
+                        <p class="text-sm text-on-surface-variant">${service.category} • ${service.destination}</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    ${service.rating ? `
+                        <div class="flex items-center gap-2">
+                            <div class="flex">
+                                ${generateStars(service.rating)}
+                            </div>
+                            <span class="text-sm text-on-surface-variant">${service.rating}</span>
+                        </div>
+                    ` : ''}
+                    
+                    ${service.price ? `
+                        <p class="text-sm font-medium text-primary">${service.price}</p>
+                    ` : ''}
+                    
+                    ${service.cuisine ? `
+                        <p class="text-sm text-on-surface-variant">${service.cuisine}</p>
+                    ` : ''}
+                    
+                    ${service.type ? `
+                        <p class="text-sm text-on-surface-variant">${service.type}</p>
+                    ` : ''}
+                    
+                    <p class="text-sm text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm align-middle">location_on</span>
+                        ${service.address}
+                    </p>
+                    
+                    <p class="text-sm text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm align-middle">call</span>
+                        ${service.phone}
+                    </p>
+                </div>
+                
+                <div class="flex gap-2 mt-4">
+                    <button class="flex-1 px-3 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium hover:brightness-110 transition-colors">
+                        <span class="material-symbols-outlined text-sm align-middle">call</span>
+                        Call
+                    </button>
+                    <button class="flex-1 px-3 py-2 bg-surface-container border border-outline-variant rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors">
+                        <span class="material-symbols-outlined text-sm align-middle">directions</span>
+                        Directions
+                    </button>
+                </div>
+            `;
+            
+            grid.appendChild(card);
+        });
+    }
+
+    // Generate star rating
+    function generateStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        let stars = '';
+        
+        for (let i = 0; i < fullStars; i++) {
+            stars += '<span class="material-symbols-outlined text-sm text-yellow-500">star</span>';
+        }
+        
+        if (hasHalfStar) {
+            stars += '<span class="material-symbols-outlined text-sm text-yellow-500">star_half</span>';
+        }
+        
+        const emptyStars = 5 - Math.ceil(rating);
+        for (let i = 0; i < emptyStars; i++) {
+            stars += '<span class="material-symbols-outlined text-sm text-on-surface-variant">star</span>';
+        }
+        
+        return stars;
+    }
+
+    // Setup filter buttons
+    function setupFilterButtons() {
+        const filterButtons = document.querySelectorAll('.service-filter');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const serviceType = button.dataset.service;
+                
+                // Update button styles
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-on-primary');
+                    btn.classList.add('bg-surface-container', 'border', 'border-outline-variant');
+                });
+                
+                button.classList.remove('bg-surface-container', 'border', 'border-outline-variant');
+                button.classList.add('bg-primary', 'text-on-primary');
+                
+                // Filter services
+                currentFilter = serviceType;
+                const filteredServices = serviceType === 'all' 
+                    ? allServices 
+                    : allServices.filter(service => service.serviceType === serviceType);
+                
+                displayServices(filteredServices);
+            });
+        });
+    }
+
+    // Setup navigation
+    function setupNavigation() {
+        // Theme toggle
+        const themeToggle = document.querySelector('button[data-icon="light_mode"]');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = localStorage.getItem('theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                
+                if (newTheme === 'light') {
+                    window.location.href = '../travel_services_cholo_1/code.html';
+                }
+            });
+        }
+
+        // Back button
+        const backButton = document.querySelector('button[data-icon="arrow_back"]');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                window.location.href = '../step_2_destination_picker_cholo_2/code.html';
+            });
+        }
+
+        // Bottom navigation
+        const navItems = document.querySelectorAll('.md\\:hidden .flex-col');
+        navItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                if (index === 0) {
+                    window.location.href = '../dashboard_cholo_2/code.html';
+                }
+            });
+        });
+    }
+</script>
+</html>

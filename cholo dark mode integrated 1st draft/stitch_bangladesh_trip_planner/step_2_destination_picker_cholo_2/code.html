@@ -331,54 +331,61 @@
         return updatedData;
     }
 
-    // Destination selection
-    let selectedDestination = null;
+    // Destination selection (multiple destinations)
+    let selectedDestinations = [];
     function selectDestination(destinationData, cardElement) {
-        selectedDestination = destinationData;
+        const isSelected = selectedDestinations.some(dest => dest.name === destinationData.name);
         
-        // Remove previous selection
-        document.querySelectorAll('.destination-card').forEach(card => {
-            card.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
-            card.classList.add('border-transparent');
-            // Remove existing checkmark
-            const existingCheckmark = card.querySelector('.destination-checkmark');
+        if (isSelected) {
+            // Remove from selection
+            selectedDestinations = selectedDestinations.filter(dest => dest.name !== destinationData.name);
+            
+            // Update UI - remove selection styling
+            cardElement.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
+            cardElement.classList.add('border-transparent');
+            
+            // Remove checkmark
+            const existingCheckmark = cardElement.querySelector('.destination-checkmark');
             if (existingCheckmark) {
                 existingCheckmark.remove();
             }
-        });
-        
-        // Add selection to clicked card
-        cardElement.classList.remove('border-transparent');
-        cardElement.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
-        
-        // Add checkmark
-        const checkmark = document.createElement('div');
-        checkmark.className = 'destination-checkmark absolute top-4 right-4';
-        checkmark.innerHTML = `
-            <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
-            </div>
-        `;
-        cardElement.appendChild(checkmark);
+        } else {
+            // Add to selection
+            selectedDestinations.push(destinationData);
+            
+            // Update UI - add selection styling
+            cardElement.classList.remove('border-transparent');
+            cardElement.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
+            
+            // Add checkmark
+            const checkmark = document.createElement('div');
+            checkmark.className = 'destination-checkmark absolute top-4 right-4';
+            checkmark.innerHTML = `
+                <div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+                </div>
+            `;
+            cardElement.appendChild(checkmark);
+        }
     }
 
-    // Navigate to next step
+    // Navigate to services page
     function goToNextStep() {
-        if (!selectedDestination) {
-            alert('Please select a destination first!');
+        if (selectedDestinations.length === 0) {
+            alert('Please select at least one destination!');
             return;
         }
 
         // Save destination data
         const tripData = saveTripData({
             step_2: {
-                destination: selectedDestination,
+                destinations: selectedDestinations,
                 timestamp: new Date().toISOString()
             }
         });
 
-        // Navigate to dashboard
-        window.location.href = '../dashboard_cholo_2/code.html';
+        // Navigate to services page
+        window.location.href = '../travel_services_cholo_2/code.html';
     }
 
     // Theme switching
@@ -404,8 +411,8 @@
 
         // Load existing trip data
         const tripData = getTripData();
-        if (tripData.step_2 && tripData.step_2.destination) {
-            selectedDestination = tripData.step_2.destination;
+        if (tripData.step_2 && tripData.step_2.destinations) {
+            selectedDestinations = tripData.step_2.destinations;
         }
 
         // Define destinations data
@@ -431,8 +438,8 @@
                     selectDestination(destinations[index], card);
                 });
 
-                // Restore previous selection if it matches
-                if (selectedDestination && destinations[index].name === selectedDestination.name) {
+                // Restore previous selections
+                if (selectedDestinations.some(dest => dest.name === destinations[index].name)) {
                     selectDestination(destinations[index], card);
                 }
             }
