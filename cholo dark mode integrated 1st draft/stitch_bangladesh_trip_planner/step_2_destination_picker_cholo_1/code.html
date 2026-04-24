@@ -154,7 +154,7 @@
 <!-- Destination Selection Grid (3 columns as per RAD) -->
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
 <!-- Destination Card: Selected -->
-<div class="relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-primary shadow-sm group cursor-pointer">
+<div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-primary shadow-sm group cursor-pointer" onclick="selectDestinationInline(0, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-primary-container/10 flex items-center justify-center text-2xl">
                     🏖️
@@ -171,7 +171,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(1, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🐅
@@ -183,7 +183,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(2, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🍵
@@ -195,7 +195,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(3, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     ⛰️
@@ -207,7 +207,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(4, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🛶
@@ -219,7 +219,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(5, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🍃
@@ -231,7 +231,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(6, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🏝️
@@ -243,7 +243,7 @@
 </div>
 </div>
 <!-- Destination Card -->
-<div class="p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="destination-card p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(7, this)">
 <div class="flex flex-col h-full gap-3">
 <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">
                     🌅
@@ -363,6 +363,25 @@
             `;
             cardElement.appendChild(checkmark);
         }
+    }
+
+    function selectDestinationInline(index, cardElement) {
+        const destinations = [
+            { name: "Cox's Bazar", type: 'Coastal Region', emoji: '🏖️' },
+            { name: 'Sundarbans', type: 'Mangrove Forest', emoji: '🐅' },
+            { name: 'Sylhet', type: 'Tea Estates', emoji: '🍵' },
+            { name: 'Bandarban', type: 'Cloudy Peaks', emoji: '⛰️' },
+            { name: 'Rangamati', type: 'Hill Tracts', emoji: '🛶' },
+            { name: 'Sreemangal', type: 'Rainforest', emoji: '🍃' },
+            { name: 'Saint Martin', type: 'Coral Island', emoji: '🏝️' },
+            { name: 'Kuakata', type: 'Daughter of Ocean', emoji: '🌅' }
+        ];
+
+        selectDestination(destinations[index], cardElement);
+    }
+
+    function goToNextStepInline() {
+        goToNextStep();
     }
 
     // Navigate to services page
