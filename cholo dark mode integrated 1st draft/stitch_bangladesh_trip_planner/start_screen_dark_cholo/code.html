@@ -75,7 +75,7 @@
 <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">travel_explore</span>
 <h1 class="font-headline font-black text-2xl tracking-tight text-on-primary">Cholo</h1>
 </div>
-<button class="w-12 h-12 flex items-center justify-center rounded-2xl bg-surface/40 backdrop-blur-md border border-white/10 shadow-sm text-primary hover:bg-surface/60 transition-colors">
+<button id="themeToggle" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-surface/40 backdrop-blur-md border border-white/10 shadow-sm text-primary hover:bg-surface/60 transition-colors">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
 </button>
 </div>
@@ -107,7 +107,7 @@
 </div>
 <!-- CTA Cluster -->
 <div class="mt-10 space-y-4">
-<button class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 group">
+<button onclick="window.location.href='../login_page_cholo_matched_1/code.html'" class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 group">
                 Get Started
                 <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </button>
@@ -118,12 +118,26 @@
 <!-- Secondary Links -->
 <div class="mt-8 text-center">
 <p class="text-on-surface-variant text-sm">
-                Already have an account? <a class="text-primary font-bold hover:underline" href="#">Log In</a>
+                Already have an account? <a class="text-primary font-bold hover:underline" href="../login_page_cholo_matched_1/code.html">Log In</a>
 </p>
 </div>
 </div>
 <!-- Decorative Elements -->
 <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 blur-[80px] rounded-full"></div>
 <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary-container/20 blur-[80px] rounded-full"></div>
+</div>
+<script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+
+    // If the user lands here but their preference is light, automatically redirect to light screen
+    if (localStorage.getItem('theme') === 'light') {
+        window.location.replace('../start_screen_cholo_matched/code.html');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        localStorage.setItem('theme', 'light');
+        window.location.href = '../start_screen_cholo_matched/code.html';
+    });
+</script>
 </main>
 </body></html>
