@@ -356,12 +356,12 @@
                 };
                 localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
                 
-                setStatusMessage(`Proceeding to services with ${selectedDestinations.length} destinations...`);
+                setStatusMessage(`Proceeding to traveler info with ${selectedDestinations.length} destinations...`);
                 setShowStatus(true);
                 
-                // Navigate to services page
+                // Navigate to traveler info page
                 setTimeout(() => {
-                    window.location.href = '../travel_services_cholo_1/code.html';
+                    window.location.href = '../step_1_traveler_info_cholo_1/code.html';
                 }, 1000);
             };
 
@@ -375,18 +375,26 @@
                 React.createElement('div', { className: 'progress-bar' }, [
                     React.createElement('div', { className: 'progress-step' }, [
                         React.createElement('div', { className: 'progress-circle inactive' }, '1'),
+                        React.createElement('div', { className: 'progress-label inactive' }, 'Start')
+                    ]),
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle inactive' }, '2'),
                         React.createElement('div', { className: 'progress-label inactive' }, 'Traveler Info')
                     ]),
                     React.createElement('div', { className: 'progress-step' }, [
-                        React.createElement('div', { className: 'progress-circle active' }, '2'),
+                        React.createElement('div', { className: 'progress-circle active' }, '3'),
                         React.createElement('div', { className: 'progress-label active' }, 'Location')
                     ]),
                     React.createElement('div', { className: 'progress-step' }, [
-                        React.createElement('div', { className: 'progress-circle inactive' }, '3'),
+                        React.createElement('div', { className: 'progress-circle inactive' }, '4'),
                         React.createElement('div', { className: 'progress-label inactive' }, 'Services')
                     ]),
                     React.createElement('div', { className: 'progress-step' }, [
-                        React.createElement('div', { className: 'progress-circle inactive' }, '4'),
+                        React.createElement('div', { className: 'progress-circle inactive' }, '5'),
+                        React.createElement('div', { className: 'progress-label inactive' }, 'Budget')
+                    ]),
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle inactive' }, '6'),
                         React.createElement('div', { className: 'progress-label inactive' }, 'Review')
                     ])
                 ]),
