@@ -70,7 +70,7 @@
 <div class="absolute inset-0 hero-gradient"></div>
 <!-- Branding Overlay - Deployment: 2025-04-25 -->
 <div class="absolute top-12 left-0 w-full px-8 flex justify-between items-center">
-<div class="w-12 h-12 invisible"></div><button onclick="window.location.reload()" class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm hover:bg-white/90 transition-colors">
+<div class="w-12 h-12 invisible"></div><button id="choloLogoBtn" class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm hover:bg-white/90 transition-colors cursor-pointer">
 <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">travel_explore</span>
 <h1 class="font-headline font-black text-2xl tracking-tight text-on-surface">Cholo</h1>
 </button><button id="themeToggle" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/70 backdrop-blur-md border border-white/40 shadow-sm text-primary hover:bg-white/90 transition-colors">
@@ -126,6 +126,7 @@
 </div>
 <script>
     const themeToggleBtn = document.getElementById('themeToggle');
+    const choloLogoBtn = document.getElementById('choloLogoBtn');
 
     // If the user lands here but their preference is dark, automatically redirect to dark screen
     if (localStorage.getItem('theme') === 'dark') {
@@ -135,6 +136,10 @@
     themeToggleBtn.addEventListener('click', () => {
         localStorage.setItem('theme', 'dark');
         window.location.href = '../start_screen_dark_cholo/code.html';
+    });
+
+    choloLogoBtn.addEventListener('click', () => {
+        window.location.reload();
     });
 </script>
 </main>
