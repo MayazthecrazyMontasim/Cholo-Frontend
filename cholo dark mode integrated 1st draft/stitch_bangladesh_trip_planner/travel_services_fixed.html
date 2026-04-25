@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Cholo - Travel Services</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #1a1a18;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00695c;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #7a786e;
+            font-size: 1.1rem;
+        }
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .progress-circle.active {
+            background: #00695c;
+            color: white;
+        }
+        .progress-circle.inactive {
+            background: #e8e4d9;
+            color: #7a786e;
+        }
+        .progress-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+        .progress-label.active {
+            color: #00695c;
+        }
+        .progress-label.inactive {
+            color: #7a786e;
+        }
+        .destinations-summary {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .destinations-summary h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #00695c;
+        }
+        .destination-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .destination-tag {
+            background: #e8f5e9;
+            color: #00695c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid #c3e6cb;
+        }
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .service-category {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .service-category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: #00695c;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a18;
+        }
+        .service-description {
+            color: #7a786e;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .service-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .service-item:hover {
+            background: #e8f5e9;
+            border-color: #00695c;
+        }
+        .service-item.selected {
+            background: #e8f5e9;
+            border-color: #00695c;
+        }
+        .service-item-icon {
+            width: 30px;
+            height: 30px;
+            background: #00695c;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .service-item-details {
+            flex: 1;
+        }
+        .service-item-name {
+            font-weight: 600;
+            color: #1a1a18;
+            margin-bottom: 2px;
+        }
+        .service-item-info {
+            font-size: 0.85rem;
+            color: #7a786e;
+        }
+        .service-item-check {
+            width: 20px;
+            height: 20px;
+            background: #00695c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        .map-section {
+            margin-bottom: 30px;
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #f0f0f0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e8e4d9;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        .btn-primary {
+            background: #00695c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.3);
+        }
+        .btn-primary:hover {
+            background: #004d40;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: #e8e4d9;
+            color: #1a1a18;
+        }
+        .btn-secondary:hover {
+            background: #d4cfc7;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .status-message {
+            text-align: center;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: 500;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status-message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Service data
+        const servicesData = {
+            hotels: {
+                icon: '🏨',
+                title: 'Hotels & Accommodations',
+                description: 'Find perfect place to stay during your trip',
+                items: [
+                    { name: 'Luxury Hotels', info: '5-star accommodations with premium amenities', icon: '🏨' },
+                    { name: 'Budget Hotels', info: 'Affordable and comfortable stays', icon: '🏪' },
+                    { name: 'Guest Houses', info: 'Homely atmosphere with local hosts', icon: '🏠' },
+                    { name: 'Resorts', info: 'All-inclusive vacation resorts', icon: '🏖️' }
+                ]
+            },
+            restaurants: {
+                icon: '🍽️',
+                title: 'Restaurants & Dining',
+                description: 'Discover local cuisine and dining experiences',
+                items: [
+                    { name: 'Local Cuisine', info: 'Authentic Bangladeshi dishes', icon: '🍛' },
+                    { name: 'Fine Dining', info: 'Upscale restaurants with premium service', icon: '🍽️' },
+                    { name: 'Street Food', info: 'Local street food specialties', icon: '🥙' },
+                    { name: 'International Cuisine', info: 'Global food options', icon: '🍜' }
+                ]
+            },
+            transport: {
+                icon: '🚌',
+                title: 'Transportation',
+                description: 'Travel options to and around destinations',
+                items: [
+                    { name: 'Bus Services', info: 'Inter-city and local bus routes', icon: '🚌' },
+                    { name: 'Car Rentals', info: 'Self-drive and chauffeur services', icon: '🚗' },
+                    { name: 'Train Services', info: 'Railway connections between cities', icon: '🚂' },
+                    { name: 'Domestic Flights', info: 'Air travel between major cities', icon: '✈️' }
+                ]
+            },
+            activities: {
+                icon: '🎯',
+                title: 'Activities & Tours',
+                description: 'Things to do and see at your destination',
+                items: [
+                    { name: 'Sightseeing Tours', info: 'Guided tours of attractions', icon: '🏛️' },
+                    { name: 'Adventure Sports', info: 'Outdoor activities and sports', icon: '🏃' },
+                    { name: 'Cultural Experiences', info: 'Local culture and traditions', icon: '🎭' },
+                    { name: 'Shopping', info: 'Local markets and shopping centers', icon: '🛍️' }
+                ]
+            },
+            guides: {
+                icon: '👤',
+                title: 'Tour Guides',
+                description: 'Professional guides for your journey',
+                items: [
+                    { name: 'Local Guides', info: 'Knowledgeable local tour guides', icon: '👤' },
+                    { name: 'Adventure Guides', info: 'Specialized adventure tour guides', icon: '🧗' },
+                    { name: 'Photography Tours', info: 'Guided photography sessions', icon: '📸' },
+                    { name: 'Historical Tours', info: 'Heritage and historical tours', icon: '📚' }
+                ]
+            }
+        };
+
+        function TravelServices() {
+            const [selectedDestinations, setSelectedDestinations] = useState([]);
+            const [selectedServices, setSelectedServices] = useState([]);
+            const [statusMessage, setStatusMessage] = useState('');
+            const [showStatus, setShowStatus] = useState(false);
+
+            // Load saved data on mount
+            useEffect(() => {
+                const tripData = localStorage.getItem('cholo_trip_data');
+                if (tripData) {
+                    try {
+                        const data = JSON.parse(tripData);
+                        setSelectedDestinations(data.step_2?.destinations || []);
+                        console.log('Loaded destinations:', data.step_2?.destinations);
+                    } catch (e) {
+                        console.error('Error loading destinations:', e);
+                    }
+                }
+
+                const savedServices = localStorage.getItem('cholo_selected_services');
+                if (savedServices) {
+                    try {
+                        const parsed = JSON.parse(savedServices);
+                        setSelectedServices(parsed);
+                        console.log('Loaded saved services:', parsed);
+                    } catch (e) {
+                        console.error('Error loading saved services:', e);
+                    }
+                }
+                
+                // Test JavaScript execution
+                console.log('React services page loaded successfully at:', new Date().toISOString());
+                setStatusMessage('Services page loaded successfully!');
+                setShowStatus(true);
+                setTimeout(() => setShowStatus(false), 3000);
+            }, []);
+
+            const toggleService = (category, name, info, icon) => {
+                const serviceId = `${category}-${name}`;
+                const index = selectedServices.findIndex(s => s.id === serviceId);
+                
+                let newSelections;
+                if (index > -1) {
+                    newSelections = selectedServices.filter(s => s.id !== serviceId);
+                    setStatusMessage(`Deselected: ${name}`);
+                } else {
+                    newSelections = [...selectedServices, { id: serviceId, category, name, info, icon }];
+                    setStatusMessage(`Selected: ${name}`);
+                }
+                
+                setSelectedServices(newSelections);
+                localStorage.setItem('cholo_selected_services', JSON.stringify(newSelections));
+                setShowStatus(true);
+                setTimeout(() => setShowStatus(false), 3000);
+            };
+
+            const continueToBudget = () => {
+                if (selectedServices.length === 0) {
+                    setStatusMessage('Please select at least one service!');
+                    setShowStatus(true);
+                    setTimeout(() => setShowStatus(false), 3000);
+                    return;
+                }
+
+                // Save trip data
+                const tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
+                tripData.step_3 = {
+                    services: selectedServices,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+                
+                setStatusMessage(`Proceeding to budget with ${selectedServices.length} services...`);
+                setShowStatus(true);
+                
+                // Navigate to budget page
+                setTimeout(() => {
+                    window.location.href = '../step_4_budget_results_cholo_1/code.html';
+                }, 1000);
+            };
+
+            const goBack = () => {
+                window.location.href = '../step_2_destination_picker_cholo_1/code.html';
+            };
+
+            return React.createElement('div', { className: 'container' }, [
+                React.createElement('div', { className: 'header' }, [
+                    React.createElement('h1', null, 'Travel Services'),
+                    React.createElement('p', null, 'Select services for your selected destinations')
+                ]),
+
+                // Progress Bar
+                React.createElement('div', { className: 'progress-bar' }, [
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle inactive' }, '1'),
+                        React.createElement('div', { className: 'progress-label inactive' }, 'Traveler Info')
+                    ]),
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle inactive' }, '2'),
+                        React.createElement('div', { className: 'progress-label inactive' }, 'Location')
+                    ]),
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle active' }, '3'),
+                        React.createElement('div', { className: 'progress-label active' }, 'Services')
+                    ]),
+                    React.createElement('div', { className: 'progress-step' }, [
+                        React.createElement('div', { className: 'progress-circle inactive' }, '4'),
+                        React.createElement('div', { className: 'progress-label inactive' }, 'Review')
+                    ])
+                ]),
+
+                // Destinations Summary
+                React.createElement('div', { className: 'destinations-summary' }, [
+                    React.createElement('h2', null, 'Selected Destinations'),
+                    React.createElement('div', { className: 'destination-tags' }, 
+                        selectedDestinations.length === 0 
+                            ? [React.createElement('p', { style: { color: '#7a786e' } }, 'No destinations selected. Please go back and select destinations.')]
+                            : selectedDestinations.map(dest => 
+                                React.createElement('div', { key: dest.name, className: 'destination-tag' }, `${dest.emoji} ${dest.name}`)
+                            )
+                    )
+                ]),
+
+                // Map Section
+                React.createElement('div', { className: 'map-section' }, [
+                    React.createElement('div', { className: 'map-container' }, [
+                        React.createElement('iframe', {
+                            src: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3746765.251413645!2d88.001391!3d23.684994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30adaaed8039a3af%3A0xfc611b0bb3005b4!2sBangladesh!5e0!3m2!1sen!2sbd!4v1715694200000!5m2!1sen!2sbd',
+                            allowFullscreen: true,
+                            loading: 'lazy',
+                            referrerPolicy: 'no-referrer-when-downgrade'
+                        })
+                    ])
+                ]),
+
+                // Services Categories
+                React.createElement('div', { className: 'services-container' }, 
+                    Object.entries(servicesData).map(([key, category]) => 
+                        React.createElement('div', { key: key, className: 'service-category' }, [
+                            React.createElement('div', { className: 'service-header' }, [
+                                React.createElement('div', { className: 'service-icon' }, category.icon),
+                                React.createElement('div', { className: 'service-title' }, category.title)
+                            ]),
+                            React.createElement('div', { className: 'service-description' }, category.description),
+                            React.createElement('div', { className: 'service-items' }, 
+                                category.items.map(item => 
+                                    React.createElement('div', { 
+                                        key: item.name,
+                                        className: `service-item ${selectedServices.some(s => s.id === `${key}-${item.name}`) ? 'selected' : ''}`,
+                                        onClick: () => toggleService(key, item.name, item.info, item.icon)
+                                    }, [
+                                        React.createElement('div', { className: 'service-item-icon' }, item.icon),
+                                        React.createElement('div', { className: 'service-item-details' }, [
+                                            React.createElement('div', { className: 'service-item-name' }, item.name),
+                                            React.createElement('div', { className: 'service-item-info' }, item.info)
+                                        ]),
+                                        selectedServices.some(s => s.id === `${key}-${item.name}`) && 
+                                            React.createElement('div', { className: 'service-item-check' }, '✓')
+                                    ])
+                                )
+                            )
+                        ])
+                    )
+                ),
+
+                // Status Message
+                showStatus && React.createElement('div', { 
+                    className: `status-message ${statusMessage.includes('Error') ? 'error' : statusMessage.includes('success') ? 'success' : 'info'}` 
+                }, statusMessage),
+
+                // Action Buttons
+                React.createElement('div', { className: 'action-buttons' }, [
+                    React.createElement('button', {
+                        className: 'btn btn-secondary',
+                        onClick: goBack
+                    }, '← Back'),
+                    React.createElement('button', {
+                        className: 'btn btn-primary',
+                        onClick: continueToBudget,
+                        disabled: selectedServices.length === 0
+                    }, `Continue to Budget (${selectedServices.length} selected)`)
+                ])
+            ]);
+        }
+
+        // Render the React app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(TravelServices));
+    </script>
+</body>
+</html>
