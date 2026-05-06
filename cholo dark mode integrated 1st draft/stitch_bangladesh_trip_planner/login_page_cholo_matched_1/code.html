@@ -203,11 +203,11 @@
                 }
                 
                 console.log('User logged in successfully:', sessionData);
-                alert('Login successful! Redirecting to dashboard...');
+                alert('Login successful! Let\'s plan your trip...');
                 
-                // Redirect to dashboard
+                // Redirect to traveler info (step 1)
                 setTimeout(() => {
-                    window.location.href = '../dashboard_page_cholo_1/code.html';
+                    window.location.href = '../step_1_traveler_info_cholo_1/code.html';
                 }, 1000);
             } else {
                 alert('Invalid username/email or password');
