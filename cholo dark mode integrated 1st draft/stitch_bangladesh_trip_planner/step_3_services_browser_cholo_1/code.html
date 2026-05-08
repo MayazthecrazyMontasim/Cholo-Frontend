@@ -76,7 +76,7 @@
         }
     </script>
 <style>
-        .material-symbols-outlined {
+        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; 
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -126,7 +126,7 @@
 </div>
 <!-- Destination Header -->
 <header class="mb-8">
-<h2 class="editorial-title text-4xl font-black tracking-tight text-on-surface mb-2">Sylhet, Bangladesh</h2>
+<h2 id="destination-title" class="editorial-title text-4xl font-black tracking-tight text-on-surface mb-2">Sylhet, Bangladesh</h2>
 <p class="text-on-surface-variant font-medium">Browse and select local services for your itinerary.</p>
 </header>
 <!-- Tab Bar -->
@@ -258,4 +258,28 @@
 </a>
 </div>
 </nav>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        try {
+            const tripDataStr = localStorage.getItem('cholo_trip_data');
+            if (tripDataStr) {
+                const tripData = JSON.parse(tripDataStr);
+                const destinations = tripData.step_2?.destinations;
+                
+                if (destinations && destinations.length > 0) {
+                    // Update destination title with the first selected destination
+                    const titleEl = document.getElementById('destination-title');
+                    if (titleEl) {
+                        titleEl.textContent = `${destinations[0].name}, Bangladesh`;
+                    }
+                } else {
+                    // No destinations selected, redirect back
+                    window.location.href = '../step_2_destination_picker_cholo_1/code.html';
+                }
+            }
+        } catch (e) {
+            console.error("Error loading trip data", e);
+        }
+    });
+</script>
 </body></html>
