@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Cholo - Create Account</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -14,17 +14,21 @@
                 extend: {
                     "colors": {
                         "primary": "#1D9E75",
-                        "on-primary": "#ffffff",
-                        "primary-container": "#0D2819",
-                        "on-primary-container": "#BDEBDB",
+                        "on-primary": "#FFFFFF",
+                        "primary-container": "#E8F5F1",
+                        "on-primary-container": "#002116",
                         "secondary": "#4A6359",
-                        "on-secondary": "#ffffff",
-                        "surface": "#0A0F0D",
-                        "on-surface": "#E1E3DF",
-                        "surface-container": "#111412",
-                        "outline": "#707974",
-                        "outline-variant": "#BFC9C3",
-                        "background": "#050807"
+                        "on-secondary": "#FFFFFF",
+                        "surface": "#FFFFFF",
+                        "on-surface": "#1A1C1E",
+                        "surface-container": "#F4F4F0",
+                        "on-surface-variant": "#44474E",
+                        "outline": "#74777F",
+                        "outline-variant": "#C4C6CF",
+                        "background": "#FBFDF8",
+                        "error": "#BA1A1A",
+                        "on-error": "#FFFFFF",
+                        "error-container": "#FFDAD6"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.5rem",
@@ -53,24 +57,46 @@
         .logo-font {
             font-family: 'Be Vietnam Pro', sans-serif;
         }
+        .loader {
+            border: 3px solid rgba(29, 158, 117, 0.2);
+            border-radius: 50%;
+            border-top: 3px solid #1D9E75;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen flex flex-col">
-    <main class="flex-grow flex items-center justify-center px-6 py-12 relative overflow-hidden">
+    <!-- Top Bar -->
+    <header class="w-full px-6 py-4 flex justify-between items-center">
+        <button onclick="window.location.href='../start_screen_cholo_matched/code.html'" class="flex items-center gap-2 text-on-surface hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="font-medium text-sm">Back</span>
+        </button>
+        <button id="themeToggle" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+    </header>
+    <main class="flex-grow flex items-center justify-center px-6 py-8 relative overflow-hidden">
         <!-- Decorative background elements -->
         <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <div class="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
-            <div class="absolute top-[40%] -right-[15%] w-[500px] h-[500px] bg-primary/15 rounded-full blur-[120px]"></div>
+            <div class="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]"></div>
+            <div class="absolute top-[40%] -right-[15%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]"></div>
         </div>
         <div class="w-full max-w-md z-10">
-            <div class="bg-surface-container border border-outline-variant/50 rounded-2xl p-8 shadow-sm">
-                <div class="flex flex-col items-center mb-10">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="material-symbols-outlined text-primary text-4xl" data-icon="travel_explore">travel_explore</span>
-                        <span class="text-3xl font-black logo-font tracking-tighter text-on-surface cursor-pointer hover:text-primary transition-colors" onclick="window.location.href='../start_screen_cholo_matched/code.html'">Cholo</span>
+            <div class="bg-surface border border-outline-variant/50 rounded-2xl p-8 shadow-sm">
+                <div class="flex flex-col items-center mb-8">
+                    <div class="flex items-center gap-2 mb-4 cursor-pointer hover:opacity-80 transition-opacity" onclick="window.location.reload()">
+                        <span class="material-symbols-outlined text-primary text-4xl">travel_explore</span>
+                        <span class="text-3xl font-black logo-font tracking-tighter text-on-surface">Cholo</span>
                     </div>
                     <h1 class="text-2xl font-bold text-on-surface">Create Account</h1>
-                    <p class="text-outline mt-1 text-sm">Start your journey with us</p>
+                    <p class="text-on-surface-variant mt-1 text-sm">Start your journey with us</p>
                 </div>
                 <form id="signupForm" onsubmit="handleSignup(event)">
                     <div class="space-y-2">
@@ -110,20 +136,42 @@
                             <label for="terms" class="text-sm text-on-surface">I agree to the <button type="button" class="text-primary font-bold hover:underline" onclick="showTerms()">Terms of Service</button> and <button type="button" class="text-primary font-bold hover:underline" onclick="showPrivacy()">Privacy Policy</button></label>
                         </div>
                     </div>
-                    <div class="flex gap-4">
-                        <button type="submit" class="flex-1 bg-primary text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 group">
-                            Create Account
-                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </button>
-                        <button type="button" onclick="window.location.href='../start_screen_cholo_matched/code.html'" class="flex-1 bg-transparent text-on-surface font-semibold py-4 rounded-xl border border-outline-variant hover:bg-secondary-container/30 active:scale-[0.98] transition-all">
-                            Back
-                        </button>
-                    </div>
+                    <button type="submit" id="submitBtn" class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 group disabled:opacity-70 disabled:cursor-not-allowed">
+                        <span id="btnText">Create Account</span>
+                        <span id="btnIcon" class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        <div id="btnLoader" class="loader hidden"></div>
+                    </button>
+                    <p class="text-center text-sm text-on-surface-variant mt-4">
+                        Already have an account? 
+                        <a href="../login_page_cholo_matched_1/code.html" class="text-primary font-bold hover:underline">Log in</a>
+                    </p>
                 </form>
             </div>
         </div>
     </main>
     <script>
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('themeToggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            themeToggleBtn.querySelector('span').textContent = 'light_mode';
+        }
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.querySelector('span').textContent = 'dark_mode';
+            } else {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.querySelector('span').textContent = 'light_mode';
+            }
+        });
+
         // Secure signup form handling
         function handleSignup(event) {
             event.preventDefault();
@@ -160,12 +208,26 @@
                 return;
             }
             
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnLoader = document.getElementById('btnLoader');
+            submitBtn.disabled = true;
+            btnText.textContent = 'Creating Account...';
+            btnIcon.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            
             // Secure user creation
             const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
             
             // Check for existing users
             if (users.some(u => u.email === email || u.username === username)) {
                 alert('An account with this email or username already exists');
+                submitBtn.disabled = false;
+                btnText.textContent = 'Create Account';
+                btnIcon.classList.remove('hidden');
+                btnLoader.classList.add('hidden');
                 return;
             }
             
@@ -182,10 +244,10 @@
             users.push(newUser);
             localStorage.setItem('cholo_users', JSON.stringify(users));
             
-            alert('Account created successfully! Let\'s plan your trip...');
+            btnText.textContent = 'Success!';
             setTimeout(() => {
                 window.location.href = '../step_1_traveler_info_cholo_1/code.html';
-            }, 1000);
+            }, 800);
         }
         
         // Password visibility toggle
@@ -210,11 +272,7 @@
             alert('Privacy Policy\n\nWe respect your privacy and protect your personal information.');
         }
         
-        function showHelp() {
-            alert('Help\n\nFor support, contact our team at support@cholo.travel');
-        }
-        
-        console.log('Secure signup page loaded successfully');
+        console.log('Cholo signup page loaded successfully');
     </script>
 </body>
 </html>
