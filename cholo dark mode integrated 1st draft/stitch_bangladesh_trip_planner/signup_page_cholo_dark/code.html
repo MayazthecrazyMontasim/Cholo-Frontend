@@ -300,40 +300,7 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
             submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span><span>Creating account...</span>';
             submitBtn.disabled = true;
 
-            // Try backend API first
-            try {
-                console.log('Attempting registration to:', `${API_BASE_URL}/auth/register`);
-                console.log('Registration data:', { username, email, password: '***' });
-
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        email: email,
-                        password: password
-                    })
-                });
-
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Registration success:', data);
-                    alert('Account created successfully! Let\'s plan your trip...');
-                    
-                    // Redirect to traveler info (step 1)
-                    window.location.href = '../step_1_traveler_info_cholo_2/code.html';
-                    return;
-                }
-            } catch (apiError) {
-                console.log('Backend API failed, using local storage fallback');
-            }
-
-            // Fallback: Store user locally with secure password hashing
+            // Store user locally
             const hashedPassword = await hashPassword(password);
             const userData = {
                 id: 'user_' + Date.now(),
@@ -374,7 +341,7 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
     // Handle Login Instead button
     document.querySelector('button.bg-surface').addEventListener('click', (e) => {
         e.preventDefault();
-        window.location.href = '../login_page_cholo_matched_2/code.html';
+        window.location.href = '../login_page_cholo_matched_1/code.html';
     });
 </script>
 </body></html>
