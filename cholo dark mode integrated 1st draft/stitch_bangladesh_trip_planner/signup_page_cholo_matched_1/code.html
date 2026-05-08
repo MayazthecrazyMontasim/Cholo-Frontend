@@ -150,25 +150,19 @@
         </div>
     </main>
     <script>
-        // Theme toggle
+        // Theme toggle - navigate to dark/light version
         const themeToggleBtn = document.getElementById('themeToggle');
         if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
             themeToggleBtn.querySelector('span').textContent = 'light_mode';
         }
         themeToggleBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
+            const isDark = localStorage.getItem('theme') === 'dark';
             if (isDark) {
-                document.documentElement.classList.remove('dark');
-                document.documentElement.classList.add('light');
                 localStorage.setItem('theme', 'light');
-                themeToggleBtn.querySelector('span').textContent = 'dark_mode';
+                window.location.href = '../signup_page_cholo_matched_1/code.html';
             } else {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
                 localStorage.setItem('theme', 'dark');
-                themeToggleBtn.querySelector('span').textContent = 'light_mode';
+                window.location.href = '../signup_page_cholo_dark/code.html';
             }
         });
 
