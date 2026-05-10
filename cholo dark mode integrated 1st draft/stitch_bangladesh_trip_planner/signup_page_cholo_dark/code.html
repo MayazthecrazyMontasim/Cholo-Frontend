@@ -177,7 +177,16 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
         window.location.href = '../signup_page_cholo_matched_1/code.html';
     });
 
-    const API_BASE_URL = "https://cholo-live-api.onrender.com";
+    function getApiBaseUrl() {
+        const localApi = "http://localhost:8000";
+        const prodApi = "https://cholo-live-api.onrender.com";
+        if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            return localApi;
+        }
+        return prodApi;
+    }
+
+    const API_BASE_URL = getApiBaseUrl();
 
     // Secure password hashing using Web Crypto API
     async function hashPassword(password, salt = null) {
@@ -300,33 +309,68 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
             submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span><span>Creating account...</span>';
             submitBtn.disabled = true;
 
-            // Store user locally
-            const hashedPassword = await hashPassword(password);
-            const userData = {
-                id: 'user_' + Date.now(),
-                username: username,
-                email: email,
-                fullname: fullname,
-                password: hashedPassword, // Secure PBKDF2 hash with salt
-                created_at: new Date().toISOString()
-            };
+            // Attempt backend registration first
+            let backendRegistered = false;
+            try {
+                const registerResponse = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
 
-            // Get existing users or create new array
-            const existingUsers = JSON.parse(localStorage.getItem('cholo_users') || '[]');
-            
-            // Check if user already exists
-            if (existingUsers.find(u => u.username === username || u.email === email)) {
-                throw new Error('Username or email already exists');
+                if (registerResponse.ok) {
+                    const user = await registerResponse.json();
+                    localStorage.setItem('current_user', JSON.stringify(user));
+
+                    const loginResponse = await fetch(`${API_BASE_URL}/auth/token`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ username, password })
+                    });
+
+                    if (loginResponse.ok) {
+                        const tokenData = await loginResponse.json();
+                        localStorage.setItem('cholo_token', tokenData.access_token);
+                    }
+
+                    backendRegistered = true;
+                } else {
+                    const errorData = await registerResponse.json().catch(() => ({}));
+                    throw new Error(errorData.detail || 'Backend registration failed');
+                }
+            } catch (backendError) {
+                console.warn('Backend registration failed, falling back to local storage:', backendError);
             }
 
-            // Add new user
-            existingUsers.push(userData);
-            localStorage.setItem('cholo_users', JSON.stringify(existingUsers));
-            
-            console.log('User registered locally:', userData);
+            // Fallback to local user registration if backend fails
+            if (!backendRegistered) {
+                const hashedPassword = await hashPassword(password);
+                const userData = {
+                    id: 'user_' + Date.now(),
+                    username: username,
+                    email: email,
+                    fullname: fullname,
+                    password: hashedPassword,
+                    created_at: new Date().toISOString()
+                };
+
+                const existingUsers = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+                if (existingUsers.find(u => u.username === username || u.email === email)) {
+                    throw new Error('Username or email already exists');
+                }
+
+                existingUsers.push(userData);
+                localStorage.setItem('cholo_users', JSON.stringify(existingUsers));
+                localStorage.setItem('current_user', JSON.stringify(userData));
+                localStorage.setItem('cholo_token', btoa(JSON.stringify({ username, email, id: userData.id })));
+                console.log('User registered locally:', userData);
+            }
+
             alert('Account created successfully! Let\'s plan your trip...');
-            
-            // Redirect to traveler info (step 1)
             window.location.href = '../step_1_traveler_info_cholo_2/code.html';
 
         } catch (error) {

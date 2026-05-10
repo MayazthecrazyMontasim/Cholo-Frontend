@@ -1,262 +1,646 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cholo - Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#191c1d",
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed": "#c0ecd6",
-                        "tertiary": "#ffb869",
-                        "secondary-fixed-dim": "#a5d0ba",
-                        "on-surface": "#e1e3e4",
-                        "inverse-primary": "#006c4e",
-                        "surface-container-high": "#2e3132",
-                        "inverse-surface": "#e1e3e4",
-                        "error-container": "#93000a",
-                        "on-tertiary-fixed": "#2b1700",
-                        "on-secondary-fixed-variant": "#264e3e",
-                        "on-primary": "#ffffff",
-                        "secondary": "#a5d0ba",
-                        "surface-container-highest": "#333537",
-                        "tertiary-fixed-dim": "#ffb869",
-                        "tertiary-fixed": "#ffdcbb",
-                        "on-tertiary": "#4a2800",
-                        "primary-fixed-dim": "#68dbae",
-                        "outline": "#8b938f",
-                        "on-primary-fixed-variant": "#00513a",
-                        "on-primary-fixed": "#002115",
-                        "surface-dim": "#0e1415",
-                        "tertiary-container": "#673d00",
-                        "surface-tint": "#68dbae",
-                        "on-primary-container": "#f5fff7",
-                        "primary": "#68dbae",
-                        "primary-fixed": "#86f8c9",
-                        "background": "#0e1415",
-                        "outline-variant": "#414945",
-                        "inverse-on-surface": "#191c1d",
-                        "primary-container": "#00513a",
-                        "surface": "#0e1415",
-                        "secondary-container": "#264e3e",
-                        "on-secondary-fixed": "#002115",
-                        "error": "#ffb4ab",
-                        "surface-bright": "#343a3b",
-                        "on-tertiary-fixed-variant": "#673d00",
-                        "on-tertiary-container": "#ffdcbb",
-                        "on-secondary-container": "#bdead3",
-                        "surface-container": "#1d2021",
-                        "surface-variant": "#414945",
-                        "on-surface-variant": "#bfc9c2",
-                        "on-background": "#e1e3e4",
-                        "surface-container-low": "#191c1d",
-                        "on-error-container": "#ffdad6",
-                        "on-error": "#690005"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "fontFamily": {
-                        "headline": ["Be Vietnam Pro"],
-                        "body": ["Plus Jakarta Sans"],
-                        "label": ["Plus Jakarta Sans"]
-                    }
-                },
-            },
-        }
-    </script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest": "#0b0f0d", "on-secondary": "#003926",
+        "secondary-fixed": "#c0ecd6", "tertiary": "#ffb869",
+        "secondary-fixed-dim": "#a5d0ba", "on-surface": "#e1e3e1",
+        "inverse-primary": "#006c4e", "surface-container-high": "#282b29",
+        "inverse-surface": "#e1e3e1", "error-container": "#93000a",
+        "on-tertiary-fixed": "#2b1700", "on-secondary-fixed-variant": "#264e3e",
+        "on-primary": "#003926", "secondary": "#a5d0ba",
+        "surface-container-highest": "#333534", "tertiary-fixed-dim": "#ffb869",
+        "tertiary-fixed": "#ffdcbb", "on-tertiary": "#482900",
+        "primary-fixed-dim": "#68dbae", "outline": "#8b938d",
+        "on-primary-fixed-variant": "#00513a", "on-primary-fixed": "#002115",
+        "surface-dim": "#111412", "tertiary-container": "#673d00",
+        "surface-tint": "#68dbae", "on-primary-container": "#86f8c9",
+        "primary": "#68dbae", "primary-fixed": "#86f8c9",
+        "background": "#111412", "outline-variant": "#414943",
+        "inverse-on-surface": "#2e3130", "primary-container": "#00513a",
+        "surface": "#111412", "secondary-container": "#264e3e",
+        "on-secondary-fixed": "#002115", "error": "#ffb4ab",
+        "surface-bright": "#373a38", "on-tertiary-fixed-variant": "#673d00",
+        "on-tertiary-container": "#ffdcbb", "on-secondary-container": "#c0ecd6",
+        "surface-container": "#1d211e", "surface-variant": "#414943",
+        "on-surface-variant": "#c0c9c2", "on-background": "#e1e3e1",
+        "surface-container-low": "#191c1b", "on-error-container": "#ffdad6",
+        "on-error": "#690005"
+      },
+      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", "2xl": "1rem", "3xl": "1.5rem", full: "9999px" },
+      fontFamily: { headline: ["Be Vietnam Pro"], body: ["Plus Jakarta Sans"], label: ["Plus Jakarta Sans"] }
+    }
+  }
+}
+</script>
 <style>
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; 
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .editorial-title { font-family: 'Be Vietnam Pro', sans-serif; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
-<style>
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; min-height: max(884px, 100dvh); }
+  h1, h2, h3 { font-family: 'Be Vietnam Pro', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .skeleton { background: linear-gradient(90deg, #2e3132 25%, #414943 50%, #2e3132 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+</style>
 </head>
-<body class="bg-background text-on-surface min-h-screen pb-40">
+<body class="bg-background text-on-surface min-h-screen pb-40 transition-colors duration-300">
+
 <!-- Top AppBar -->
-<nav class="sticky top-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-surface-container-high">
-<div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
-<div class="flex items-center gap-4">
-<button class="active:scale-95 transition-transform p-2 hover:bg-surface-container-high rounded-full">
-<span class="material-symbols-outlined text-primary">arrow_back</span>
-</button>
-<h1 class="text-xl font-extrabold tracking-tighter text-primary editorial-title">Cholo</h1>
-</div>
-<button class="active:scale-95 transition-transform p-2 bg-primary-container text-on-primary-container rounded-full mr-2">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
-</button>
-<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
-<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlW3f7diJMcjwFEaJSO5roC4MzI7DZujXLIVLmKvThAeGCPOxIQ9j6U3STXQqsfzIdS-52QJjlsqWc5OzHdKB01XXR3n0k9chuKD5xJI1sp50RUr_ISUkqeVz18sXVD0wt1Qta0j_ATyvmOaFUYkj1O2iKdtFRxn6JuMuEYMJDHsnkRhlhvCxJLu1FEQxTjBVBedJfCrtF69BJ_11d8Gn5_seSi70ZgiawfCK0qPnL-sEh9axB7yuJJcIlu4KUjOMbzYDSBmYoRQZ-"/>
-</div>
-</div>
+<nav class="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+  <div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+    <div class="flex items-center gap-4">
+      <button onclick="goBack()" class="active:scale-95 transition-transform p-2 hover:bg-surface-variant/20 rounded-full text-primary">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="text-xl font-extrabold tracking-tighter text-primary editorial-title">Cholo</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleTheme()" class="active:scale-95 transition-transform p-2 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+      </button>
+      <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
+        <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlW3f7diJMcjwFEaJSO5roC4MzI7DZujXLIVLmKvThAeGCPOxIQ9j6U3STXQqsfzIdS-52QJjlsqWc5OzHdKB01XXR3n0k9chuKD5xJI1sp50RUr_ISUkqeVz18sXVD0wt1Qta0j_ATyvmOaFUYkj1O2iKdtFRxn6JuMuEYMJDHsnkRhlhvCxJLu1FEQxTjBVBedJfCrtF69BJ_11d8Gn5_seSi70ZgiawfCK0qPnL-sEh9axB7yuJJcIlu4KUjOMbzYDSBmYoRQZ-"/>
+      </div>
+    </div>
+  </div>
 </nav>
+
 <main class="max-w-7xl mx-auto px-6 pt-6">
-<!-- Progress Indicator -->
-<div class="mb-6">
-<div class="flex justify-between items-end mb-2">
-<span class="text-[10px] uppercase tracking-[0.2em] font-bold text-outline">Step 3 of 4</span>
-<span class="text-sm font-bold text-primary">75% Complete</span>
-</div>
-<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
-<div class="h-full bg-tertiary w-3/4"></div>
-</div>
-</div>
-<!-- AdSense Placeholder -->
-<div class="w-full flex justify-center mb-8">
-<div class="w-full max-w-[320px] h-[50px] bg-surface-container-low flex items-center justify-center rounded-lg border border-dashed border-outline-variant">
-<span class="text-[10px] uppercase tracking-widest text-outline font-medium">Advertisement</span>
-</div>
-</div>
-<!-- Destination Header -->
-<header class="mb-8">
-<h2 class="editorial-title text-4xl font-black tracking-tight text-on-surface mb-2">Sylhet, Bangladesh</h2>
-<p class="text-on-surface-variant font-medium">Browse and select local services for your itinerary.</p>
-</header>
-<!-- Tab Bar -->
-<div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar mb-6">
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">Hotels</button>
-<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Bike Rental</button>
-<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Bus Counters</button>
-<button class="bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-colors whitespace-nowrap">Restaurants</button>
-</div>
-<!-- Service Grid -->
-<div class="grid grid-cols-1 gap-4">
-<!-- Service Card: Selected (Hotel - Teal) -->
-<div class="relative bg-surface-container-lowest rounded-2xl p-4 border-2 border-primary shadow-sm">
-<div class="absolute top-4 right-4 bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center">
-<span class="material-symbols-outlined text-sm font-bold">check</span>
-</div>
-<div class="flex gap-4">
-<div class="w-16 h-16 rounded-xl bg-secondary-container flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-primary text-3xl">hotel</span>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-lg leading-tight mb-1">Grand Sultan Tea Resort</h3>
-<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-xs">location_on</span> Sreemangal, Sylhet
-                    </p>
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="text-primary font-bold text-lg">৳12,500 <span class="text-[10px] font-medium text-outline">/ night</span></span>
-</div>
-<span class="bg-primary-container text-on-primary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Luxury</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Service Card: Unselected (Bike - Amber) -->
-<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
-<div class="flex gap-4">
-<div class="w-16 h-16 rounded-xl bg-tertiary-container/30 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-tertiary text-3xl">motorcycle</span>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Sylhet Bike Hub</h3>
-<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-xs">location_on</span> Zindabazar, Sylhet
-                    </p>
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="text-primary font-bold text-lg">৳1,200 <span class="text-[10px] font-medium text-outline">/ day</span></span>
-</div>
-<span class="bg-secondary-container text-on-secondary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Budget</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Service Card: Unselected (Bus - Coral) -->
-<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
-<div class="flex gap-4">
-<div class="w-16 h-16 rounded-xl bg-error-container/30 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-error text-3xl">directions_bus</span>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Green Line Paribahan</h3>
-<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-xs">location_on</span> Humayun Rashid Square
-                    </p>
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="text-primary font-bold text-lg">৳1,500 <span class="text-[10px] font-medium text-outline">/ seat</span></span>
-</div>
-<span class="bg-secondary-container text-on-secondary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Popular</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Service Card: Unselected (Restaurant - Blue) -->
-<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm border border-transparent hover:border-surface-container-highest transition-all cursor-pointer">
-<div class="flex gap-4">
-<div class="w-16 h-16 rounded-xl bg-blue-900/30 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-blue-400 text-3xl">restaurant</span>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-lg leading-tight mb-1 text-on-surface">Panch Bhai Restaurant</h3>
-<p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
-<span class="material-symbols-outlined text-xs">location_on</span> Zindabazar, Sylhet
-                    </p>
-<div class="flex items-center justify-between">
-<div class="flex flex-col">
-<span class="text-primary font-bold text-lg">৳450 <span class="text-[10px] font-medium text-outline">/ meal</span></span>
-</div>
-<div class="flex gap-1">
-<span class="bg-green-900/30 text-green-400 px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Eco</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Google Maps Attribution -->
-<div class="mt-12 mb-24 flex items-center justify-center gap-2 opacity-60">
-<img alt="Google Logo" class="h-4 invert brightness-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7xyGqR_WPmvlO0aWqmPJBa6JP9AAoEoh8GSDwXLlj3oweyEgsqicniFHd7bKoEhwO-srLzHTdUnBVf5uG6a668csETnyO5SLGG2anugC5r-7F1Yq9R_xZumc0SOKNrCa-O36WkelkhC1K8VwO9t3IM9ucP7RzQjQbQAY3LjJh4ge9CH-by551TuHsmcIngrFybmBTsYFHDHfWRMkB5WVcCB7j_X-xG5UUfrMBMsP4p9PYZhQdsIYO9zuE2Bcx7ddXE7iEYujIeEBr"/>
-<span class="text-xs font-medium text-on-surface-variant tracking-tight">Powered by Google Maps</span>
-</div>
-<!-- CTA Section -->
-<div class="fixed bottom-28 left-0 w-full px-6 flex justify-center pointer-events-none">
-<button class="pointer-events-auto bg-primary text-on-primary px-10 py-4 rounded-full shadow-2xl flex items-center gap-3 active:scale-95 transition-all group">
-<span class="font-bold tracking-tight">Calculate Budget</span>
-<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
-</div>
+  <!-- Progress Indicator -->
+  <div class="mb-6">
+    <div class="flex justify-between items-end mb-2">
+      <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-outline">Step 3 of 4</span>
+      <span class="text-sm font-bold text-primary">75% Complete</span>
+    </div>
+    <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+      <div class="h-full bg-tertiary w-3/4"></div>
+    </div>
+  </div>
+
+  <!-- AdSense Placeholder -->
+  <div class="w-full flex justify-center mb-8">
+    <div class="w-full max-w-[320px] h-[50px] bg-surface-container-low flex items-center justify-center rounded-lg border border-dashed border-outline-variant">
+      <span class="text-[10px] uppercase tracking-widest text-outline font-medium">Advertisement</span>
+    </div>
+  </div>
+
+  <!-- Destination Header -->
+  <header class="mb-8">
+    <h2 id="destination-title" class="editorial-title text-4xl font-black tracking-tight text-on-surface mb-2">Loading...</h2>
+    <p class="text-on-surface-variant font-medium">Browse and select local services for your itinerary.</p>
+  </header>
+
+  <!-- Tab Bar -->
+  <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar mb-6" id="categoryTabs">
+    <button onclick="switchCategory('lodging')" class="category-tab bg-primary text-on-primary px-6 py-2.5 rounded-full text-sm font-bold shadow-sm whitespace-nowrap transition-all flex items-center gap-1.5" data-category="lodging">
+      <span class="material-symbols-outlined text-[16px]">hotel</span>Hotels
+    </button>
+    <button onclick="switchCategory('bicycle_rental')" class="category-tab bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all whitespace-nowrap flex items-center gap-1.5" data-category="bicycle_rental">
+      <span class="material-symbols-outlined text-[16px]">pedal_bike</span>Bike Rental
+    </button>
+    <button onclick="switchCategory('bus_station')" class="category-tab bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all whitespace-nowrap flex items-center gap-1.5" data-category="bus_station">
+      <span class="material-symbols-outlined text-[16px]">directions_bus</span>Bus Counters
+    </button>
+    <button onclick="switchCategory('restaurant')" class="category-tab bg-surface-container-high text-on-surface-variant px-6 py-2.5 rounded-full text-sm font-bold hover:bg-surface-container-highest transition-all whitespace-nowrap flex items-center gap-1.5" data-category="restaurant">
+      <span class="material-symbols-outlined text-[16px]">restaurant</span>Restaurants
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div id="loadingState" class="hidden mb-8">
+    <div class="space-y-4">
+      <div class="skeleton h-24 rounded-2xl w-full"></div>
+      <div class="skeleton h-24 rounded-2xl w-full"></div>
+      <div class="skeleton h-24 rounded-2xl w-full"></div>
+      <div class="skeleton h-24 rounded-2xl w-full"></div>
+    </div>
+  </div>
+
+  <!-- Service Grid -->
+  <div id="servicesGrid" class="grid grid-cols-1 gap-4 mb-24"></div>
+
+  <!-- Empty State -->
+  <div id="emptyState" class="hidden text-center py-12 mb-24">
+    <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">search_off</span>
+    <h3 class="text-lg font-bold text-on-surface mb-2">No services found</h3>
+    <p class="text-sm text-on-surface-variant">Try a different category or check your connection.</p>
+  </div>
+
+  <!-- Error State -->
+  <div id="errorState" class="hidden text-center py-12 mb-24">
+    <span class="material-symbols-outlined text-6xl text-error mb-4">error</span>
+    <h3 class="text-lg font-bold text-on-surface mb-2">Something went wrong</h3>
+    <p class="text-sm text-on-surface-variant mb-4" id="errorMessage">Unable to load services.</p>
+    <button onclick="retryLoad()" class="bg-primary text-on-primary px-6 py-2.5 rounded-full text-sm font-bold active:scale-95 transition-transform">Try Again</button>
+  </div>
+
+  <!-- OpenStreetMap Attribution -->
+  <div class="mt-8 mb-8 flex items-center justify-center gap-2 opacity-60">
+    <span class="text-xs font-medium text-on-surface-variant tracking-tight">Data © OpenStreetMap contributors</span>
+  </div>
 </main>
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-lg rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.2)]">
-<div class="flex justify-around items-center px-4 pt-3 pb-8">
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
-<span class="material-symbols-outlined">explore</span>
-<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-primary-container text-primary rounded-2xl px-5 py-2 active:scale-90 transition-all" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
-<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
-<span class="material-symbols-outlined">bookmark</span>
-<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all active:scale-90" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
-</a>
+
+<!-- Selected Services Summary -->
+<div id="selectedSummary" class="fixed bottom-28 left-0 w-full px-6 z-40 hidden">
+  <div class="bg-surface-container-high rounded-2xl border border-primary/30 shadow-xl p-4 max-w-lg mx-auto">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-bold text-on-surface"><span id="selectedCount">0</span> selected</span>
+      <button onclick="clearSelections()" class="text-xs font-semibold text-primary hover:underline active:scale-95 transition-transform">Clear all</button>
+    </div>
+    <div id="selectedChips" class="flex flex-wrap gap-2 max-h-20 overflow-y-auto no-scrollbar"></div>
+  </div>
 </div>
+
+<!-- CTA Section -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-background/80 backdrop-blur-lg border-t border-outline-variant/30 pb-safe">
+  <div class="max-w-lg mx-auto px-6 py-4">
+    <button onclick="goToNextStep()" class="w-full bg-primary text-on-primary py-4 rounded-full shadow-xl shadow-primary/20 flex items-center justify-center gap-2 group active:scale-95 transition-all font-bold">
+      Calculate Budget
+      <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+    </button>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-[72px] left-0 w-full z-40 bg-surface-container/80 backdrop-blur-lg border-t border-outline-variant/30 rounded-t-3xl md:hidden">
+  <div class="flex justify-around items-center px-4 pt-3 pb-2">
+    <div onclick="window.location.href='../dashboard_cholo_2/code.html'" class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
+    </div>
+    <div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-5 py-2">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-on-surface-variant/60 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+    </div>
+  </div>
 </nav>
-</body></html>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// OPENSTREETMAP CONFIGURATION - FREE, NO API KEY NEEDED
+// ═══════════════════════════════════════════════════════════════════
+
+const CATEGORY_CONFIG = {
+  lodging: {
+    icon: 'hotel',
+    priceUnit: '/ night',
+    tags: { luxury: 'Luxury', budget: 'Budget', mid: 'Standard' },
+    bgColor: 'bg-secondary-container',
+    iconColor: 'text-primary',
+    osmQuery: '["tourism"~"hotel|guest_house|hostel"]'
+  },
+  bicycle_rental: {
+    icon: 'pedal_bike',
+    priceUnit: '/ day',
+    tags: { budget: 'Budget', popular: 'Popular' },
+    bgColor: 'bg-tertiary-container/30',
+    iconColor: 'text-tertiary',
+    osmQuery: '["amenity"="bicycle_rental"]'
+  },
+  bus_station: {
+    icon: 'directions_bus',
+    priceUnit: '/ seat',
+    tags: { popular: 'Popular', budget: 'Budget' },
+    bgColor: 'bg-error-container/30',
+    iconColor: 'text-error',
+    osmQuery: '["amenity"="bus_station"]'
+  },
+  restaurant: {
+    icon: 'restaurant',
+    priceUnit: '/ meal',
+    tags: { eco: 'Eco', popular: 'Popular', luxury: 'Fine Dining' },
+    bgColor: 'bg-blue-900/30',
+    iconColor: 'text-blue-400',
+    osmQuery: '["amenity"="restaurant"]'
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+
+let currentDestination = null;
+let currentCategory = 'lodging';
+let servicesData = [];
+let selectedServices = [];
+let currentLat = 23.684994;
+let currentLng = 88.001391;
+
+// ═══════════════════════════════════════════════════════════════════
+// INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!localStorage.getItem('cholo_token') && !localStorage.getItem('cholo_guest')) {
+    localStorage.setItem('cholo_guest', 'true');
+  }
+  
+  const tripData = getTripData();
+  if (tripData.step_3?.services) {
+    selectedServices = tripData.step_3.services;
+  }
+  
+  loadDestinationAndServices();
+});
+
+async function loadDestinationAndServices() {
+  const tripData = getTripData();
+  const destinations = tripData.step_2?.destinations || [];
+  
+  if (destinations.length === 0) {
+    window.location.href = '../step_2_destination_picker_cholo_2/code.html';
+    return;
+  }
+  
+  currentDestination = destinations[0];
+  document.getElementById('destination-title').textContent = `${currentDestination.name}, Bangladesh`;
+  
+  try {
+    const coords = await geocodeOSM(currentDestination.name);
+    currentLat = coords.lat;
+    currentLng = coords.lon;
+    await loadServices();
+  } catch (err) {
+    console.error('Geocoding error:', err);
+    showError('Failed to locate destination. Using default coordinates.');
+    await loadServices();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// OPENSTREETMAP API FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════
+
+async function geocodeOSM(address) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ', Bangladesh')}&limit=1`;
+  const response = await fetch(url, {
+    headers: { 'User-Agent': 'CholoApp/1.0 (contact@example.com)' }
+  });
+  const data = await response.json();
+  
+  if (!data || data.length === 0) {
+    throw new Error('Location not found');
+  }
+  
+  return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+}
+
+async function loadServices() {
+  showLoading(true);
+  hideError();
+  hideEmpty();
+  
+  try {
+    const results = await searchOSMPlaces(currentCategory, currentLat, currentLng);
+    
+    if (results.length === 0) {
+      showEmpty();
+    } else {
+      servicesData = results.slice(0, 20);
+      renderServices();
+    }
+  } catch (err) {
+    console.error('Load services error:', err);
+    showError(err.message || 'Failed to load services');
+  } finally {
+    showLoading(false);
+  }
+}
+
+async function searchOSMPlaces(category, lat, lon) {
+  const config = CATEGORY_CONFIG[category];
+  const radius = 15000;
+  
+  const overpassQuery = `
+    [out:json][timeout:25];
+    (
+      node${config.osmQuery}(around:${radius},${lat},${lon});
+      way${config.osmQuery}(around:${radius},${lat},${lon});
+      relation${config.osmQuery}(around:${radius},${lat},${lon});
+    );
+    out center 20;
+  `;
+  
+  const response = await fetch('https://overpass-api.de/api/interpreter', {
+    method: 'POST',
+    body: overpassQuery,
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Overpass API error: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  
+  return data.elements.map(el => {
+    const tags = el.tags || {};
+    const center = el.center || { lat: el.lat, lon: el.lon };
+    
+    const stars = tags.stars ? parseFloat(tags.stars) : null;
+    const rating = stars || (3 + Math.random() * 1.5);
+    const price = generatePrice(category, rating, tags);
+    
+    const vicinityParts = [];
+    if (tags['addr:street']) vicinityParts.push(tags['addr:street']);
+    if (tags['addr:city']) vicinityParts.push(tags['addr:city']);
+    if (vicinityParts.length === 0) vicinityParts.push('Nearby');
+    
+    return {
+      place_id: `osm_${el.type}_${el.id}`,
+      name: tags.name || tags.brand || tags.operator || 'Unnamed Place',
+      vicinity: vicinityParts.join(', '),
+      rating: parseFloat(rating.toFixed(1)),
+      price_level: stars ? Math.min(Math.floor(stars), 4) : Math.floor(Math.random() * 3) + 1,
+      price: price,
+      category: category,
+      lat: center.lat,
+      lon: center.lon,
+      photos: null
+    };
+  });
+}
+
+function generatePrice(category, rating, tags) {
+  const basePrices = {
+    lodging: { min: 800, max: 15000 },
+    bicycle_rental: { min: 300, max: 2500 },
+    bus_station: { min: 200, max: 3000 },
+    restaurant: { min: 150, max: 5000 }
+  };
+  
+  const range = basePrices[category] || { min: 500, max: 5000 };
+  const ratingFactor = rating / 5;
+  const price = Math.floor(range.min + (range.max - range.min) * ratingFactor);
+  
+  return Math.ceil(price / 50) * 50;
+}
+
+function retryLoad() {
+  loadServices();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════════════════════════
+
+function renderServices() {
+  const grid = document.getElementById('servicesGrid');
+  const config = CATEGORY_CONFIG[currentCategory];
+  
+  hideEmpty();
+  
+  grid.innerHTML = servicesData.map((place) => {
+    const isSelected = selectedServices.some(s => s.place_id === place.place_id);
+    const tag = generateTag(place);
+    
+    return `
+      <div class="service-card relative bg-surface-container-low rounded-2xl p-4 border-2 ${isSelected ? 'border-primary shadow-lg shadow-primary/10' : 'border-transparent'} shadow-sm hover:shadow-md transition-all cursor-pointer" 
+           onclick="toggleService('${place.place_id}', this)" 
+           data-place-id="${place.place_id}">
+        ${isSelected ? `
+          <div class="absolute top-4 right-4 bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center z-10">
+            <span class="material-symbols-outlined text-sm font-bold" style="font-variation-settings:'FILL' 1;">check</span>
+          </div>
+        ` : ''}
+        <div class="flex gap-4">
+          <div class="w-16 h-16 rounded-xl ${config.bgColor} flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined ${config.iconColor} text-3xl">${config.icon}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-lg leading-tight mb-1 truncate pr-8 text-on-surface">${escapeHtml(place.name)}</h3>
+            <p class="text-xs text-on-surface-variant mb-2 flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">location_on</span>
+              <span class="truncate">${escapeHtml(place.vicinity)}</span>
+            </p>
+            <div class="flex items-center justify-between">
+              <div class="flex flex-col">
+                <span class="text-primary font-bold text-lg">৳${place.price.toLocaleString('en-BD')} <span class="text-[10px] font-medium text-outline">${config.priceUnit}</span></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="flex items-center gap-0.5 text-xs font-semibold text-on-surface-variant">
+                  <span class="material-symbols-outlined text-[14px] text-amber-500">star</span>
+                  ${place.rating}
+                </span>
+                <span class="bg-primary-container text-on-primary-container px-2.5 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">${tag}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  updateSummary();
+}
+
+function generateTag(place) {
+  const config = CATEGORY_CONFIG[place.category];
+  if (place.rating >= 4.5) return config.tags.luxury || 'Luxury';
+  if (place.rating >= 4.0) return config.tags.popular || 'Popular';
+  if (place.price_level <= 1) return config.tags.budget || 'Budget';
+  return config.tags.eco || 'Standard';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════════════════════
+
+function toggleService(placeId, cardEl) {
+  const place = servicesData.find(p => p.place_id === placeId);
+  if (!place) return;
+  
+  const existingIndex = selectedServices.findIndex(s => s.place_id === placeId);
+  const isAdding = existingIndex === -1;
+  
+  if (isAdding) {
+    selectedServices.push({
+      place_id: place.place_id,
+      name: place.name,
+      category: place.category,
+      price: place.price,
+      vicinity: place.vicinity,
+      rating: place.rating
+    });
+  } else {
+    selectedServices.splice(existingIndex, 1);
+  }
+  
+  const checkmark = cardEl.querySelector('.absolute.top-4.right-4');
+  if (isAdding) {
+    cardEl.classList.remove('border-transparent');
+    cardEl.classList.add('border-primary', 'shadow-lg', 'shadow-primary/10');
+    if (!checkmark) {
+      const chk = document.createElement('div');
+      chk.className = 'absolute top-4 right-4 bg-primary text-on-primary rounded-full p-1 h-6 w-6 flex items-center justify-center z-10';
+      chk.innerHTML = '<span class="material-symbols-outlined text-sm font-bold" style="font-variation-settings:\\'FILL\\' 1;">check</span>';
+      cardEl.appendChild(chk);
+    }
+  } else {
+    cardEl.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
+    cardEl.classList.add('border-transparent');
+    if (checkmark) checkmark.remove();
+  }
+  
+  saveTripData();
+  updateSummary();
+}
+
+function switchCategory(category) {
+  currentCategory = category;
+  
+  document.querySelectorAll('.category-tab').forEach(tab => {
+    if (tab.dataset.category === category) {
+      tab.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+      tab.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    } else {
+      tab.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      tab.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+    }
+  });
+  
+  loadServices();
+}
+
+function updateSummary() {
+  const summary = document.getElementById('selectedSummary');
+  const count = document.getElementById('selectedCount');
+  const chips = document.getElementById('selectedChips');
+  
+  if (selectedServices.length === 0) {
+    summary.classList.add('hidden');
+    return;
+  }
+  
+  summary.classList.remove('hidden');
+  count.textContent = selectedServices.length;
+  
+  chips.innerHTML = selectedServices.map(s => {
+    const config = CATEGORY_CONFIG[s.category];
+    return `
+      <button onclick="event.stopPropagation(); removeService('${s.place_id}')" class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary border border-primary/20 active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-[14px]">${config.icon}</span>
+        ${escapeHtml(s.name)}
+        <span class="material-symbols-outlined text-[14px]">close</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function removeService(placeId) {
+  selectedServices = selectedServices.filter(s => s.place_id !== placeId);
+  
+  const card = document.querySelector(`[data-place-id="${placeId}"]`);
+  if (card) {
+    card.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
+    card.classList.add('border-transparent');
+    const checkmark = card.querySelector('.absolute.top-4.right-4');
+    if (checkmark) checkmark.remove();
+  }
+  
+  saveTripData();
+  updateSummary();
+}
+
+function clearSelections() {
+  selectedServices = [];
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.classList.remove('border-primary', 'shadow-lg', 'shadow-primary/10');
+    card.classList.add('border-transparent');
+    const checkmark = card.querySelector('.absolute.top-4.right-4');
+    if (checkmark) checkmark.remove();
+  });
+  saveTripData();
+  updateSummary();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NAVIGATION - FIXED TO MATCH YOUR FOLDER STRUCTURE
+// ═══════════════════════════════════════════════════════════════════
+
+function goBack() {
+  window.location.href = '../step_2_destination_picker_cholo_2/code.html';
+}
+
+function goToNextStep() {
+  if (selectedServices.length === 0) {
+    alert('Please select at least one service!');
+    return;
+  }
+  saveTripData();
+  window.location.href = '../step_4_budget_results_cholo_2/code.html';
+}
+
+
+// ═══════════════════════════════════════════════════════════════════
+// DATA PERSISTENCE
+// ═══════════════════════════════════════════════════════════════════
+
+function getTripData() {
+  return JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
+}
+
+function saveTripData() {
+  const data = getTripData();
+  data.step_3 = {
+    services: selectedServices,
+    timestamp: new Date().toISOString()
+  };
+  localStorage.setItem('cholo_trip_data', JSON.stringify(data));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════════
+
+function showLoading(show) {
+  document.getElementById('loadingState').classList.toggle('hidden', !show);
+  if (show) document.getElementById('servicesGrid').innerHTML = '';
+}
+
+function showEmpty() {
+  document.getElementById('emptyState').classList.remove('hidden');
+  document.getElementById('servicesGrid').innerHTML = '';
+}
+
+function hideEmpty() {
+  document.getElementById('emptyState').classList.add('hidden');
+}
+
+function showError(message) {
+  document.getElementById('errorState').classList.remove('hidden');
+  document.getElementById('errorMessage').textContent = message;
+  document.getElementById('servicesGrid').innerHTML = '';
+}
+
+function hideError() {
+  document.getElementById('errorState').classList.add('hidden');
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>

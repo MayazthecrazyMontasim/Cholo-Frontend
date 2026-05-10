@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cholo - Budget Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff",
+        "secondary-fixed": "#c0ecd6", "tertiary": "#855000",
+        "secondary-fixed-dim": "#a5d0ba", "on-surface": "#191c1d",
+        "inverse-primary": "#68dbae", "surface-container-high": "#e7e8e9",
+        "inverse-surface": "#2e3132", "error-container": "#ffdad6",
+        "on-tertiary-fixed": "#2b1700", "on-secondary-fixed-variant": "#264e3e",
+        "on-primary": "#ffffff", "secondary": "#3e6655",
+        "surface-container-highest": "#e1e3e4", "tertiary-fixed-dim": "#ffb869",
+        "tertiary-fixed": "#ffdcbb", "on-tertiary": "#ffffff",
+        "primary-fixed-dim": "#68dbae", "outline": "#6d7a73",
+        "on-primary-fixed-variant": "#00513a", "on-primary-fixed": "#002115",
+        "surface-dim": "#d9dadb", "tertiary-container": "#a76500",
+        "surface-tint": "#006c4e", "on-primary-container": "#f5fff7",
+        "primary": "#00694c", "primary-fixed": "#86f8c9",
+        "background": "#f8f9fa", "outline-variant": "#bccac1",
+        "inverse-on-surface": "#f0f1f2", "primary-container": "#008560",
+        "surface": "#f8f9fa", "secondary-container": "#bdead3",
+        "on-secondary-fixed": "#002115", "error": "#ba1a1a",
+        "surface-bright": "#f8f9fa", "on-tertiary-fixed-variant": "#673d00",
+        "on-tertiary-container": "#fffbff", "on-secondary-container": "#426b59",
+        "surface-container": "#edeeef", "surface-variant": "#e1e3e4",
+        "on-surface-variant": "#3d4943", "on-background": "#191c1d",
+        "surface-container-low": "#f3f4f5", "on-error-container": "#93000a",
+        "on-error": "#ffffff"
+      },
+      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", "2xl": "1rem", "3xl": "1.5rem", full: "9999px" },
+      fontFamily: { headline: ["Be Vietnam Pro"], body: ["Plus Jakarta Sans"], label: ["Plus Jakarta Sans"] }
+    }
+  }
+}
+</script>
+<style>
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; min-height: max(884px, 100dvh); }
+  h1, h2, h3 { font-family: 'Be Vietnam Pro', sans-serif; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"] { -moz-appearance: textfield; }
+</style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-40">
+
+<!-- Top AppBar -->
+<nav class="sticky top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-surface-container-high">
+  <div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
+    <div class="flex items-center gap-4">
+      <button onclick="goBack()" class="active:scale-95 transition-transform p-2 hover:bg-surface-container-high rounded-full">
+        <span class="material-symbols-outlined text-primary">arrow_back</span>
+      </button>
+      <h1 class="text-xl font-extrabold tracking-tighter text-primary editorial-title">Cholo</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleTheme()" class="active:scale-95 transition-transform p-2 hover:bg-surface-container-high rounded-full mr-2">
+        <span class="material-symbols-outlined text-primary">dark_mode</span>
+      </button>
+      <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+        <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlW3f7diJMcjwFEaJSO5roC4MzI7DZujXLIVLmKvThAeGCPOxIQ9j6U3STXQqsfzIdS-52QJjlsqWc5OzHdKB01XXR3n0k9chuKD5xJI1sp50RUr_ISUkqeVz18sXVD0wt1Qta0j_ATyvmOaFUYkj1O2iKdtFRxn6JuMuEYMJDHsnkRhlhvCxJLu1FEQxTjBVBedJfCrtF69BJ_11d8Gn5_seSi70ZgiawfCK0qPnL-sEh9axB7yuJJcIlu4KUjOMbzYDSBmYoRQZ-"/>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-6 pt-6">
+  <!-- Progress Indicator -->
+  <div class="mb-6">
+    <div class="flex justify-between items-end mb-2">
+      <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-outline">Step 4 of 4</span>
+      <span class="text-sm font-bold text-primary">100% Complete</span>
+    </div>
+    <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+      <div class="h-full bg-tertiary w-full"></div>
+    </div>
+  </div>
+
+  <!-- Destination Header -->
+  <header class="mb-8">
+    <h2 class="editorial-title text-3xl font-black tracking-tight text-on-surface mb-2">Review & Budget</h2>
+    <p class="text-on-surface-variant font-medium">Review your selections and calculate the total cost.</p>
+  </header>
+
+  <!-- Trip Summary Card -->
+  <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 p-6 mb-6 shadow-sm">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+      </div>
+      <div>
+        <p class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Destination</p>
+        <p id="summary-destination" class="font-bold text-on-surface">Loading...</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-secondary-container flex items-center justify-center">
+        <span class="material-symbols-outlined text-primary">calendar_today</span>
+      </div>
+      <div>
+        <p class="text-xs text-on-surface-variant font-bold uppercase tracking-widest">Travel Dates</p>
+        <p id="summary-dates" class="font-bold text-on-surface">Not set</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travelers Input -->
+  <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 p-6 mb-6 shadow-sm">
+    <h3 class="font-bold text-lg text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">group</span>
+      Travelers
+    </h3>
+    <div class="flex items-center gap-4">
+      <button onclick="adjustTravelers(-1)" class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-on-surface">remove</span>
+      </button>
+      <div class="flex-1 text-center">
+        <span id="traveler-count" class="text-3xl font-black text-on-surface">1</span>
+        <p class="text-xs text-on-surface-variant">Person</p>
+      </div>
+      <button onclick="adjustTravelers(1)" class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-on-surface">add</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Selected Services -->
+  <div class="mb-6">
+    <h3 class="font-bold text-lg text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">receipt_long</span>
+      Selected Services
+    </h3>
+    <div id="services-list" class="space-y-3"></div>
+  </div>
+
+  <!-- Additional Expenses -->
+  <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 p-6 mb-6 shadow-sm">
+    <h3 class="font-bold text-lg text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">add_circle</span>
+      Additional Expenses
+    </h3>
+    <div class="space-y-4">
+      <div class="flex items-center justify-between gap-4">
+        <label class="text-sm font-medium text-on-surface-variant">Food & Dining</label>
+        <div class="flex items-center gap-2">
+          <span class="text-primary font-bold">৳</span>
+          <input type="number" id="expense-food" value="0" min="0" step="100" onchange="calculateBudget()" 
+            class="w-28 px-3 py-2 bg-surface-container rounded-xl border border-outline-variant text-on-surface text-right font-bold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-4">
+        <label class="text-sm font-medium text-on-surface-variant">Transportation</label>
+        <div class="flex items-center gap-2">
+          <span class="text-primary font-bold">৳</span>
+          <input type="number" id="expense-transport" value="0" min="0" step="100" onchange="calculateBudget()" 
+            class="w-28 px-3 py-2 bg-surface-container rounded-xl border border-outline-variant text-on-surface text-right font-bold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+        </div>
+      </div>
+      <div class="flex items-center justify-between gap-4">
+        <label class="text-sm font-medium text-on-surface-variant">Shopping & Misc</label>
+        <div class="flex items-center gap-2">
+          <span class="text-primary font-bold">৳</span>
+          <input type="number" id="expense-shopping" value="0" min="0" step="100" onchange="calculateBudget()" 
+            class="w-28 px-3 py-2 bg-surface-container rounded-xl border border-outline-variant text-on-surface text-right font-bold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Duration Input -->
+  <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 p-6 mb-6 shadow-sm">
+    <h3 class="font-bold text-lg text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">timer</span>
+      Trip Duration
+    </h3>
+    <div class="flex items-center gap-4">
+      <button onclick="adjustDuration(-1)" class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-on-surface">remove</span>
+      </button>
+      <div class="flex-1 text-center">
+        <span id="duration-days" class="text-3xl font-black text-on-surface">3</span>
+        <p class="text-xs text-on-surface-variant">Days</p>
+      </div>
+      <button onclick="adjustDuration(1)" class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-on-surface">add</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Budget Summary -->
+  <div class="bg-primary-container/30 rounded-3xl border border-primary/20 p-6 mb-24">
+    <h3 class="font-bold text-lg text-on-surface mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+      Budget Summary
+    </h3>
+    
+    <div class="space-y-3 mb-4">
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-on-surface-variant">Services Total</span>
+        <span id="total-services" class="font-bold text-on-surface">৳0</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-on-surface-variant">Additional Expenses</span>
+        <span id="total-additional" class="font-bold text-on-surface">৳0</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-on-surface-variant">Duration Multiplier (×<span id="duration-display">3</span> days)</span>
+        <span class="text-xs text-outline">Applied to daily rates</span>
+      </div>
+      <div class="h-px bg-outline-variant/30 my-2"></div>
+      <div class="flex justify-between items-center">
+        <span class="font-bold text-on-surface">Grand Total</span>
+        <span id="grand-total" class="text-2xl font-black text-primary">৳0</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-sm text-on-surface-variant">Per Person (<span id="traveler-display">1</span> travelers)</span>
+        <span id="per-person" class="font-bold text-primary">৳0</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- CTA Section -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-background/80 backdrop-blur-lg border-t border-outline-variant/30 pb-safe">
+  <div class="max-w-lg mx-auto px-6 py-4 flex gap-3">
+    <button onclick="saveTrip()" class="flex-1 bg-surface-container-high text-on-surface py-4 rounded-full font-bold active:scale-95 transition-all border border-outline-variant">
+      Save Trip
+    </button>
+    <button onclick="bookNow()" class="flex-1 bg-primary text-on-primary py-4 rounded-full shadow-xl flex items-center justify-center gap-2 group active:scale-95 transition-all font-bold">
+      Book Now
+      <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+    </button>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-[72px] left-0 w-full z-40 bg-white/80 backdrop-blur-lg rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.04)] md:hidden">
+  <div class="flex justify-around items-center px-4 pt-3 pb-2">
+    <div onclick="window.location.href='../dashboard_cholo_1/code.html'" class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Explore</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">map</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Planner</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Saved</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-slate-500 px-5 py-2 hover:text-primary transition-all active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] uppercase tracking-widest font-bold mt-1">Profile</span>
+    </div>
+  </div>
+</nav>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+
+let tripData = {};
+let selectedServices = [];
+let travelers = 1;
+let durationDays = 3;
+
+const CATEGORY_CONFIG = {
+  lodging: { icon: 'hotel', priceUnit: '/ night', multiplier: 'daily' },
+  bicycle_rental: { icon: 'pedal_bike', priceUnit: '/ day', multiplier: 'daily' },
+  bus_station: { icon: 'directions_bus', priceUnit: '/ seat', multiplier: 'fixed' },
+  restaurant: { icon: 'restaurant', priceUnit: '/ meal', multiplier: 'daily' }
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// INITIALIZATION
+// ═══════════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadTripData();
+});
+
+function loadTripData() {
+  tripData = JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
+  
+  if (!tripData.step_2?.destinations?.length) {
+    window.location.href = '../step_2_destination_picker_cholo_1/code.html';
+    return;
+  }
+  
+  if (!tripData.step_3?.services?.length) {
+    window.location.href = '../step_3_services_browser_cholo_1/code.html';
+    return;
+  }
+  
+  selectedServices = tripData.step_3.services;
+  
+  if (tripData.step_4) {
+    travelers = tripData.step_4.travelers || 1;
+    durationDays = tripData.step_4.durationDays || 3;
+    document.getElementById('expense-food').value = tripData.step_4.expenses?.food || 0;
+    document.getElementById('expense-transport').value = tripData.step_4.expenses?.transport || 0;
+    document.getElementById('expense-shopping').value = tripData.step_4.expenses?.shopping || 0;
+  }
+  
+  if (tripData.step_1) {
+    if (tripData.step_1.travelers) travelers = parseInt(tripData.step_1.travelers) || 1;
+    if (tripData.step_1.startDate && tripData.step_1.endDate) {
+      const start = new Date(tripData.step_1.startDate);
+      const end = new Date(tripData.step_1.endDate);
+      const diffTime = Math.abs(end - start);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      if (diffDays > 0) durationDays = diffDays;
+    }
+  }
+  
+  renderSummary();
+  renderServices();
+  calculateBudget();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════════════════════════
+
+function renderSummary() {
+  const destination = tripData.step_2.destinations[0];
+  document.getElementById('summary-destination').textContent = `${destination.name}, Bangladesh`;
+  
+  let dateText = 'Not set';
+  if (tripData.step_1?.startDate && tripData.step_1?.endDate) {
+    const start = new Date(tripData.step_1.startDate).toLocaleDateString('en-BD', { day: 'numeric', month: 'short' });
+    const end = new Date(tripData.step_1.endDate).toLocaleDateString('en-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+    dateText = `${start} - ${end}`;
+  }
+  document.getElementById('summary-dates').textContent = dateText;
+}
+
+function renderServices() {
+  const container = document.getElementById('services-list');
+  
+  if (selectedServices.length === 0) {
+    container.innerHTML = '<p class="text-center text-on-surface-variant py-4">No services selected</p>';
+    return;
+  }
+  
+  container.innerHTML = selectedServices.map(service => {
+    const config = CATEGORY_CONFIG[service.category] || { icon: 'place', priceUnit: '', multiplier: 'fixed' };
+    const isDaily = config.multiplier === 'daily';
+    const durationMultiplier = isDaily ? durationDays : 1;
+    const totalPrice = service.price * durationMultiplier;
+    
+    return `
+      <div class="bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/30 shadow-sm">
+        <div class="flex gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-primary text-2xl">${config.icon}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-on-surface truncate">${escapeHtml(service.name)}</h4>
+                <p class="text-xs text-on-surface-variant flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[12px]">location_on</span>
+                  ${escapeHtml(service.vicinity || 'Nearby')}
+                </p>
+              </div>
+              <button onclick="removeService('${service.place_id}')" class="p-1 hover:bg-error-container rounded-full transition-colors active:scale-95">
+                <span class="material-symbols-outlined text-error text-lg">delete</span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <span class="text-xs text-outline">${config.priceUnit} × ${isDaily ? durationDays + ' days' : '1'}</span>
+              <span class="font-bold text-primary">৳${totalPrice.toLocaleString('en-BD')}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BUDGET CALCULATIONS
+// ═══════════════════════════════════════════════════════════════════
+
+function calculateBudget() {
+  let servicesTotal = 0;
+  
+  selectedServices.forEach(service => {
+    const config = CATEGORY_CONFIG[service.category] || { multiplier: 'fixed' };
+    const isDaily = config.multiplier === 'daily';
+    const multiplier = isDaily ? durationDays : 1;
+    servicesTotal += service.price * multiplier;
+  });
+  
+  const food = parseInt(document.getElementById('expense-food').value) || 0;
+  const transport = parseInt(document.getElementById('expense-transport').value) || 0;
+  const shopping = parseInt(document.getElementById('expense-shopping').value) || 0;
+  
+  const additionalTotal = (food + transport + shopping) * durationDays;
+  const grandTotal = servicesTotal + additionalTotal;
+  const perPerson = travelers > 0 ? Math.ceil(grandTotal / travelers) : grandTotal;
+  
+  document.getElementById('total-services').textContent = `৳${servicesTotal.toLocaleString('en-BD')}`;
+  document.getElementById('total-additional').textContent = `৳${additionalTotal.toLocaleString('en-BD')}`;
+  document.getElementById('duration-display').textContent = durationDays;
+  document.getElementById('traveler-display').textContent = travelers;
+  document.getElementById('grand-total').textContent = `৳${grandTotal.toLocaleString('en-BD')}`;
+  document.getElementById('per-person').textContent = `৳${perPerson.toLocaleString('en-BD')}`;
+  
+  document.getElementById('traveler-count').textContent = travelers;
+  document.getElementById('duration-days').textContent = durationDays;
+  
+  saveBudgetData();
+}
+
+function adjustTravelers(delta) {
+  travelers = Math.max(1, travelers + delta);
+  calculateBudget();
+}
+
+function adjustDuration(delta) {
+  durationDays = Math.max(1, durationDays + delta);
+  renderServices();
+  calculateBudget();
+}
+
+function removeService(placeId) {
+  selectedServices = selectedServices.filter(s => s.place_id !== placeId);
+  
+  tripData.step_3.services = selectedServices;
+  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+  
+  renderServices();
+  calculateBudget();
+  
+  if (selectedServices.length === 0) {
+    alert('No services selected. Redirecting to services page...');
+    window.location.href = '../step_3_services_browser_cholo_1/code.html';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DATA PERSISTENCE
+// ═══════════════════════════════════════════════════════════════════
+
+function saveBudgetData() {
+  const food = parseInt(document.getElementById('expense-food').value) || 0;
+  const transport = parseInt(document.getElementById('expense-transport').value) || 0;
+  const shopping = parseInt(document.getElementById('expense-shopping').value) || 0;
+  
+  tripData.step_4 = {
+    travelers: travelers,
+    durationDays: durationDays,
+    expenses: {
+      food: food,
+      transport: transport,
+      shopping: shopping
+    },
+    totals: {
+      services: parseInt(document.getElementById('total-services').textContent.replace(/[^0-9]/g, '')) || 0,
+      additional: parseInt(document.getElementById('total-additional').textContent.replace(/[^0-9]/g, '')) || 0,
+      grand: parseInt(document.getElementById('grand-total').textContent.replace(/[^0-9]/g, '')) || 0
+    },
+    timestamp: new Date().toISOString()
+  };
+  
+  localStorage.setItem('cholo_trip_data', JSON.stringify(tripData));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════════════════════════════
+
+function saveTrip() {
+  saveBudgetData();
+  
+  const token = localStorage.getItem('cholo_token');
+  if (token) {
+    const savedTrips = JSON.parse(localStorage.getItem('cholo_saved_trips') || '[]');
+    savedTrips.push({
+      id: Date.now(),
+      data: tripData,
+      createdAt: new Date().toISOString()
+    });
+    localStorage.setItem('cholo_saved_trips', JSON.stringify(savedTrips));
+    alert('Trip saved successfully!');
+  } else {
+    alert('Trip saved locally! Sign in to sync across devices.');
+  }
+}
+
+function bookNow() {
+  saveBudgetData();
+  alert('Proceeding to booking... (Integrate payment gateway here)');
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════════
+
+function goBack() {
+  window.location.href = '../step_3_services_browser_cholo_1/code.html';
+}
+
+function toggleTheme() {
+  localStorage.setItem('theme', 'dark');
+  window.location.href = '../step_4_budget_results_cholo_2/code.html';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>
