@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -67,7 +67,7 @@
       <span class="material-symbols-outlined text-primary">dark_mode</span>
     </button>
     <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
-      <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsZMtzB3VcsUVuf9onAf2yYoYNy_bf0Xo9RHtozI74NbGSyKv0QqHc0HO85NARQ7I613DvQc-PuanrgTYXOvnnVa7yxKX-ZG_KYHU5wI3lbt_jCOMpbY8kS2Ug_DD1HNqvB9fnNEgKx1-iwEIIKw9kd8KQyBuM0Yx-AYVw3Ff6m0G8e9TcytepfgZHiKpAnKxBaCBot_XZL7imcDuW1C-xNpXs6U7RuOwoPHVsbhdO7vFT3rOJZN_PE2C7enxSbO00oTN7N280Du2h"/>
+      <img alt="User profile" src="https://ui-avatars.com/api/?name=U&background=1D9E75&color=fff&size=80"/>
     </div>
   </div>
 </header>
@@ -140,62 +140,107 @@
     </div>
   </div>
 
-  <!-- ✅ FIX 3: Added `relative` to ALL cards (was missing on cards 1–7) -->
+  <!-- Destination Cards — photo-card style -->
+  <style>
+    .dest-card { position: relative; border-radius: 1.5rem; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 3px solid transparent; }
+    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,105,76,0.25); }
+    .dest-card.selected { border-color: #00694c; box-shadow: 0 0 0 3px rgba(0,105,76,0.3), 0 20px 40px -10px rgba(0,105,76,0.3); }
+    .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .dest-card:hover img { transform: scale(1.07); }
+    .dest-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 55%, transparent 100%); }
+    .dest-card .info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; }
+    .dest-card .check { position: absolute; top: 0.75rem; right: 0.75rem; width: 2rem; height: 2rem; background: #00694c; border-radius: 9999px; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.6); transition: opacity 0.2s, transform 0.2s; }
+    .dest-card.selected .check { opacity: 1; transform: scale(1); }
+    .dest-card .badge { display: inline-block; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(0,105,76,0.85); color: #fff; border-radius: 9999px; padding: 0.2rem 0.6rem; margin-bottom: 0.35rem; }
+  </style>
+
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent shadow-sm cursor-pointer" onclick="selectDestination('Cox\'s Bazar','Coastal Region','🏖️',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-primary-container/10 flex items-center justify-center text-2xl">🏖️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Cox's Bazar</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Coastal Region</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Cox\'s Bazar','Coastal Region','🏖️',this)" data-name="Cox's Bazar">
+      <img src="https://images.unsplash.com/photo-H8jywsQxCDk?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach at night"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Coastal Region</span>
+        <h3 class="font-bold text-base text-white leading-tight">Cox's Bazar</h3>
+        <p class="text-white/70 text-xs">World's longest beach</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sundarbans','Mangrove Forest','🐅',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🐅</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sundarbans</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Mangrove Forest</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Sundarbans','Mangrove Forest','🐅',this)" data-name="Sundarbans">
+      <img src="https://images.unsplash.com/photo-Gz2oZP23j1s?w=500&q=80&auto=format&fit=crop" alt="Sundarbans mangrove forest"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Mangrove Forest</span>
+        <h3 class="font-bold text-base text-white leading-tight">Sundarbans</h3>
+        <p class="text-white/70 text-xs">Royal Bengal tigers</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sylhet','Tea Estates','🍵',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🍵</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sylhet</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Tea Estates</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Sylhet','Tea Estates','🍵',this)" data-name="Sylhet">
+      <img src="https://images.unsplash.com/photo-sY875j5lXnU?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Tea Estates</span>
+        <h3 class="font-bold text-base text-white leading-tight">Sylhet</h3>
+        <p class="text-white/70 text-xs">Rolling tea gardens</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Bandarban','Cloudy Peaks','⛰️',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">⛰️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Bandarban</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Cloudy Peaks</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Bandarban','Cloudy Peaks','⛰️',this)" data-name="Bandarban">
+      <img src="https://images.unsplash.com/photo-MrKPi-yajC0?w=500&q=80&auto=format&fit=crop" alt="Bandarban hill tracts"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Cloudy Peaks</span>
+        <h3 class="font-bold text-base text-white leading-tight">Bandarban</h3>
+        <p class="text-white/70 text-xs">Misty mountain trails</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Rangamati','Hill Tracts','🛶',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🛶</div>
-        <div><h3 class="font-bold text-base text-on-surface">Rangamati</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Hill Tracts</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Rangamati','Hill Tracts','🛶',this)" data-name="Rangamati">
+      <img src="https://images.unsplash.com/photo-qbdWz7mq_JU?w=500&q=80&auto=format&fit=crop" alt="Rangamati Kaptai lake"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Hill Tracts</span>
+        <h3 class="font-bold text-base text-white leading-tight">Rangamati</h3>
+        <p class="text-white/70 text-xs">Kaptai lake serenity</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Sreemangal','Rainforest','🍃',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🍃</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sreemangal</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Rainforest</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Sreemangal','Rainforest','🍃',this)" data-name="Sreemangal">
+      <img src="https://images.unsplash.com/photo-AbIiPjvu5z0?w=500&q=80&auto=format&fit=crop" alt="Sreemangal nature"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Rainforest</span>
+        <h3 class="font-bold text-base text-white leading-tight">Sreemangal</h3>
+        <p class="text-white/70 text-xs">Tea capital of Bangladesh</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Saint Martin','Coral Island','🏝️',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🏝️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Saint Martin</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Coral Island</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Saint Martin','Coral Island','🏝️',this)" data-name="Saint Martin">
+      <img src="https://images.unsplash.com/photo-XlP7c_TUKm8?w=500&q=80&auto=format&fit=crop" alt="Saint Martin coral island beach"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Coral Island</span>
+        <h3 class="font-bold text-base text-white leading-tight">Saint Martin</h3>
+        <p class="text-white/70 text-xs">Bangladesh's only coral island</p>
       </div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-lowest rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestination('Kuakata','Daughter of Ocean','🌅',this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container-low flex items-center justify-center text-2xl">🌅</div>
-        <div><h3 class="font-bold text-base text-on-surface">Kuakata</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Daughter of Ocean</p></div>
+    <div class="destination-card dest-card" onclick="selectDestination('Kuakata','Daughter of Ocean','🌅',this)" data-name="Kuakata">
+      <img src="https://images.unsplash.com/photo-5QTAbs-MBfE?w=500&q=80&auto=format&fit=crop" alt="Kuakata beach sunset"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info">
+        <span class="badge">Daughter of Ocean</span>
+        <h3 class="font-bold text-base text-white leading-tight">Kuakata</h3>
+        <p class="text-white/70 text-xs">Sunrise &amp; sunset beach</p>
       </div>
     </div>
 
@@ -244,24 +289,15 @@
   }
 
   function getCardByName(name) {
-    return Array.from(document.querySelectorAll('.destination-card')).find(c => c.querySelector('h3')?.textContent.trim() === name);
+    return Array.from(document.querySelectorAll('.destination-card')).find(c => c.dataset.name === name || c.querySelector('h3')?.textContent.trim() === name);
   }
 
   function updateCardSelection(card, isSelected) {
     if (!card) return;
     if (isSelected) {
-      card.classList.add('border-primary', 'shadow-xl', 'shadow-primary/10');
-      card.classList.remove('border-transparent');
-      if (!card.querySelector('.destination-checkmark')) {
-        const chk = document.createElement('div');
-        chk.className = 'destination-checkmark absolute top-4 right-4';
-        chk.innerHTML = `<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-on-primary" style="font-variation-settings:'FILL' 1;">check</span></div>`;
-        card.appendChild(chk);
-      }
+      card.classList.add('selected');
     } else {
-      card.classList.remove('border-primary', 'shadow-xl', 'shadow-primary/10');
-      card.classList.add('border-transparent');
-      card.querySelector('.destination-checkmark')?.remove();
+      card.classList.remove('selected');
     }
   }
 
@@ -281,8 +317,16 @@
     saveTripData();
   }
 
+  function showToast(msg) {
+    const e = document.getElementById('cholo-toast'); if (e) e.remove();
+    const t = document.createElement('div'); t.id = 'cholo-toast';
+    t.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#00694c;color:#fff;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.18);white-space:nowrap;';
+    t.textContent = msg; document.body.appendChild(t);
+    setTimeout(() => { t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 2500);
+  }
+
   function goToServices() {
-    if (selectedDestinations.length === 0) { alert('Please select at least one destination!'); return; }
+    if (selectedDestinations.length === 0) { showToast('Pick at least one destination!'); return; }
     saveTripData();
     window.location.href = '../step_3_services_browser_cholo_1/code.html';
   }
@@ -340,7 +384,7 @@
   function searchOnGoogleMaps() {
     const term = document.getElementById('destinationSearch').value.trim();
     if (term) window.open(`https://www.google.com/maps/search/${encodeURIComponent(term + ', Bangladesh')}`, '_blank');
-    else alert('Please enter a destination to search on Google Maps');
+    else showToast('Enter a destination name to search on Google Maps');
   }
 
   document.addEventListener('DOMContentLoaded', () => {

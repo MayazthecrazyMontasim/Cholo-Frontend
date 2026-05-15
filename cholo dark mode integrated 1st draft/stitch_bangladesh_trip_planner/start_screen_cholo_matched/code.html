@@ -52,8 +52,13 @@
             direction: ltr;
         }
         .hero-gradient {
-            background: linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0.2) 40%, transparent 100%);
+            background: linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0.4) 35%, transparent 100%);
         }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
+    .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+    .fade-up-2 { animation-delay: 0.25s; opacity: 0; }
+    .fade-up-3 { animation-delay: 0.4s; opacity: 0; }
     </style>
 <style>
     body {
@@ -66,7 +71,7 @@
 <main class="relative w-full max-w-md h-screen mx-auto overflow-hidden bg-surface flex flex-col shadow-2xl">
 <!-- Hero Image Section -->
 <div class="relative flex-[1.3] w-full overflow-hidden">
-<img alt="Majestic landscape of Bangladesh" class="absolute inset-0 w-full h-full object-cover scale-110" data-alt="Sunlight breaking through morning mist over the lush green tea gardens of Sylhet, Bangladesh with a serene atmosphere and soft golden lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV1dYy_61uvCrdqocdtZKlZPp72Tgi3bQc13L2KyAZVvfaoceK-4LTvj5LFmmVlcry1t0QcdE5SUU0KVA_dlVApHxZhhbI2YcpxPRqcDv0EZ_sET2_niewe_EOMHf5pIibe_2f5SzuxvYuKuBkfenvpvRyRHZmLShiHW8wTae3jis26ZpogBx5yRrVFAm7hvJAp10oUHoJ-YpC9NN86RpRQOiOQO81ZZNS6Dk3wBMo7ZdAVW6dLksFxmaPwcmZ-wBGcyiNmgKF7ksX"/>
+<img alt="Majestic landscape of Bangladesh" class="absolute inset-0 w-full h-full object-cover scale-110" data-alt="Sunlight breaking through morning mist over the lush green tea gardens of Sylhet, Bangladesh with a serene atmosphere and soft golden lighting" src="https://images.unsplash.com/photo-5QTAbs-MBfE?w=1280&q=85&auto=format&fit=crop"/>
 <div class="absolute inset-0 hero-gradient"></div>
 <!-- Branding Overlay - Deployment: 2025-04-25 -->
 <div class="absolute top-12 left-0 w-full px-8 flex justify-between items-center">
@@ -80,31 +85,35 @@
 </div>
 <!-- Content & Action Section -->
 <div class="relative flex-1 bg-surface px-8 pt-10 pb-12 rounded-t-[2.5rem] -mt-12 z-10">
-<div class="space-y-4 text-center">
+<div class="space-y-4 text-center fade-up fade-up-1">
 <h2 class="font-headline text-4xl font-extrabold leading-[1.1] tracking-tight text-on-surface">
                     Discover the <span class="text-primary">Magic</span> of Bangladesh
                 </h2>
 <p class="text-on-surface-variant text-base leading-relaxed max-w-[280px] mx-auto">
-                    Plan your next adventure with the best local guides and hidden gem destinations.
+                    Plan smarter trips with local guides, budget tools, and all 64 districts at your fingertips.
                 </p>
 </div>
-<!-- Bento-style Feature Chips -->
-<div class="flex flex-wrap justify-center gap-2.5 mt-8">
-<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full">
-<span class="material-symbols-outlined text-sm text-on-secondary-container">map</span>
-<span class="text-xs font-bold text-on-secondary-container">Live Routes</span>
+<!-- Feature Chips -->
+<div class="flex flex-wrap justify-center gap-2.5 mt-8 fade-up fade-up-2">
+<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-on-secondary-container" style="font-variation-settings:'FILL' 1">map</span>
+<span class="text-xs font-bold text-on-secondary-container">Trip Planner</span>
 </div>
-<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full">
-<span class="material-symbols-outlined text-sm text-on-secondary-container">hotel</span>
-<span class="text-xs font-bold text-on-secondary-container">Top Stays</span>
+<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-on-secondary-container" style="font-variation-settings:'FILL' 1">account_balance_wallet</span>
+<span class="text-xs font-bold text-on-secondary-container">Budget Split</span>
 </div>
-<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full">
-<span class="material-symbols-outlined text-sm text-on-secondary-container">explore</span>
-<span class="text-xs font-bold text-on-secondary-container">Local Guides</span>
+<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-on-secondary-container" style="font-variation-settings:'FILL' 1">explore</span>
+<span class="text-xs font-bold text-on-secondary-container">64 Districts</span>
+</div>
+<div class="flex items-center gap-1.5 px-3.5 py-2 bg-secondary-container rounded-full shadow-sm">
+<span class="material-symbols-outlined text-sm text-on-secondary-container" style="font-variation-settings:'FILL' 1">robot_2</span>
+<span class="text-xs font-bold text-on-secondary-container">Travis AI</span>
 </div>
 </div>
 <!-- CTA Cluster -->
-<div class="mt-10 space-y-4">
+<div class="mt-8 space-y-4 fade-up fade-up-3">
 <button onclick="window.location.href='../signup_page_cholo_matched_1/code.html'" class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 group">
                     Get Started
                     <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>

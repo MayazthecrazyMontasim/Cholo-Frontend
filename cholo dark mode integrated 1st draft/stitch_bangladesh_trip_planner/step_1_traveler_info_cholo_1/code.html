@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en"><head>
 <meta charset="utf-8"/>
@@ -57,6 +57,19 @@
     </style>
 </head>
 <body class="bg-surface text-on-surface min-h-screen">
+<script>
+// Global toast helper injected
+window._choloToast = function(msg, type) {
+  var e = document.getElementById('_ct'); if (e) e.remove();
+  var c = {success:'#1D9E75',info:'#1D9E75',warn:'#BA7517',error:'#BA1A1A'};
+  var t = document.createElement('div'); t.id = '_ct';
+  t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:'+(c[type]||c.info)+';color:#fff;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.18);white-space:nowrap;max-width:90vw;text-align:center;';
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(function(){t.remove();},400); }, 3000);
+};
+var _origAlert = window.alert;
+window.alert = function(msg) { window._choloToast(msg, 'info'); };
+</script>
 <!-- TopAppBar -->
 <header class="sticky top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-highest">
 <div class="flex items-center justify-between px-6 py-4 w-full max-w-7xl mx-auto">
@@ -65,7 +78,7 @@
 <span class="text-xl font-extrabold tracking-tighter text-primary">Cholo</span>
 </div>
 <div class="w-10 h-10 rounded-full bg-primary-container border-2 border-white shadow-sm overflow-hidden"><button class="material-symbols-outlined text-primary hover:bg-primary-container p-2 rounded-full transition-colors active:scale-95 mr-2" data-icon="dark_mode" onclick="toggleTheme()">dark_mode</button>
-<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling professional person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALr8sid6R_me_7-VVdFfbwhgO4GKp0DQFYMba7tXB5TxldcUS6O8Z2x85Ja97ZMg9wFS6ibaOst5C6VSUww5Zgz_zhSXGphbVkmIcnm1iC8A-dhYXpABR_TDjKnljnaZ6Gq8-cuDc_ip099C2ZVJdCDw6W1rYDF3pRu7yBr3PVQhc3-7Lz06I5T7m2BmGhhtir9pfkMPjSzwhQ_hy7ZlNhvUG1P4mwS5GJmt--0U9r4I5NES_pLYQpL6SiEfrFqpCkoToLn806AVVQ"/>
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling professional person" src="https://ui-avatars.com/api/?name=U&background=1D9E75&color=fff&size=80&font-size=0.4" id="userAvatar"/>
 </div>
 </div>
 </header>
@@ -149,7 +162,7 @@
 <div class="md:col-span-5 space-y-6">
 <div class="bg-primary text-on-primary rounded-[2.5rem] overflow-hidden relative group shadow-lg">
 <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-<img alt="Sundarbans landscape" class="w-full h-72 object-cover transform group-hover:scale-105 transition-transform duration-1000" data-alt="Beautiful aerial view of the Sundarbans mangrove forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr2Ay-mGfR0nKg41BM08SDDT5zsYoCGzcnDQ7-qnf6kUJQ3KVnFiuC0bn0HiWB14fbRxqXVzzOBzKvgz1JRLkLypfE1Se4njbNk5J_KC3BJHrb9rF3-n3Syp7wOpBvj7ztVttCIJY16R5VGKlP2qJwrjlu5R2KfuDHKksTgBpADK1sLc4o97vbCzKA3HCAdD2JHTY3gZ9n5O0xYkex1b5GTEcMgE3_tQCLMAnGN8u4akSkHnFQq06Ku7Qv14ukUXbpAH58O87MrSl6"/>
+<img alt="Sundarbans landscape" class="w-full h-72 object-cover transform group-hover:scale-105 transition-transform duration-1000" data-alt="Beautiful aerial view of the Sundarbans mangrove forest" src="https://images.unsplash.com/photo-Gz2oZP23j1s?w=800&q=80&auto=format&fit=crop"/>
 <div class="absolute bottom-0 left-0 p-8 z-20 w-full">
 <span class="bg-secondary text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest mb-3 inline-block shadow-sm">Curated Pick</span>
 <h3 class="text-2xl font-extrabold leading-tight">The Delta's Whisper</h3>
@@ -227,9 +240,11 @@
         }
     }
 
-    // Back navigation
     function goBack() {
-        window.location.href = '../start_screen_cholo_matched/code.html';
+        const theme = localStorage.getItem('theme') || 'light';
+        window.location.href = theme === 'dark'
+            ? '../start_screen_dark_cholo/code.html'
+            : '../start_screen_cholo_matched/code.html';
     }
 
     // JavaScript execution test

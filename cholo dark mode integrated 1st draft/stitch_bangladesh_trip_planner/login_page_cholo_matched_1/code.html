@@ -240,10 +240,18 @@
             window.location.href = '../login_page_cholo_dark/code.html';
         }
 
-        function showForgotPassword() { alert('Please contact support@cholo.travel for password assistance.'); }
-        function showTerms()    { alert('By using Cholo Travel, you agree to our terms of service.'); }
-        function showPrivacy()  { alert('We respect your privacy and protect your personal information.'); }
-        function showHelp()     { alert('For support, contact our team at support@cholo.travel'); }
+        function showToast(msg, type) {
+            const e = document.getElementById('cholo-toast'); if (e) e.remove();
+            const colors = { info: '#1D9E75', warn: '#BA7517', error: '#BA1A1A' };
+            const t = document.createElement('div'); t.id = 'cholo-toast';
+            t.style.cssText = `position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:${colors[type]||colors.info};color:#fff;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.18);white-space:nowrap;`;
+            t.textContent = msg; document.body.appendChild(t);
+            setTimeout(() => { t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(()=>t.remove(),400); }, 3000);
+        }
+        function showForgotPassword() { showToast('Password reset — contact support@cholo.travel', 'info'); }
+        function showTerms()    { showToast('By using Cholo, you agree to our terms of service.', 'info'); }
+        function showPrivacy()  { showToast('We protect your personal data — privacy@cholo.travel', 'info'); }
+        function showHelp()     { showToast('Need help? Contact support@cholo.travel', 'info'); }
 
         // Auto-redirect if already logged in
         window.onload = function() {

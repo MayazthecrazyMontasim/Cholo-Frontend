@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -55,6 +55,19 @@ tailwind.config = {
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen pb-40 transition-colors duration-300">
+<script>
+// Global toast helper injected
+window._choloToast = function(msg, type) {
+  var e = document.getElementById('_ct'); if (e) e.remove();
+  var c = {success:'#1D9E75',info:'#1D9E75',warn:'#BA7517',error:'#BA1A1A'};
+  var t = document.createElement('div'); t.id = '_ct';
+  t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:'+(c[type]||c.info)+';color:#fff;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.18);white-space:nowrap;max-width:90vw;text-align:center;';
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(function(){t.remove();},400); }, 3000);
+};
+var _origAlert = window.alert;
+window.alert = function(msg) { window._choloToast(msg, 'info'); };
+</script>
 
 <!-- Top AppBar -->
 <nav class="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
@@ -70,7 +83,7 @@ tailwind.config = {
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
       </button>
       <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
-        <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlW3f7diJMcjwFEaJSO5roC4MzI7DZujXLIVLmKvThAeGCPOxIQ9j6U3STXQqsfzIdS-52QJjlsqWc5OzHdKB01XXR3n0k9chuKD5xJI1sp50RUr_ISUkqeVz18sXVD0wt1Qta0j_ATyvmOaFUYkj1O2iKdtFRxn6JuMuEYMJDHsnkRhlhvCxJLu1FEQxTjBVBedJfCrtF69BJ_11d8Gn5_seSi70ZgiawfCK0qPnL-sEh9axB7yuJJcIlu4KUjOMbzYDSBmYoRQZ-"/>
+        <img alt="User profile" id="s3UserAvatar" src="https://ui-avatars.com/api/?name=U&background=1D9E75&color=fff&size=80"/>
       </div>
     </div>
   </div>

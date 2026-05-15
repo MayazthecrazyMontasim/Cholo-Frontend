@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -50,6 +50,17 @@
 </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen pb-32 transition-colors duration-300">
+<script>
+window._choloToast = function(msg, type) {
+  var e = document.getElementById('_ct'); if (e) e.remove();
+  var c = {success:'#68dbae',info:'#68dbae',warn:'#ffb869',error:'#ffb4ab'};
+  var t = document.createElement('div'); t.id = '_ct';
+  t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#00513a;color:#68dbae;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.3);border:1px solid #68dbae40;white-space:nowrap;max-width:90vw;text-align:center;';
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(function(){t.remove();},400); }, 3000);
+};
+window.alert = function(msg) { window._choloToast(msg, 'info'); };
+</script>
 
 <!-- TopAppBar -->
 <header class="sticky top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
@@ -67,7 +78,7 @@
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
       </button>
       <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/30">
-        <img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsZMtzB3VcsUVuf9onAf2yYoYNy_bf0Xo9RHtozI74NbGSyKv0QqHc0HO85NARQ7I613DvQc-PuanrgTYXOvnnVa7yxKX-ZG_KYHU5wI3lbt_jCOMpbY8kS2Ug_DD1HNqvB9fnNEgKx1-iwEIIKw9kd8KQyBuM0Yx-AYVw3Ff6m0G8e9TcytepfgZHiKpAnKxBaCBot_XZL7imcDuW1C-xNpXs6U7RuOwoPHVsbhdO7vFT3rOJZN_PE2C7enxSbO00oTN7N280Du2h"/>
+        <img alt="User profile" src="https://ui-avatars.com/api/?name=U&background=1D9E75&color=fff&size=80"/>
       </div>
     </div>
   </div>
@@ -133,63 +144,76 @@
     <div id="selectedChips" class="flex flex-wrap gap-2"></div>
   </div>
 
-  <!-- ✅ FIX 3: All cards now have `relative` + `onclick="selectDestinationInline(N, this)"` -->
+  <!-- Destination cards — photo style (dark) -->
+  <style>
+    .dest-card { position: relative; border-radius: 1.5rem; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; transition: transform 0.2s ease, box-shadow 0.2s ease; border: 3px solid transparent; }
+    .dest-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(104,219,174,0.2); }
+    .dest-card.selected { border-color: #68dbae; box-shadow: 0 0 0 3px rgba(104,219,174,0.25), 0 20px 40px -10px rgba(104,219,174,0.25); }
+    .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .dest-card:hover img { transform: scale(1.07); }
+    .dest-card .overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 55%, transparent 100%); }
+    .dest-card .info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; }
+    .dest-card .check { position: absolute; top: 0.75rem; right: 0.75rem; width: 2rem; height: 2rem; background: #68dbae; border-radius: 9999px; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.6); transition: opacity 0.2s, transform 0.2s; }
+    .dest-card.selected .check { opacity: 1; transform: scale(1); }
+    .dest-card .badge { display: inline-block; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(104,219,174,0.2); border: 1px solid rgba(104,219,174,0.4); color: #68dbae; border-radius: 9999px; padding: 0.2rem 0.6rem; margin-bottom: 0.35rem; backdrop-filter: blur(4px); }
+  </style>
+
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(0,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center text-2xl">🏖️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Cox's Bazar</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Coastal Region</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(0,this)" data-name="Cox's Bazar">
+      <img src="https://images.unsplash.com/photo-H8jywsQxCDk?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Coastal</span><h3 class="font-bold text-sm text-white">Cox's Bazar</h3><p class="text-white/60 text-xs">World's longest beach</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(1,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🐅</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sundarbans</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Mangrove Forest</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(1,this)" data-name="Sundarbans">
+      <img src="https://images.unsplash.com/photo-Gz2oZP23j1s?w=500&q=80&auto=format&fit=crop" alt="Sundarbans mangrove"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Mangrove</span><h3 class="font-bold text-sm text-white">Sundarbans</h3><p class="text-white/60 text-xs">Royal Bengal tigers</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(2,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🍵</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sylhet</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Tea Estates</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(2,this)" data-name="Sylhet">
+      <img src="https://images.unsplash.com/photo-sY875j5lXnU?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Tea Estates</span><h3 class="font-bold text-sm text-white">Sylhet</h3><p class="text-white/60 text-xs">Rolling tea gardens</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(3,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">⛰️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Bandarban</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Cloudy Peaks</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(3,this)" data-name="Bandarban">
+      <img src="https://images.unsplash.com/photo-MrKPi-yajC0?w=500&q=80&auto=format&fit=crop" alt="Bandarban hills"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Hills</span><h3 class="font-bold text-sm text-white">Bandarban</h3><p class="text-white/60 text-xs">Misty mountain trails</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(4,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🛶</div>
-        <div><h3 class="font-bold text-base text-on-surface">Rangamati</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Hill Tracts</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(4,this)" data-name="Rangamati">
+      <img src="https://images.unsplash.com/photo-qbdWz7mq_JU?w=500&q=80&auto=format&fit=crop" alt="Rangamati lake"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Hill Tracts</span><h3 class="font-bold text-sm text-white">Rangamati</h3><p class="text-white/60 text-xs">Kaptai lake serenity</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(5,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🍃</div>
-        <div><h3 class="font-bold text-base text-on-surface">Sreemangal</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Rainforest</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(5,this)" data-name="Sreemangal">
+      <img src="https://images.unsplash.com/photo-AbIiPjvu5z0?w=500&q=80&auto=format&fit=crop" alt="Sreemangal nature"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Rainforest</span><h3 class="font-bold text-sm text-white">Sreemangal</h3><p class="text-white/60 text-xs">Tea capital</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(6,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🏝️</div>
-        <div><h3 class="font-bold text-base text-on-surface">Saint Martin</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Coral Island</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(6,this)" data-name="Saint Martin">
+      <img src="https://images.unsplash.com/photo-XlP7c_TUKm8?w=500&q=80&auto=format&fit=crop" alt="Saint Martin island"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Coral Island</span><h3 class="font-bold text-sm text-white">Saint Martin</h3><p class="text-white/60 text-xs">Only coral island</p></div>
     </div>
 
-    <div class="destination-card relative p-5 bg-surface-container-high rounded-3xl border-2 border-transparent hover:border-outline-variant/30 transition-all cursor-pointer" onclick="selectDestinationInline(7,this)">
-      <div class="flex flex-col h-full gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-surface-container flex items-center justify-center text-2xl">🌅</div>
-        <div><h3 class="font-bold text-base text-on-surface">Kuakata</h3><p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Daughter of Ocean</p></div>
-      </div>
+    <div class="destination-card dest-card" onclick="selectDestinationInline(7,this)" data-name="Kuakata">
+      <img src="https://images.unsplash.com/photo-5QTAbs-MBfE?w=500&q=80&auto=format&fit=crop" alt="Kuakata beach sunset"/>
+      <div class="overlay"></div>
+      <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
+      <div class="info"><span class="badge">Beach</span><h3 class="font-bold text-sm text-white">Kuakata</h3><p class="text-white/60 text-xs">Sunrise &amp; sunset</p></div>
     </div>
 
   </div>

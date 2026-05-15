@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
@@ -61,6 +61,19 @@
     </style>
 </head>
 <body class="bg-background text-on-surface min-h-screen flex flex-col">
+<script>
+// Global toast helper injected
+window._choloToast = function(msg, type) {
+  var e = document.getElementById('_ct'); if (e) e.remove();
+  var c = {success:'#1D9E75',info:'#1D9E75',warn:'#BA7517',error:'#BA1A1A'};
+  var t = document.createElement('div'); t.id = '_ct';
+  t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:'+(c[type]||c.info)+';color:#fff;padding:12px 24px;border-radius:9999px;font-weight:700;font-size:14px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.18);white-space:nowrap;max-width:90vw;text-align:center;';
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity 0.4s'; t.style.opacity='0'; setTimeout(function(){t.remove();},400); }, 3000);
+};
+var _origAlert = window.alert;
+window.alert = function(msg) { window._choloToast(msg, 'info'); };
+</script>
 <main class="flex-grow flex items-center justify-center px-6 py-12 relative overflow-hidden">
 <!-- Decorative background elements -->
 <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
