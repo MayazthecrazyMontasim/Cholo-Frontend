@@ -212,8 +212,6 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
 // FOURSQUARE PLACES API v3 — Free tier: 1,000 requests/day
 // ═══════════════════════════════════════════════════════════════════
 
-const FSQ_API_KEY = 'ET4KKHJQIPDYNM5WHA54P5M4XQH3CBMF4IJTIHK1DGVMN5KU';
-const FSQ_BASE    = 'https://api.foursquare.com/v3/places/search';
 
 const CATEGORY_CONFIG = {
   lodging: {
@@ -285,16 +283,16 @@ async function searchFoursquarePlaces(category, lat, lon) {
     bus_station:    [200,  500, 1200,  2500],
     bicycle_rental: [300,  600, 1500,  2500]
   };
-  const url = new URL(FSQ_BASE);
+  const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8000' : 'https://cholo-live-api.onrender.com';
+  const url = new URL(`${API_BASE}/proxy/places`);
   url.searchParams.set('ll',         `${lat},${lon}`);
   url.searchParams.set('radius',     '15000');
   url.searchParams.set('categories', config.fsqCategories);
   url.searchParams.set('limit',      '20');
   url.searchParams.set('fields',     'fsq_id,name,location,rating,price,distance,geocodes');
-  const res = await fetch(url.toString(), {
-    headers: { 'Authorization': FSQ_API_KEY, 'Accept': 'application/json' }
-  });
-  if (!res.ok) throw new Error(`Foursquare error: ${res.status}`);
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`Places proxy error: ${res.status}`);
   const data = await res.json();
   const prices = priceMaps[category] || priceMaps.restaurant;
   return (data.results || []).filter(p => p.name?.trim()).map(p => {
