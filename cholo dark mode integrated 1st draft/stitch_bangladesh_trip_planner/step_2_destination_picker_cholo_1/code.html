@@ -157,7 +157,7 @@
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
 
     <div class="destination-card dest-card" onclick="selectDestination('Cox\'s Bazar','Coastal Region','🏖️',this)" data-name="Cox's Bazar">
-      <img src="https://images.unsplash.com/photo-1526289925534-a8b94e699809?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach at night"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
+      <img src="https://images.unsplash.com/photo-1608958435020-e8a7109ba809?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach at night"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
       <div class="overlay"></div>
       <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
       <div class="info">
@@ -179,7 +179,7 @@
     </div>
 
     <div class="destination-card dest-card" onclick="selectDestination('Sylhet','Tea Estates','🍵',this)" data-name="Sylhet">
-      <img src="https://images.unsplash.com/photo-1634962458589-30d58befcab2?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
+      <img src="https://images.unsplash.com/photo-1667120205301-a2a3a886886e?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
       <div class="overlay"></div>
       <div class="check"><span class="material-symbols-outlined text-white text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
       <div class="info">
@@ -350,20 +350,70 @@
     const list = document.getElementById('searchResultsList');
     if (term.length < 2) { box.classList.add('hidden'); return; }
     const all = [
-      {name:"Cox's Bazar",type:'Coastal Region',emoji:'🏖️',description:"World's longest natural sea beach"},
-      {name:'Sundarbans',type:'Mangrove Forest',emoji:'🐅',description:'Largest mangrove forest and Royal Bengal tigers'},
-      {name:'Sylhet',type:'Tea Estates',emoji:'🍵',description:'Tea gardens and natural beauty'},
-      {name:'Bandarban',type:'Cloudy Peaks',emoji:'⛰️',description:'Hill district with tribal culture'},
-      {name:'Rangamati',type:'Hill Tracts',emoji:'🛶',description:'Lake district and hill tracts'},
-      {name:'Sreemangal',type:'Rainforest',emoji:'🍃',description:'Tea capital and rain forests'},
-      {name:'Saint Martin',type:'Coral Island',emoji:'🏝️',description:'Beautiful coral island'},
-      {name:'Kuakata',type:'Daughter of Ocean',emoji:'🌅',description:'Sunrise and sunset beach'},
-      {name:'Dhaka',type:'Capital City',emoji:'🏙️',description:'Historic capital and cultural hub'},
-      {name:'Chittagong',type:'Port City',emoji:'⚓',description:'Major port and business hub'},
-      {name:'Rajshahi',type:'Silk City',emoji:'🧵',description:'Silk industry and mango gardens'},
-      {name:'Khulna',type:'Industrial City',emoji:'🏭',description:'Industrial hub near Sundarbans'},
-      {name:'Barisal',type:'Venice of Bengal',emoji:'🚤',description:'Riverine district and floating markets'},
-      {name:'Mymensingh',type:'Educational Hub',emoji:'🎓',description:'Educational institutions and rural beauty'}
+      {name:"Cox's Bazar",type:'Coastal Region',emoji:'🏖️',description:"World's longest natural sea beach — 120 km stretch"},
+      {name:'Sundarbans',type:'Mangrove Forest',emoji:'🐅',description:'UNESCO World Heritage, Royal Bengal tigers'},
+      {name:'Sylhet',type:'Tea Estates',emoji:'🍵',description:'Iconic rolling tea gardens, Ratargul swamp forest'},
+      {name:'Bandarban',type:'Cloudy Peaks',emoji:'⛰️',description:'Highest peaks in Bangladesh, waterfalls & tribal culture'},
+      {name:'Rangamati',type:'Hill Tracts',emoji:'🛶',description:'Kaptai Lake, hanging bridge, indigenous culture'},
+      {name:'Sreemangal',type:'Tea Capital',emoji:'🍃',description:'7-layer tea, Lawachara rainforest, tea estates'},
+      {name:'Saint Martin',type:'Coral Island',emoji:'🏝️',description:"Bangladesh's only coral island in the Bay of Bengal"},
+      {name:'Kuakata',type:'Daughter of Ocean',emoji:'🌅',description:'See both sunrise & sunset from the same beach'},
+      {name:'Dhaka',type:'Capital City',emoji:'🏙️',description:'Historic capital, Lalbagh Fort, Ahsan Manzil'},
+      {name:'Chittagong',type:'Port City',emoji:'⚓',description:'Major seaport, Patenga beach, Foy\'s Lake'},
+      {name:'Rajshahi',type:'Silk & Mango City',emoji:'🥭',description:'Silk industry, mango orchards, Varendra Museum'},
+      {name:'Khulna',type:'Sundarban Gateway',emoji:'🌿',description:'Gateway to Sundarbans, Sixty Dome Mosque nearby'},
+      {name:'Barisal',type:'Venice of Bengal',emoji:'🚤',description:'Floating guava markets, river launches'},
+      {name:'Mymensingh',type:'Cultural Hub',emoji:'🎓',description:'Agricultural university, Shashi Lodge, Brahmaputra'},
+      {name:'Comilla',type:'Historic City',emoji:'🏛️',description:'Shalban Vihara Buddhist ruins, Mainamati museum'},
+      {name:'Cumilla',type:'Historic City',emoji:'🏛️',description:'Shalban Vihara Buddhist ruins, Mainamati museum'},
+      {name:'Narsingdi',type:'Industrial',emoji:'🏭',description:'Textile industry, Wari-Bateshwar archaeological site'},
+      {name:'Gazipur',type:'Industrial City',emoji:'🏗️',description:'Bhawal National Park, near Dhaka'},
+      {name:'Narayanganj',type:'River Port',emoji:'⚓',description:'Sonargaon ancient capital, river trade city'},
+      {name:'Tangail',type:'Muslin Town',emoji:'🧵',description:'Famous Tangail saree, Atia Mosque, Madhupur forest'},
+      {name:'Kishoreganj',type:'Haor Region',emoji:'🌊',description:'Haor wetlands, Nikli and Mithamoin lakes'},
+      {name:'Sunamganj',type:'Haor Paradise',emoji:'🚤',description:'Tanguar Haor, largest wetland, migratory birds'},
+      {name:'Habiganj',type:'Tea & Forest',emoji:'🍃',description:'Rema-Kalenga Wildlife Sanctuary, tea estates'},
+      {name:'Moulvibazar',type:'Tea Garden',emoji:'🍵',description:'Madhabkunda waterfall, tea gardens, Hakaluki Haor'},
+      {name:'Brahmanbaria',type:'Cultural City',emoji:'🎶',description:'City of music, Meghna river, classical music heritage'},
+      {name:'Chandpur',type:'Hilsha Capital',emoji:'🐟',description:'Hilsha fish capital, Meghna-Padma confluence'},
+      {name:'Noakhali',type:'Coastal District',emoji:'🌊',description:'Nijhum Dwip island, mangrove, coastal wetlands'},
+      {name:'Feni',type:'Border Town',emoji:'🌄',description:'Muhuri irrigation project, border hills'},
+      {name:'Khagrachhari',type:'Hill Tracts',emoji:'⛰️',description:'Alutila caves, Richhang waterfall, tribal villages'},
+      {name:'Jessore',type:'Flower City',emoji:'🌸',description:'Rose & flower cultivation, Benapole port'},
+      {name:'Narail',type:'Art District',emoji:'🎨',description:'Birthplace of SM Sultan painter, river landscapes'},
+      {name:'Satkhira',type:'Sundarban Gateway',emoji:'🐅',description:'Sundarban mangrove tourism, shrimp farming'},
+      {name:'Bagerhat',type:'Mosque City',emoji:'🕌',description:'60 Dome Mosque UNESCO site, Shait Gumbad'},
+      {name:'Patuakhali',type:'Coastal District',emoji:'🏖️',description:'Kuakata region, coastal islands, sea fishing'},
+      {name:'Bhola',type:'Largest Island',emoji:'🏝️',description:"Bangladesh's largest island district, river culture"},
+      {name:'Barguna',type:'Coastal',emoji:'🌊',description:'Bay of Bengal coast, mangroves, beach'},
+      {name:'Natore',type:'Garden City',emoji:'🌹',description:'Dighapatia Palace, Chalan Beel wetland'},
+      {name:'Pabna',type:'River Town',emoji:'🌊',description:'Hardinge Bridge, Lalon Shah shrine, Atrai river'},
+      {name:'Sirajganj',type:'Jamuna Bank',emoji:'🌊',description:'Bongobandhu Bridge, Jamuna chars'},
+      {name:'Bogra',type:'Archaeological City',emoji:'🏛️',description:'Mahasthangarh oldest city ruins in Bangladesh'},
+      {name:'Joypurhat',type:'Agricultural',emoji:'🌾',description:'Paharpur Buddhist monastery UNESCO site nearby'},
+      {name:'Naogaon',type:'Heritage',emoji:'🏛️',description:'Paharpur Vihara ruins, Kusumba Mosque'},
+      {name:'Chapainawabganj',type:'Mango Capital',emoji:'🥭',description:'Mango capital of Bangladesh, Gaur ancient ruins'},
+      {name:'Rangpur',type:'Northern City',emoji:'🌾',description:'Tajhat Palace, potato cultivation, historic trade'},
+      {name:'Dinajpur',type:'Temple City',emoji:'🛕',description:'Kantaji Temple, Ramsagar lake, lychee & rice'},
+      {name:'Thakurgaon',type:'Northern Border',emoji:'🌾',description:'Sugarcane, border district, agriculture'},
+      {name:'Panchagarh',type:'Himalayan View',emoji:'🏔️',description:'Northernmost district with Himalayan peak views'},
+      {name:'Nilphamari',type:'Northern District',emoji:'🌾',description:'Haripur oil field, Syed Nazrul Islam museum'},
+      {name:'Lalmonirhat',type:'Teesta River',emoji:'🌄',description:'Teesta river, former enclaves, border tourism'},
+      {name:'Kurigram',type:'Northern Border',emoji:'🌊',description:'Brahmaputra river, char islands'},
+      {name:'Gaibandha',type:'Char Islands',emoji:'🚣',description:'River char islands, flood-resilient communities'},
+      {name:'Jamalpur',type:'Brahmaputra Bank',emoji:'🌿',description:'Jamuna char islands, Madhurpur teak forest'},
+      {name:'Sherpur',type:'Border Town',emoji:'🌄',description:'Garo Hills border, Gazni Safari Park, waterfalls'},
+      {name:'Netrokona',type:'Haor District',emoji:'🌊',description:'Birishiri tribal culture, limestone hills, haors'},
+      {name:'Manikganj',type:'River District',emoji:'🚤',description:'Padma & Jamuna confluence, baluchor saree'},
+      {name:'Munshiganj',type:'Historical',emoji:'🏺',description:'Idrakpur Fort, mango gardens, river delta'},
+      {name:'Shariatpur',type:'River District',emoji:'🌊',description:'Padma river islands, fishing communities'},
+      {name:'Madaripur',type:'River Town',emoji:'🚣',description:'Padma bank, Sreenagar mosque'},
+      {name:'Gopalganj',type:'Heritage',emoji:'🌾',description:'Birthplace of Sheikh Mujibur Rahman, Orakandi'},
+      {name:'Faridpur',type:'River City',emoji:'🌊',description:'Padma river town, floating markets'},
+      {name:'Rajbari',type:'River District',emoji:'🚤',description:'Gorai-Madhumati river junction'},
+      {name:'Pirojpur',type:'Canal City',emoji:'🚣',description:'Canal network, Rajapur jackfruit, river delta'},
+      {name:'Jhalokati',type:'River District',emoji:'🌊',description:'Floating guava market, river tourism'},
+      {name:'Lakshmipur',type:'River District',emoji:'🌊',description:'Meghna estuary, char islands'},
     ];
     const filtered = all.filter(d => d.name.toLowerCase().includes(term) || d.type.toLowerCase().includes(term) || d.description.toLowerCase().includes(term));
     if (filtered.length > 0) {

@@ -122,6 +122,19 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
     </div>
   </div>
 
+  <!-- Search Section -->
+  <div class="mb-8 max-w-2xl mx-auto">
+    <div class="relative">
+      <input type="text" id="destinationSearch" placeholder="Search all 64 districts of Bangladesh..."
+        class="w-full px-12 py-4 bg-surface-container border border-outline-variant rounded-2xl text-on-surface placeholder:text-outline-variant focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+        oninput="searchDest(this.value)">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+    </div>
+    <div id="searchBox" class="hidden mt-3 bg-surface-container border border-outline-variant rounded-2xl p-4 max-h-64 overflow-y-auto">
+      <div id="searchList" class="space-y-2"></div>
+    </div>
+  </div>
+
   <!-- Map Section -->
   <div class="mb-10">
     <div class="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border border-outline-variant/50">
@@ -161,7 +174,7 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
 
     <div class="destination-card dest-card" onclick="selectDestinationInline(0,this)" data-name="Cox's Bazar">
-      <img src="https://images.unsplash.com/photo-1526289925534-a8b94e699809?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
+      <img src="https://images.unsplash.com/photo-1608958435020-e8a7109ba809?w=500&q=80&auto=format&fit=crop" alt="Cox's Bazar beach"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
       <div class="overlay"></div>
       <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
       <div class="info"><span class="badge">Coastal</span><h3 class="font-bold text-sm text-white">Cox's Bazar</h3><p class="text-white/60 text-xs">World's longest beach</p></div>
@@ -175,7 +188,7 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
     </div>
 
     <div class="destination-card dest-card" onclick="selectDestinationInline(2,this)" data-name="Sylhet">
-      <img src="https://images.unsplash.com/photo-1634962458589-30d58befcab2?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
+      <img src="https://images.unsplash.com/photo-1667120205301-a2a3a886886e?w=500&q=80&auto=format&fit=crop" alt="Sylhet tea gardens"/ onerror="this.style.opacity=0.3;this.alt='Image unavailable'">
       <div class="overlay"></div>
       <div class="check"><span class="material-symbols-outlined text-surface-container text-sm" style="font-variation-settings:'FILL' 1">check</span></div>
       <div class="info"><span class="badge">Tea Estates</span><h3 class="font-bold text-sm text-white">Sylhet</h3><p class="text-white/60 text-xs">Rolling tea gardens</p></div>
@@ -262,6 +275,107 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
     { name: 'Saint Martin',type: 'Coral Island', emoji: '🏝️' },
     { name: 'Kuakata',     type: 'Daughter of Ocean', emoji: '🌅' }
   ];
+
+  const ALL_DESTINATIONS = [
+    {name:"Cox's Bazar",type:'Coastal Region',emoji:'🏖️',description:"World's longest natural sea beach — 120 km"},
+    {name:'Sundarbans',type:'Mangrove Forest',emoji:'🐅',description:'UNESCO World Heritage, Royal Bengal tigers'},
+    {name:'Sylhet',type:'Tea Estates',emoji:'🍵',description:'Iconic rolling tea gardens, Ratargul swamp forest'},
+    {name:'Bandarban',type:'Cloudy Peaks',emoji:'⛰️',description:'Highest peaks in Bangladesh, waterfalls & tribal culture'},
+    {name:'Rangamati',type:'Hill Tracts',emoji:'🛶',description:'Kaptai Lake, hanging bridge, indigenous culture'},
+    {name:'Sreemangal',type:'Tea Capital',emoji:'🍃',description:'7-layer tea, Lawachara rainforest, tea estates'},
+    {name:'Saint Martin',type:'Coral Island',emoji:'🏝️',description:"Bangladesh's only coral island"},
+    {name:'Kuakata',type:'Daughter of Ocean',emoji:'🌅',description:'See both sunrise & sunset from the same beach'},
+    {name:'Dhaka',type:'Capital City',emoji:'🏙️',description:'Historic capital, Lalbagh Fort, Ahsan Manzil'},
+    {name:'Chittagong',type:'Port City',emoji:'⚓',description:"Major seaport, Patenga beach, Foy's Lake"},
+    {name:'Rajshahi',type:'Silk & Mango City',emoji:'🥭',description:'Silk industry, mango orchards, Varendra Museum'},
+    {name:'Khulna',type:'Sundarban Gateway',emoji:'🌿',description:'Gateway to Sundarbans, Sixty Dome Mosque nearby'},
+    {name:'Barisal',type:'Venice of Bengal',emoji:'🚤',description:'Floating guava markets, river launches'},
+    {name:'Mymensingh',type:'Cultural Hub',emoji:'🎓',description:'Agricultural university, Shashi Lodge'},
+    {name:'Comilla',type:'Historic City',emoji:'🏛️',description:'Shalban Vihara Buddhist ruins, Mainamati museum'},
+    {name:'Cumilla',type:'Historic City',emoji:'🏛️',description:'Shalban Vihara Buddhist ruins, Mainamati museum'},
+    {name:'Sunamganj',type:'Haor Paradise',emoji:'🚤',description:'Tanguar Haor, largest wetland, migratory birds'},
+    {name:'Habiganj',type:'Tea & Forest',emoji:'🍃',description:'Rema-Kalenga Wildlife Sanctuary, tea estates'},
+    {name:'Moulvibazar',type:'Tea Garden',emoji:'🍵',description:'Madhabkunda waterfall, tea gardens'},
+    {name:'Brahmanbaria',type:'Cultural City',emoji:'🎶',description:'City of music, Meghna river'},
+    {name:'Chandpur',type:'Hilsha Capital',emoji:'🐟',description:'Hilsha fish capital, Meghna-Padma confluence'},
+    {name:'Noakhali',type:'Coastal District',emoji:'🌊',description:'Nijhum Dwip island, coastal wetlands'},
+    {name:'Feni',type:'Border Town',emoji:'🌄',description:'Muhuri irrigation project, border hills'},
+    {name:'Khagrachhari',type:'Hill Tracts',emoji:'⛰️',description:'Alutila caves, Richhang waterfall, tribal villages'},
+    {name:'Jessore',type:'Flower City',emoji:'🌸',description:'Rose cultivation, Benapole port'},
+    {name:'Narail',type:'Art District',emoji:'🎨',description:'Birthplace of SM Sultan painter'},
+    {name:'Satkhira',type:'Sundarban Gateway',emoji:'🐅',description:'Sundarban mangrove tourism'},
+    {name:'Bagerhat',type:'Mosque City',emoji:'🕌',description:'60 Dome Mosque UNESCO site'},
+    {name:'Patuakhali',type:'Coastal District',emoji:'🏖️',description:'Kuakata region, coastal islands'},
+    {name:'Bhola',type:'Largest Island',emoji:'🏝️',description:"Bangladesh's largest island district"},
+    {name:'Barguna',type:'Coastal',emoji:'🌊',description:'Bay of Bengal coast, mangroves'},
+    {name:'Natore',type:'Garden City',emoji:'🌹',description:'Dighapatia Palace, Chalan Beel wetland'},
+    {name:'Pabna',type:'River Town',emoji:'🌊',description:'Hardinge Bridge, Lalon Shah shrine'},
+    {name:'Sirajganj',type:'Jamuna Bank',emoji:'🌊',description:'Bongobandhu Bridge, Jamuna chars'},
+    {name:'Bogra',type:'Archaeological City',emoji:'🏛️',description:'Mahasthangarh oldest city ruins'},
+    {name:'Naogaon',type:'Heritage',emoji:'🏛️',description:'Paharpur Vihara ruins, Kusumba Mosque'},
+    {name:'Chapainawabganj',type:'Mango Capital',emoji:'🥭',description:'Mango capital of Bangladesh'},
+    {name:'Rangpur',type:'Northern City',emoji:'🌾',description:'Tajhat Palace, potato cultivation'},
+    {name:'Dinajpur',type:'Temple City',emoji:'🛕',description:'Kantaji Temple, Ramsagar lake'},
+    {name:'Thakurgaon',type:'Northern Border',emoji:'🌾',description:'Sugarcane, border district'},
+    {name:'Panchagarh',type:'Himalayan View',emoji:'🏔️',description:'Northernmost district with Himalayan views'},
+    {name:'Nilphamari',type:'Northern District',emoji:'🌾',description:'Haripur oil field, border region'},
+    {name:'Lalmonirhat',type:'Teesta River',emoji:'🌄',description:'Teesta river, former enclaves'},
+    {name:'Kurigram',type:'Northern Border',emoji:'🌊',description:'Brahmaputra river, char islands'},
+    {name:'Gaibandha',type:'Char Islands',emoji:'🚣',description:'River char islands'},
+    {name:'Jamalpur',type:'Brahmaputra Bank',emoji:'🌿',description:'Jamuna char islands, teak forest'},
+    {name:'Sherpur',type:'Border Town',emoji:'🌄',description:'Garo Hills border, waterfalls'},
+    {name:'Netrokona',type:'Haor District',emoji:'🌊',description:'Birishiri tribal culture, limestone hills'},
+    {name:'Narsingdi',type:'Industrial',emoji:'🏭',description:'Textile industry, Wari-Bateshwar ruins'},
+    {name:'Gazipur',type:'Industrial City',emoji:'🏗️',description:'Bhawal National Park, near Dhaka'},
+    {name:'Narayanganj',type:'River Port',emoji:'⚓',description:'Sonargaon ancient capital'},
+    {name:'Tangail',type:'Muslin Town',emoji:'🧵',description:'Famous Tangail saree, Madhupur forest'},
+    {name:'Kishoreganj',type:'Haor Region',emoji:'🌊',description:'Haor wetlands, Nikli and Mithamoin lakes'},
+    {name:'Manikganj',type:'River District',emoji:'🚤',description:'Padma & Jamuna confluence'},
+    {name:'Munshiganj',type:'Historical',emoji:'🏺',description:'Idrakpur Fort, mango gardens'},
+    {name:'Gopalganj',type:'Heritage',emoji:'🌾',description:'Birthplace of Sheikh Mujibur Rahman'},
+    {name:'Faridpur',type:'River City',emoji:'🌊',description:'Padma river town'},
+    {name:'Rajbari',type:'River District',emoji:'🚤',description:'Gorai-Madhumati river junction'},
+    {name:'Pirojpur',type:'Canal City',emoji:'🚣',description:'Canal network, Rajapur jackfruit'},
+    {name:'Jhalokati',type:'River District',emoji:'🌊',description:'Floating guava market, river tourism'},
+    {name:'Joypurhat',type:'Agricultural',emoji:'🌾',description:'Near Paharpur Buddhist monastery'},
+    {name:'Lakshmipur',type:'River District',emoji:'🌊',description:'Meghna estuary, char islands'},
+    {name:'Shariatpur',type:'River District',emoji:'🌊',description:'Padma river islands, fishing'},
+    {name:'Madaripur',type:'River Town',emoji:'🚣',description:'Padma bank'},
+  ];
+
+  function searchDest(term) {
+    const box = document.getElementById('searchBox');
+    const list = document.getElementById('searchList');
+    if (!term || term.length < 2) { box.classList.add('hidden'); return; }
+    const t = term.toLowerCase();
+    const results = ALL_DESTINATIONS.filter(d =>
+      d.name.toLowerCase().includes(t) || d.type.toLowerCase().includes(t) || d.description.toLowerCase().includes(t)
+    );
+    if (results.length === 0) {
+      list.innerHTML = '<p class="text-on-surface-variant text-sm py-2">No destinations found.</p>';
+    } else {
+      list.innerHTML = results.map(d => `
+        <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors"
+          onclick="addSearchResult('${d.name.replace(/'/g,"\\'")}','${d.type}','${d.emoji}')">
+          <span class="text-xl">${d.emoji}</span>
+          <div class="flex-1">
+            <p class="font-semibold text-on-surface text-sm">${d.name}</p>
+            <p class="text-xs text-on-surface-variant">${d.description}</p>
+          </div>
+          <span class="material-symbols-outlined text-primary text-sm">add_circle</span>
+        </div>`).join('');
+    }
+    box.classList.remove('hidden');
+  }
+
+  function addSearchResult(name, type, emoji) {
+    if (!selectedDestinations.find(d => d.name === name)) {
+      selectedDestinations.push({ name, type, emoji });
+      updateSummary();
+    }
+    document.getElementById('destinationSearch').value = '';
+    document.getElementById('searchBox').classList.add('hidden');
+  }
 
   function getTripData() {
     return JSON.parse(localStorage.getItem('cholo_trip_data') || '{}');
