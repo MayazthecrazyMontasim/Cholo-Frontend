@@ -90,7 +90,7 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
 <h1 class="text-2xl font-bold text-on-surface">Create Account</h1>
 <p class="text-outline mt-1 text-sm">Start your journey with us</p>
 </div>
-<form class="space-y-6">
+<form class="space-y-6" id="signupForm" onsubmit="handleSignup(event)">
 <div class="space-y-2">
 <label class="block text-xs font-bold text-outline uppercase tracking-wider ml-1" for="fullname">Full Name</label>
 <div class="relative group">
@@ -138,9 +138,9 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
 I agree to the <a href="#" class="text-primary font-semibold hover:underline">Terms of Service</a> and <a href="#" class="text-primary font-semibold hover:underline">Privacy Policy</a>
 </label>
 </div>
-<button class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
-<span>Create Account</span>
-<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+<button id="signupBtn" class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+<span id="signupBtnText">Create Account</span>
+<span id="signupBtnIcon" class="material-symbols-outlined">arrow_forward</span>
 </button>
 </form>
 <div class="relative my-8">
@@ -152,10 +152,10 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
 </div>
 </div>
 <div class="grid grid-cols-1 gap-3">
-<button class="w-full border border-outline-variant bg-surface hover:bg-background text-on-surface py-3.5 rounded-xl font-semibold transition-colors flex items-center justify-center gap-3">
-<span class="material-symbols-outlined text-primary" data-icon="login">login</span>
-                    Login Instead
-                </button>
+<button onclick="window.location.href='../login_page_cholo_matched_2/code.html'" type="button" class="w-full border border-outline-variant bg-surface hover:bg-background text-on-surface py-3.5 rounded-xl font-semibold transition-colors flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-primary">login</span>
+Login Instead
+</button>
 </div>
 <p class="mt-8 text-center text-sm text-outline font-medium">
                 Already have an account? <a class="text-primary font-bold hover:underline" href="../login_page_cholo_matched_2/code.html">Log In</a>
@@ -189,6 +189,94 @@ I agree to the <a href="#" class="text-primary font-semibold hover:underline">Te
         localStorage.setItem('theme', 'light');
         window.location.href = '../signup_page_cholo_matched_1/code.html';
     });
+
+    // ── Signup handler ────────────────────────────────────────────
+    async function handleSignup(e) {
+        e.preventDefault();
+        const fullname = document.getElementById('fullname').value.trim();
+        const email    = document.getElementById('email').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const confirm  = document.getElementById('confirmPassword').value;
+
+        if (!fullname || !email || !username || !password) {
+            window._choloToast('Please fill in all fields', 'error'); return;
+        }
+        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            window._choloToast('Enter a valid email address', 'error'); return;
+        }
+        if (username.length < 3) {
+            window._choloToast('Username must be at least 3 characters', 'error'); return;
+        }
+        if (password.length < 8) {
+            window._choloToast('Password must be at least 8 characters', 'error'); return;
+        }
+        if (password !== confirm) {
+            window._choloToast('Passwords do not match', 'error'); return;
+        }
+
+        const btn = document.getElementById('signupBtn');
+        document.getElementById('signupBtnText').textContent = 'Creating Account...';
+        document.getElementById('signupBtnIcon').textContent = 'hourglass_empty';
+        btn.disabled = true;
+
+        // Try API first
+        try {
+            const res = await fetch(API_BASE_URL + '/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem('current_user', JSON.stringify({
+                    id: data.id, fullname, username: data.username,
+                    email: data.email, isGuest: false
+                }));
+                // Auto-login
+                const form = new URLSearchParams();
+                form.append('username', username);
+                form.append('password', password);
+                const tokenRes = await fetch(API_BASE_URL + '/auth/token', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: form
+                });
+                if (tokenRes.ok) {
+                    const td = await tokenRes.json();
+                    localStorage.setItem('cholo_token', td.access_token);
+                }
+                document.getElementById('signupBtnText').textContent = 'Success!';
+                setTimeout(() => window.location.href = '../step_1_traveler_info_cholo_2/code.html', 800);
+                return;
+            }
+            window._choloToast(data.detail || 'Registration failed', 'error');
+        } catch (_) {
+            // Offline fallback — save locally
+            const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+            if (users.some(u => u.email === email || u.username === username)) {
+                window._choloToast('Email or username already exists', 'error');
+                btn.disabled = false;
+                document.getElementById('signupBtnText').textContent = 'Create Account';
+                document.getElementById('signupBtnIcon').textContent = 'arrow_forward';
+                return;
+            }
+            const newUser = { id: Date.now().toString(), fullname, email, username, createdAt: new Date().toISOString() };
+            users.push(newUser);
+            localStorage.setItem('cholo_users', JSON.stringify(users));
+            localStorage.setItem('current_user', JSON.stringify({ ...newUser, isGuest: false }));
+        }
+
+        document.getElementById('signupBtnText').textContent = 'Success!';
+        setTimeout(() => window.location.href = '../step_1_traveler_info_cholo_2/code.html', 800);
+    }
+
+    function togglePassword(fieldId) {
+        const f = document.getElementById(fieldId);
+        const ico = f.parentElement.querySelector('button span');
+        f.type = f.type === 'password' ? 'text' : 'password';
+        if (ico) ico.textContent = f.type === 'password' ? 'visibility' : 'visibility_off';
+    }
 
     function getApiBaseUrl() {
         const localApi = "http://localhost:8000";

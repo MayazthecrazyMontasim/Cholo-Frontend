@@ -238,19 +238,21 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
                 return;
             }
             
-            // Create new user
+            // Create new user (no password stored in localStorage)
             const newUser = {
                 id: Date.now().toString(),
+                fullname: fullname,
                 name: fullname,
                 email: email,
                 username: username,
-                password: password,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                isGuest: false
             };
-            
+
             users.push(newUser);
             localStorage.setItem('cholo_users', JSON.stringify(users));
-            
+            localStorage.setItem('current_user', JSON.stringify(newUser));
+
             btnText.textContent = 'Success!';
             setTimeout(() => {
                 window.location.href = '../step_1_traveler_info_cholo_1/code.html';
