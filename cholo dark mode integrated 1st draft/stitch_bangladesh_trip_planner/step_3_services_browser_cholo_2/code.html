@@ -209,99 +209,42 @@ window.alert = function(msg) { window._choloToast(msg, 'info'); };
 
 <script>
 // ═══════════════════════════════════════════════════════════════════
-// OPENSTREETMAP CONFIGURATION - FREE, NO API KEY NEEDED
+// FOURSQUARE PLACES API v3 — Free tier: 1,000 requests/day
 // ═══════════════════════════════════════════════════════════════════
+
+const FSQ_API_KEY = 'ET4KKHJQIPDYNM5WHA54P5M4XQH3CBMF4IJTIHK1DGVMN5KU';
+const FSQ_BASE    = 'https://api.foursquare.com/v3/places/search';
 
 const CATEGORY_CONFIG = {
   lodging: {
-    icon: 'hotel',
-    priceUnit: '/ night',
+    icon: 'hotel', priceUnit: '/ night', label: 'Hotels',
+    bgColor: 'bg-primary-container', iconColor: 'text-on-primary-container',
     tags: { luxury: 'Luxury', budget: 'Budget', mid: 'Standard' },
-    bgColor: 'bg-secondary-container',
-    iconColor: 'text-primary',
+    fsqCategories: '19014,19016,19021',
     osmQuery: '["tourism"~"hotel|guest_house|hostel"]'
   },
   bicycle_rental: {
-    icon: 'pedal_bike',
-    priceUnit: '/ day',
+    icon: 'pedal_bike', priceUnit: '/ day', label: 'Bike Rentals',
+    bgColor: 'bg-tertiary-container', iconColor: 'text-on-tertiary-container',
     tags: { budget: 'Budget', popular: 'Popular' },
-    bgColor: 'bg-tertiary-container/30',
-    iconColor: 'text-tertiary',
+    fsqCategories: '18021,18056',
     osmQuery: '["amenity"="bicycle_rental"]'
   },
   bus_station: {
-    icon: 'directions_bus',
-    priceUnit: '/ seat',
+    icon: 'directions_bus', priceUnit: '/ seat', label: 'Bus Counters',
+    bgColor: 'bg-error-container', iconColor: 'text-error',
     tags: { popular: 'Popular', budget: 'Budget' },
-    bgColor: 'bg-error-container/30',
-    iconColor: 'text-error',
+    fsqCategories: '19040,19024,19057',
     osmQuery: '["amenity"="bus_station"]'
   },
   restaurant: {
-    icon: 'restaurant',
-    priceUnit: '/ meal',
+    icon: 'restaurant', priceUnit: '/ meal', label: 'Restaurants',
+    bgColor: 'bg-secondary-container', iconColor: 'text-on-secondary-container',
     tags: { eco: 'Eco', popular: 'Popular', luxury: 'Fine Dining' },
-    bgColor: 'bg-blue-900/30',
-    iconColor: 'text-blue-400',
-    osmQuery: '["amenity"="restaurant"]'
+    fsqCategories: '13065,13145,13003',
+    osmQuery: '["amenity"~"restaurant|cafe"]'
   }
 };
-
-// ═══════════════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════════════
-
-let currentDestination = null;
-let currentCategory = 'lodging';
-let servicesData = [];
-let selectedServices = [];
-let currentLat = 23.684994;
-let currentLng = 88.001391;
-
-// ═══════════════════════════════════════════════════════════════════
-// INITIALIZATION
-// ═══════════════════════════════════════════════════════════════════
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('cholo_token') && !localStorage.getItem('cholo_guest')) {
-    localStorage.setItem('cholo_guest', 'true');
-  }
-  
-  const tripData = getTripData();
-  if (tripData.step_3?.services) {
-    selectedServices = tripData.step_3.services;
-  }
-  
-  loadDestinationAndServices();
-});
-
-async function loadDestinationAndServices() {
-  const tripData = getTripData();
-  const destinations = tripData.step_2?.destinations || [];
-  
-  if (destinations.length === 0) {
-    window.location.href = '../step_2_destination_picker_cholo_2/code.html';
-    return;
-  }
-  
-  currentDestination = destinations[0];
-  document.getElementById('destination-title').textContent = `${currentDestination.name}, Bangladesh`;
-  
-  try {
-    const coords = await geocodeOSM(currentDestination.name);
-    currentLat = coords.lat;
-    currentLng = coords.lon;
-    await loadServices();
-  } catch (err) {
-    console.error('Geocoding error:', err);
-    showError('Failed to locate destination. Using default coordinates.');
-    await loadServices();
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════
-// OPENSTREETMAP API FUNCTIONS
-// ═══════════════════════════════════════════════════════════════════
 
 async function geocodeOSM(address) {
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ', Bangladesh')}&limit=1`;
@@ -321,91 +264,80 @@ async function loadServices() {
   showLoading(true);
   hideError();
   hideEmpty();
-  
   try {
-    const results = await searchOSMPlaces(currentCategory, currentLat, currentLng);
-    
-    if (results.length === 0) {
-      showEmpty();
-    } else {
-      servicesData = results.slice(0, 20);
-      renderServices();
-    }
+    let results = await searchFoursquarePlaces(currentCategory, currentLat, currentLng);
+    if (results.length === 0) results = await searchOSMPlaces(currentCategory, currentLat, currentLng);
+    if (results.length === 0) { showEmpty(); }
+    else { servicesData = results.slice(0, 20); renderServices(); }
   } catch (err) {
-    console.error('Load services error:', err);
-    showError(err.message || 'Failed to load services');
-  } finally {
-    showLoading(false);
-  }
+    try {
+      const fb = await searchOSMPlaces(currentCategory, currentLat, currentLng);
+      if (fb.length > 0) { servicesData = fb.slice(0, 20); renderServices(); } else showEmpty();
+    } catch (_) { showError('Could not load services. Check connection.'); }
+  } finally { showLoading(false); }
 }
 
-async function searchOSMPlaces(category, lat, lon) {
+async function searchFoursquarePlaces(category, lat, lon) {
   const config = CATEGORY_CONFIG[category];
-  const radius = 15000;
-  
-  const overpassQuery = `
-    [out:json][timeout:25];
-    (
-      node${config.osmQuery}(around:${radius},${lat},${lon});
-      way${config.osmQuery}(around:${radius},${lat},${lon});
-      relation${config.osmQuery}(around:${radius},${lat},${lon});
-    );
-    out center 20;
-  `;
-  
-  const response = await fetch('https://overpass-api.de/api/interpreter', {
-    method: 'POST',
-    body: overpassQuery,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  const priceMaps = {
+    lodging:        [900, 2500, 7000, 18000],
+    restaurant:     [120,  350, 1000,  3000],
+    bus_station:    [200,  500, 1200,  2500],
+    bicycle_rental: [300,  600, 1500,  2500]
+  };
+  const url = new URL(FSQ_BASE);
+  url.searchParams.set('ll',         `${lat},${lon}`);
+  url.searchParams.set('radius',     '15000');
+  url.searchParams.set('categories', config.fsqCategories);
+  url.searchParams.set('limit',      '20');
+  url.searchParams.set('fields',     'fsq_id,name,location,rating,price,distance,geocodes');
+  const res = await fetch(url.toString(), {
+    headers: { 'Authorization': FSQ_API_KEY, 'Accept': 'application/json' }
   });
-  
-  if (!response.ok) {
-    throw new Error(`Overpass API error: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  
-  return data.elements.map(el => {
-    const tags = el.tags || {};
-    const center = el.center || { lat: el.lat, lon: el.lon };
-    
-    const stars = tags.stars ? parseFloat(tags.stars) : null;
-    const rating = stars || (3 + Math.random() * 1.5);
-    const price = generatePrice(category, rating, tags);
-    
-    const vicinityParts = [];
-    if (tags['addr:street']) vicinityParts.push(tags['addr:street']);
-    if (tags['addr:city']) vicinityParts.push(tags['addr:city']);
-    if (vicinityParts.length === 0) vicinityParts.push('Nearby');
-    
+  if (!res.ok) throw new Error(`Foursquare error: ${res.status}`);
+  const data = await res.json();
+  const prices = priceMaps[category] || priceMaps.restaurant;
+  return (data.results || []).filter(p => p.name?.trim()).map(p => {
+    const loc = p.location || {};
+    const coords = p.geocodes?.main || { latitude: lat, longitude: lon };
+    const fsqPri = p.price || 2;
+    const rating = p.rating ? parseFloat((p.rating / 2).toFixed(1)) : parseFloat((3 + Math.random()).toFixed(1));
     return {
-      place_id: `osm_${el.type}_${el.id}`,
-      name: tags.name || tags.brand || tags.operator || 'Unnamed Place',
-      vicinity: vicinityParts.join(', '),
-      rating: parseFloat(rating.toFixed(1)),
-      price_level: stars ? Math.min(Math.floor(stars), 4) : Math.floor(Math.random() * 3) + 1,
-      price: price,
-      category: category,
-      lat: center.lat,
-      lon: center.lon,
-      photos: null
+      place_id:    p.fsq_id,
+      name:        p.name,
+      vicinity:    loc.formatted_address || loc.address || loc.locality || `${(p.distance/1000).toFixed(1)} km away`,
+      rating:      Math.min(rating, 5.0),
+      price_level: fsqPri,
+      price:       prices[fsqPri - 1] || prices[1],
+      category,
+      lat:         coords.latitude,
+      lon:         coords.longitude,
+      source:      'foursquare'
     };
   });
 }
 
-function generatePrice(category, rating, tags) {
-  const basePrices = {
-    lodging: { min: 800, max: 15000 },
-    bicycle_rental: { min: 300, max: 2500 },
-    bus_station: { min: 200, max: 3000 },
-    restaurant: { min: 150, max: 5000 }
-  };
-  
-  const range = basePrices[category] || { min: 500, max: 5000 };
-  const ratingFactor = rating / 5;
-  const price = Math.floor(range.min + (range.max - range.min) * ratingFactor);
-  
-  return Math.ceil(price / 50) * 50;
+async function searchOSMPlaces(category, lat, lon) {
+  const config = CATEGORY_CONFIG[category];
+  const q = `[out:json][timeout:25];(node${config.osmQuery}(around:15000,${lat},${lon});way${config.osmQuery}(around:15000,${lat},${lon}););out center 20;`;
+  const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:q, headers:{'Content-Type':'application/x-www-form-urlencoded'} });
+  if (!res.ok) throw new Error(`Overpass error: ${res.status}`);
+  const data = await res.json();
+  const priceMaps = { lodging:{min:800,max:15000}, restaurant:{min:150,max:4000}, bus_station:{min:200,max:2500}, bicycle_rental:{min:300,max:2000} };
+  const range = priceMaps[category] || {min:500,max:5000};
+  return data.elements.filter(el => el.tags?.name).map(el => {
+    const tags = el.tags || {};
+    const center = el.center || {lat:el.lat,lon:el.lon};
+    const rating = parseFloat((3 + Math.random() * 1.5).toFixed(1));
+    return {
+      place_id: `osm_${el.type}_${el.id}`,
+      name: tags.name || tags.brand || 'Unnamed Place',
+      vicinity: [tags['addr:street'], tags['addr:city']].filter(Boolean).join(', ') || 'Nearby',
+      rating, price_level: Math.floor(Math.random()*3)+1,
+      price: Math.ceil((range.min + (range.max-range.min)*(rating/5))/50)*50,
+      category, lat: center.lat, lon: center.lon, source: 'osm'
+    };
+  });
 }
 
 function retryLoad() {
