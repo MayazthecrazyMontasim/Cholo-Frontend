@@ -173,6 +173,22 @@
             btn.classList.toggle('opacity-70', loading);
         }
 
+        // ── Fetch with timeout helper ───────────────────────────
+        function fetchWithTimeout(url, options, ms = 10000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), ms);
+            return fetch(url, { ...options, signal: controller.signal })
+                .finally(() => clearTimeout(id));
+        }
+
+        // ── Local user lookup (offline fallback) ────────────────
+        function tryLocalLogin(username, password) {
+            const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+            return users.find(u =>
+                (u.username === username || u.email === username) && u.password === password
+            ) || null;
+        }
+
         // ── Main login handler ──────────────────────────────────
         async function handleLogin(event) {
             event.preventDefault();
@@ -180,43 +196,55 @@
 
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
+            const remember = document.getElementById('remember')?.checked ?? true;
 
-            if (!username || !password) {
-                showError('Please fill in all fields');
-                return;
-            }
+            if (!username || !password) { showError('Please fill in all fields'); return; }
 
             setLoading(true);
 
             try {
-                // FastAPI OAuth2 expects application/x-www-form-urlencoded
                 const formData = new URLSearchParams();
                 formData.append('username', username);
                 formData.append('password', password);
 
-                const response = await fetch(`${API_BASE_URL}/auth/token`, {
+                const response = await fetchWithTimeout(`${API_BASE_URL}/auth/token`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: formData
-                });
+                }, 10000);
 
                 const data = await response.json();
 
                 if (response.ok && data.access_token) {
-                    // Save token
                     const storage = remember ? localStorage : sessionStorage;
                     storage.setItem('cholo_token', data.access_token);
-                    storage.setItem('cholo_token_type', data.token_type || 'bearer');
+                    localStorage.setItem('current_user', JSON.stringify({ username, isGuest: false }));
 
-                    // Redirect to trip planner
+                    // Fetch full profile
+                    try {
+                        const p = await fetchWithTimeout(`${API_BASE_URL}/auth/me`, {
+                            headers: { 'Authorization': `Bearer ${data.access_token}` }
+                        }, 5000);
+                        if (p.ok) localStorage.setItem('current_user', JSON.stringify(await p.json()));
+                    } catch (_) {}
+
                     window.location.href = '../step_1_traveler_info_cholo_1/code.html';
                 } else {
                     showError(data.detail || 'Invalid username or password');
                 }
             } catch (error) {
-                console.error('Login error:', error);
-                showError('Could not connect to server. Please try again.');
+                if (error.name === 'AbortError') {
+                    // API timed out — try local fallback
+                    const local = tryLocalLogin(username, password);
+                    if (local) {
+                        localStorage.setItem('current_user', JSON.stringify(local));
+                        window.location.href = '../step_1_traveler_info_cholo_1/code.html';
+                        return;
+                    }
+                    showError('Server is starting up (Render cold start). Please wait 30 seconds and try again, or Continue as Guest.');
+                } else {
+                    showError('Could not connect to server. Check your connection and try again.');
+                }
             } finally {
                 setLoading(false);
             }
@@ -237,7 +265,7 @@
 
         function toggleTheme() {
             localStorage.setItem('theme', 'dark');
-            window.location.href = '../login_page_cholo_dark/code.html';
+            window.location.href = '../login_page_cholo_matched_2/code.html';
         }
 
         function showToast(msg, type) {

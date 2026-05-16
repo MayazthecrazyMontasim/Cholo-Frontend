@@ -179,7 +179,19 @@
     ico.textContent = f.type === 'password' ? 'visibility' : 'visibility_off';
   }
 
-  // ── CHANGE 5: Login handler — same API logic as light mode ───
+  // ── Fetch with timeout ──────────────────────────────────────
+  function fetchWithTimeout(url, options, ms = 10000) {
+    const ctrl = new AbortController();
+    const id = setTimeout(() => ctrl.abort(), ms);
+    return fetch(url, { ...options, signal: ctrl.signal }).finally(() => clearTimeout(id));
+  }
+
+  function tryLocalLogin(username, password) {
+    const users = JSON.parse(localStorage.getItem('cholo_users') || '[]');
+    return users.find(u => (u.username === username || u.email === username) && u.password === password) || null;
+  }
+
+  // ── Login handler ────────────────────────────────────────────
   document.getElementById('loginForm').addEventListener('submit', async e => {
     e.preventDefault();
     hideError();
@@ -192,28 +204,26 @@
     setLoading(true);
     try {
       const formData = new URLSearchParams();
-      formData.append('username', email);   // FastAPI OAuth2 uses "username" field
+      formData.append('username', email);
       formData.append('password', password);
 
-      const res = await fetch(`${API_BASE_URL}/auth/token`, {
+      const res = await fetchWithTimeout(`${API_BASE_URL}/auth/token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData
-      });
+      }, 10000);
 
       const data = await res.json();
 
       if (res.ok && data.access_token) {
         localStorage.setItem('cholo_token', data.access_token);
+        localStorage.setItem('current_user', JSON.stringify({ username: email, isGuest: false }));
 
-        // Fetch user profile
         try {
-          const profile = await fetch(`${API_BASE_URL}/auth/me`, {
+          const p = await fetchWithTimeout(`${API_BASE_URL}/auth/me`, {
             headers: { 'Authorization': `Bearer ${data.access_token}` }
-          });
-          if (profile.ok) {
-            localStorage.setItem('current_user', JSON.stringify(await profile.json()));
-          }
+          }, 5000);
+          if (p.ok) localStorage.setItem('current_user', JSON.stringify(await p.json()));
         } catch (_) {}
 
         window.location.href = '../step_1_traveler_info_cholo_2/code.html';
@@ -221,8 +231,17 @@
         showError(data.detail || 'Invalid email or password');
       }
     } catch (err) {
-      console.error(err);
-      showError('Could not connect to server. Please try again.');
+      if (err.name === 'AbortError') {
+        const local = tryLocalLogin(email, password);
+        if (local) {
+          localStorage.setItem('current_user', JSON.stringify(local));
+          window.location.href = '../step_1_traveler_info_cholo_2/code.html';
+          return;
+        }
+        showError('Server is starting up. Wait 30 seconds and try again, or use "Start as Guest".');
+      } else {
+        showError('Could not connect. Check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }

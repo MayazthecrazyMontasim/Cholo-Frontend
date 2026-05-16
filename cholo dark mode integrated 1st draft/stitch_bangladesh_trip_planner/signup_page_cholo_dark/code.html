@@ -190,6 +190,13 @@ Login Instead
         window.location.href = '../signup_page_cholo_matched_1/code.html';
     });
 
+    // ── Fetch with timeout ───────────────────────────────────────
+    function fetchWithTimeout(url, opts, ms = 10000) {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), ms);
+        return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(t));
+    }
+
     // ── Signup handler ────────────────────────────────────────────
     async function handleSignup(e) {
         e.preventDefault();
@@ -222,11 +229,11 @@ Login Instead
 
         // Try API first
         try {
-            const res = await fetch(API_BASE_URL + '/auth/register', {
+            const res = await fetchWithTimeout(API_BASE_URL + '/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password })
-            });
+            }, 10000);
             const data = await res.json();
             if (res.ok) {
                 localStorage.setItem('current_user', JSON.stringify({
@@ -237,11 +244,11 @@ Login Instead
                 const form = new URLSearchParams();
                 form.append('username', username);
                 form.append('password', password);
-                const tokenRes = await fetch(API_BASE_URL + '/auth/token', {
+                const tokenRes = await fetchWithTimeout(API_BASE_URL + '/auth/token', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: form
-                });
+                }, 8000);
                 if (tokenRes.ok) {
                     const td = await tokenRes.json();
                     localStorage.setItem('cholo_token', td.access_token);
@@ -379,8 +386,10 @@ Login Instead
         }
     });
 
+    // OLD handler disabled — handleSignup() on the form's onsubmit handles this
     document.querySelector('form').addEventListener('submit', async (e) => {
-        e.preventDefault();
+        e.stopImmediatePropagation(); // handleSignup already bound via onsubmit
+        return;
         const fullname = document.getElementById('fullname').value;
         const email = document.getElementById('email').value;
         const username = document.getElementById('username').value;
@@ -483,10 +492,6 @@ Login Instead
         }
     });
 
-    // Handle Login Instead button
-    document.querySelector('button.bg-surface').addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = '../login_page_cholo_matched_1/code.html';
-    });
+    // Login Instead button — handled by inline onclick, no duplicate listener needed
 </script>
 </body></html>
